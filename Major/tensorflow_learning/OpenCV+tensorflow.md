@@ -142,6 +142,7 @@ idx = rf.random.shuffle(idx)  # (就好比生成了10组随机的通道(每个�
 ```
 
 ##### 索引与切片  
+
 ``` python 
 # 索引
 # numpy风格的索引，如：
@@ -221,7 +222,7 @@ tf.squeeze(a,axis=2)  # 把第二维度去掉
 
 ##### Broadcasting
 - expand without copying data:扩张了一个数据,但实际上并没有复制出来多份
-![broadcast机制](./static/broadcasting.png)  
+<img src="./static/broadcasting.png" style="zoom:50%">
 
 ``` python
 tf.broadcast_to
@@ -545,13 +546,12 @@ loss2 = tf.reduce_mean(tf.losses.MSE(y,out))
 一组输出为$Q_1[0.4,0.3,0.05,0.05,0.5]$;  
 则:
 
-$$
-\begin{align}
+$$\begin{aligned}
 loss &= H(p,q) \\
 &= -\sum{P_1(x) \log_2{Q_1(x)}} \\
 &= -\log_2{0.4}  \\
 &= 0.916
-\end{align}
+\end{aligned}
 $$
 
 
@@ -609,12 +609,10 @@ grad2 = tape.gradient(loss,[w])  # 可调用多次
     - `y = tf.tanh(a)`
 - **ReLU(Rectified Linear Unit)**
     -   $
-        \begin{equation}
         f(x) = \begin{cases}
         0, & \text{if } x < 0  \\
         x, & \text{if } x \geq 0 
         \end{cases}
-        \end{equation}
         $
     - `tf.nn.relu()`
     - 深度学习最常用的
@@ -627,12 +625,10 @@ grad2 = tape.gradient(loss,[w])  # 可调用多次
     - 区别于一般的转换成prob的方法，Softmax会把大的放大，小的缩小；拉大差距(sotf version of max)
     - 求导:把先把分子分母看做整体`f(x)和g(x)`然后相当于$\frac{\partial p_i}{\partial a_j}=\frac{f'(x)g(x)-f(x)g'(x)}{g(x)^2}$;注意i和j不同的情况要分开讨论
         - 结果$
-        \begin{equation}
         \frac{\partial p_i}{\partial a_j} = \begin{cases}
         p_i(1-p_1), & \text{if } i=j  \\
         -p_jp_i, & \text{if } i\neq j 
         \end{cases}
-        \end{equation}
         $
 
 
@@ -995,6 +991,139 @@ $$
 O _ {mn} = \sum {x _ {ij} * w _ {ij}} + b  \\
 \frac{\delta Loss}{\delta w _ {ij}} 
 $$
+
+
+### Classic Network
+
+#### GoogLeNet
+
+When the network get deeper, above 20, is get harder to training, even make trains revoke.
+
+
+#### ResNet
+
+Residual
+
+
+## Sequence
+Signal with time order
+
+- sequence embed
+    - turn digital signal into a sequence
+
+Many sets can be like a sequence. mnist for example[b, 28, 28]. can expand like [b, time, 28] or [time, b, 28] and so on.
+
+But a sequence better to expand like a time orde things [time, b, 28] is much better. It depend on how you expand.
+
+Here are some rules:
+- semantic similarity
+- trainable
+
+### Cycle network
+Two question:
+- Long sentence
+    - weight sharing
+    - We can do like a conv_net
+
+- Context information
+    - It is a pertinence bettween word and word
+    - Here is the example formulation
+
+$$\begin{aligned}
+h_t &= f_w(h_{t-1}, x_t) \\
+h_t &= tanh(W_{hh}h_{t-1} + W{xh}x_t) \\
+y_t &= W_{hy}h_t \\
+\end{aligned}$$
+
+
+### RNNlayer
+
+#### SimpleRNN
+$$
+\begin{aligned}
+call &= xw_{xh} + h_tw_{hh}, (for\ each\ item\ in\ timeline) \\
+out_1, h_1 &= call(x, h_0) \\
+out_2, h_2 &= call(x, h_1) \\
+out_t, h_t &= call(x, h_{t-1}) 
+\end{aligned}
+$$
+
+$h_t$ and $out_t$ is the same thing(id) but have difference meaning 
+
+
+#### Optimize
+- Step 1:Gradient Exploding
+    - Gradient Clipping
+    - $grad = \frac{|grad|}{grad}$ ,shrink to 1 and mult $15\times{lr}$
+    - `grads = [tf.clipe_by_norm(g, 15) for g in grads]`
+- Step 2:Gradient Vanishing
+    - *LSTM* \ *GRU*  
+
+##### LSTM
+Compare with RNN(short term memory), which can only remenber nearly sentence.*LSTM* is long short term memory.
+
+LSTM use three gates(sigmoid) to contral the signal. 
+- Forget gate
+    - $f_t = \sigma(W_f\cdot[h_{t-1}, x_t]+b_f)$
+    - <img src="./static/forget_gate.png" style="zoom:50%">
+- Input gate
+    - $$
+      \begin{aligned}
+        i_t &= \sigma(W_i\cdot[h{t-1}, x_t] + b_i) \\
+        \widetilde{C_t} &= tanh(W_C\cdot[h_{t-1}, x_t] + b_C)
+      \end{aligned}
+      $$
+    - <img src="./static/input_gate.png" style="zoom:50%">
+- Cell state
+    - $C_t = f_f * C_{t-1} + i_t * \widetilde{C_t}$
+    - <img src="./static/cell_state.png" style="zoom:50%">
+- Output gate
+    - $$
+        \begin{aligned}
+        O_t &= \sigma(W_o[h_{t-1}, x_t] + b_o) \\
+        h_t &= O_t * tanh(C_t)
+        \end{aligned}$$
+    - <img src="./static/output_gate.png" style="zoom:50%">
+
+##### GRU
+
+
+## Auto-Encoder
+Why we need:
+- Dimension reduction
+- Visualization
+- Take advantages of *unsupervised* date
+    - Unsupervise
+    - *Reconstruct* itself
+
+### Denoising AutoEncoder
+Add some noise and can still reconstruct well. Means model can dig out information from a mass data.
+
+### Dropout AutoEncoder
+Use dropout to autoencoder. It the hard dropouted network can than the disdropout network do better.
+
+### Adversarial AutoEncoder
+
+### Variational AutoEncoder
+
+
+# Gen
+- Painter or Generator
+- Critic or Discriminator
+
+$$
+\begin{aligned}
+min_G\ max_D\ L(D,G) &= E_{x~p_r(x)}[\log{D(x)}] + E_{z~p_r(z)}[\log{1-D(G(z))}] \\
+&= E_{x~p_r(x)}[\log{D(x)}] + E_{x~p_r(x)}[\log{1-D(x)}] \\
+\end{aligned}
+$$
+
+Both of they want to maximum and than get a nash equilibrium
+
+### Nash Equilibrium
+- Q1.Where will D converge, given fixed G
+- Q2.Where will G converge, after optimal D
+
 
 
 
