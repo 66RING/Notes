@@ -1,7 +1,7 @@
 ---
 title: golang操作 mgov2篇
 date: 2019-8-27
-tags: mongo
+draft: true
 ---
 
 ### 打开mongo

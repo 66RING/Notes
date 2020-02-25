@@ -1,3 +1,9 @@
+---
+title: linux command line
+tag: linux
+date: 2020-2-23
+---
+
 # Command line 
 
 ## shebang

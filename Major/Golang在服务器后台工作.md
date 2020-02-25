@@ -1,7 +1,7 @@
 ---
 title: Golang在服务器后台工作
 data: 2019-08-08 17:52:45
-tags: golang，ubuntu16
+draft: true
 ---
 1.生产可执行文件	
 
