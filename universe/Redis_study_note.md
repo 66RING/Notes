@@ -150,3 +150,84 @@ set所有命令s开头
 | <++>                                | <++>                                 | <++>           |
 | <++>                                | <++>                                 | <++>           |
 | <++>                                | <++>                                 | <++>           |
+
+### 慢查询
+
+生命周期
+``` sequence-diagrams
+client->command queue: command
+Note right of command queue: Execute one command
+command queue-->client: result
+```
+
+慢查询发生在执行命令的过程, 如`keys *`就会发生慢查询, 通过配置慢查询来防止阻塞
+
+| 配置                                     | 结果                                               |
+|------------------------------------------|----------------------------------------------------|
+| config set slowlog-max-len value         | 慢查询队列的最大长度为value                        |
+| config set slowlog-log-slower-than value | 把慢于value微妙的命令放入慢查询队列, 一般设置1微妙 |
+| slowlog get [n]                          | 获取慢查询队列                                     |
+| slowlog len                              | 获取慢查询队列条数                                 |
+| slowlog reset                            | 清空                                               |
+
+### 流水线 Pipline
+
+网络通信时间 = 网络时间+命令时间
+
+因为redis很快, 通信时间大多数时候受限于网络时间, 而且如果让redis同时mget, mset或者n次set是不行的, 这意味着就需要多次请求, 就会耗费很多时间
+
+流水线的作用就是把一批命令批量打包, 发送到服务端, 然后按顺序反回, 这样n次网络时间就缩短为1次了
+
+
+### 发布订阅
+``` sequence-diagrams
+发布者publisher->频道redis server: 发布消息
+频道channle-->订阅者subscribers: 订阅消息给订阅者1
+频道channle-->订阅者subscribers: 订阅消息给订阅者2
+频道channle-->订阅者subscribers: 订阅消息给订阅者3
+Note right of 订阅者subscribers: 每个订阅了频道的人都会收到消息
+```
+
+| API                               | desc                               |
+|-----------------------------------|------------------------------------|
+| publish channel message           | 发送message到channel, 返回订阅者数 |
+| subscribe [channel] #一个或多个   | 订阅                               |
+| unsubscribe [channel] #一个或多个 | 取消订阅                           |
+
+**消息队列** 类似发布订阅, 只是只有一个订阅者能收到, 类似强红包
+
+
+### 位图Bitmap
+redis中对位进行操作, 字符串其实就是字符数组嘛, 每个字符又是一段二进制编码
+
+| API                               | desc                                                                          |
+|-----------------------------------|-------------------------------------------------------------------------------|
+| setbit key offset value           | 设置, value只能是0,1                                                          |
+| getbit key offset                 |                                                                               |
+| bitcount key [start end]          | 获取指定范围1的个数                                                           |
+| btop op destkey key [key...]      | 将多个位图进行交并非异或等操作, 把结果保存到destkey中                         |
+| bitpos key tagetBit [start] [end] | 计算位图指定范围(start, end单位是字节)第一个偏移量对应的值等于targetBit的位置 |
+
+
+### HyperLogLog
+用极小的空间完成独立用户的统计
+- 有错误率
+- 不能取单条数据
+
+本质结构还是string 
+| API                                      | desc                      |
+|------------------------------------------|---------------------------|
+| pfadd key element [element..]            | 向hyperloglog添加元素     |
+| pfcount key [key..]                      | 计算hyperloglog的独立总数 |
+| pfmerge destkey sourcekey [sourcekey...] | 合并多个hyperloglog       |
+
+
+### 地理信息定位GEO
+存储经纬度, 计算两地距离, 范围计算等
+
+| API                                     | desc             |
+|-----------------------------------------|------------------|
+| geo key longitude latitude member [...] | 添加地理位置信息 |
+| geopos key member [...]                 | 获取信息         |
+| geodist member1 member2                 | 算距离           |
+| georadius                               | 范围             |
