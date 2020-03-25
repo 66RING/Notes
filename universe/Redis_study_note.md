@@ -557,6 +557,90 @@ sentinel实现的高可用, 如果客户端没有实现高可用, 对sentinel的
 - sentinel节点: 参考其他sentinel节点启动即可, 订阅发布
 
 
+## Redis Cluster
+
+### 呼唤集群
+
+为什么需要呼唤
+- 并发量: OPS
+    - Redis官方数据每秒可以执行10万行, 但是如果业务要求100万/每秒呢
+- 数据量
+    - 一般的计算机内存16~256G, 但是如果业务要求500G呢
+- 流量
+    - 单机流量是千兆网卡, 但是业务要求万兆呢
+
+分布式就是结局这些问题的好方法, 集群就相当于机柜. 规模化需求.
+
+
+### 数据分布
+
+全量分布 => 一定的分区规则 => 子集N
+
+- 顺序分区
+    - 数据分散度易倾斜
+    - 键值业务相关
+        - 如按日期的顺序分区
+    - 可顺序访问
+    - 不支持批量操作
+- 哈希分区
+    - 数据分散度高
+    - 键值与业务无关
+    - 无法顺序访问
+    - 支持批量操作
+
+
+#### 哈希分布
+
+- 节点取余分区
+    - 扩容时, 迁移率高
+    - 使用多倍扩容可以优化
+- 一致性哈希分区
+    - 让节点分布在一个token环上(首尾相连的数组), 举行哈希运算后先后检索
+    - 节点伸缩时, 只影响附近的节点, 迁移量较小
+    - 伸缩时建议翻倍伸缩, 保证负载均衡
+- 虚拟槽分区
+    - Redis Cluster的分区方式, Redis Cluster有16384个节点, 开槽是对16384进行平均
+    - 按一定的范围划分虚拟槽, 每个节点对应一个槽, 任取一个节点计算key哈希运算的结果, 如果结果是是自己管辖的范围, 则通过redis cluster的节点通信告知目标节点
+
+
+### 集群搭建
+
+Redis Cluster架构
+- 节点
+    - `cluster-enabled: yes`以集群模式启动节点
+- meet
+    - 有一个节点向其他节点发送"meet", 节点收到后回复
+    - 内部机制让于同一个节点"meet"的节点们能互通
+- 指派槽
+    - 负载均衡
+- 复制
+    - 保证高可用
+
+
+### 安装
+
+#### 原生命令安装
+
+- 配置开启节点
+    - `port ${port}`
+    - `daemonize yes`
+    - `dir "/path/to/"`
+    - `dbfilename "dump-${port}.rdb"`
+    - `logfile "${port}.log"`
+    - `cluster-enabled yes`  是cluser节点
+    - `cluster-config-file nodes-${port}.conf` 为当前节点单独选择配置文件
+    - `cluster-node-timeout 15000`
+    - `cluster-require-full-coverage yes`  当集群中所有节点可以用时才提供服务, 默认是yes, 不符合高可用
+- 节点握手: meet
+    - `cluster meet ip port`
+- 指派槽
+    - `cluster addslots slot [slot...]`
+- 主从关系分配实现高可用
+    - `cluster replicate node-id` node-id是值集群节点的id, 不是runid
+
+
+#### 使用Ruby安装脚本
+
 
 
 

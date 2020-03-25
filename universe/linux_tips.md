@@ -13,6 +13,7 @@ a shebang is the interpreter of this script. like this
 ```
 
 ## Redirection
+
 | command | function                       |
 |---------|--------------------------------|
 | a > b   | a's std output override into b |
@@ -22,6 +23,7 @@ a shebang is the interpreter of this script. like this
 | a <<< b | here                           |
 
 ### Here document
+
 A block as input
 ``` sh
 echo << token
@@ -37,6 +39,7 @@ $ halo
 ```
 
 ### Here
+
 a bit like *here document*, a line as input.
 ``` sh
 read ans1 ans2 ans3 <<< "a1 a2 a3"
@@ -45,41 +48,112 @@ a1 a2 a3 as input to read process
 ```
 
 ## Useful commands
+
 ### Grep
+
 `grep [option] file1 file2...`
 
 The most commonly used
-| options | description                    |
-|---------|--------------------------------|
-| -i      | --ignore-case                  |
-| -v      | --revert-mathch                |
-| -c      | --count                        |
-| -l      | --file-with-match              |
-| -L      | --file-without-math            |
-| -n      | --line-number                  |
-| -h      | no filename in multi file mode |
+| options  | description                    |
+|----------|--------------------------------|
+| -i       | --ignore-case                  |
+| -v       | --revert-mathch                |
+| -c       | --count                        |
+| -l       | --file-with-match              |
+| -L       | --file-without-math            |
+| -n       | --line-number                  |
+| -h       | no filename in multi file mode |
+| -a/-text | do not ignore binary data      |
+| -e       | --regexp                       |
+| -f       | specify regexp file            |
 
 
 ### Sed
 
+sed can deal with text file with script-command or script-file.
+
+`sed [options][target-file]`
+
+| options | description |
+|---------|-------------|
+| -e      |             |
+| <++>    | <++>        |
+| <++>    | <++>        |
+| <++>    | <++>        |
+| <++>    | <++>        |
+| <++>    | <++>        |
+| <++>    | <++>        |
+
+script action
+
+| action | description                                  |
+|--------|----------------------------------------------|
+| a\     | add a new line or lines next to current line |
+| c\     | replace current line with some text          |
+| d      | delete line                                  |
+| i\     | insert text befor curent line                |
+| h      | <++>                                         |
+| H      | <++>                                         |
+| g      | <++>                                         |
+| G      | <++>                                         |
+| I      | <++>                                         |
+| p      | print line                                   |
+| n      | <++>                                         |
+| q      | quit sed                                     |
+| r      | <++>                                         |
+| !      | <++>                                         |
+| s      | replace string with other string             |
+| <++>   | <++>                                         |
+| <++>   | <++>                                         |
+| <++>   | <++>                                         |
+| <++>   | <++>                                         |
+| <++>   | <++>                                         |
+
+replace identifier
+
+| options | description                 |
+|---------|-----------------------------|
+| g       | global replace in this line |
+| p       | print line                  |
+| w       | write line into file        |
+| x       | <++>                        |
+| y       | <++>                        |
+| <++>    | <++>                        |
+
+
+
 ### Cut
+
+| options | description |
+|---------|-------------|
+| <++>    | <++>        |
+| <++>    | <++>        |
+| <++>    | <++>        |
+| <++>    | <++>        |
+| <++>    | <++>        |
+| <++>    | <++>        |
+| <++>    | <++>        |
 
 ## Regular Expressions
 
 ### Literals
+
 | pattern | description     |
 |---------|-----------------|
 | .       | match any char  |
 | char    | literaly a char |
 
 ### Metacharacters
+
 #### Anchors
+
 | pattern | description                |
 |---------|----------------------------|
 | ^       | found at the begin of line |
 | $       | found at the end of line   |
 
 #### Quantifiers
+
 | pattern | description                                            |
 |---------|--------------------------------------------------------|
 | ?       | match **an element** zero or one time                  |
@@ -145,8 +219,11 @@ $ grep -h '[A-Fa-z0-9]' test.txt
 
 
 ## Flow control
+
 ### if statements
+
 #### File Expressions
+
 | command   | description                          |
 |-----------|--------------------------------------|
 | f1 -ef f2 | f1 and f2 have the same indoe number |
@@ -157,6 +234,7 @@ $ grep -h '[A-Fa-z0-9]' test.txt
 | -f f1     | f1 is a regular file                 |
 
 #### String Expressions
+
 | command             | description                              |
 |---------------------|------------------------------------------|
 | string              | string is not null                       |
@@ -168,6 +246,7 @@ $ grep -h '[A-Fa-z0-9]' test.txt
 | s1 < s2             | s1 sortf before s2                       |
 
 #### Integer Expressions
+
 | command       | description      |
 |---------------|------------------|
 | int1 -eq int2 | equal            |
@@ -190,6 +269,7 @@ and here is a new feature:
     - integer only
 
 ### case
+
 ``` sh
 case word in
     [pattern [| pattern]...) commands ;;]...
@@ -203,6 +283,7 @@ esac
 ```
 
 #### pattern
+
 | pattern     | description                                      |
 |-------------|--------------------------------------------------|
 | a)          | matches if word equals a                         |
