@@ -642,6 +642,94 @@ Redis Cluster架构
 #### 使用Ruby安装脚本
 
 
+### 集群伸缩
+
+集群搭建 = 虚拟槽和数据在节点之间移动
+
+
+#### 集群扩容
+
+- 准备新集群节点
+- 加入集群
+    - `cluster meet ip port`
+- 迁移槽和数据
+    - 迁移计划: 槽的规划
+    - 迁移数据
+        - 对目标节点发送: `cluster setslot {slot} importing {sourceNodeId}`, 让目标节点准备导入槽的数据
+        - 对源节点发送: `cluster setslot {slot} migraing {targetNodeId}`, 让源节点准备迁出槽数据 
+        - 源节点循环执行: `cluster getkeysinslot {slot} {count}`, 每次获取count个属于槽的键
+        - 在源节点上执行: `migrate {targetIp} {targetPort} key 0 {timeout}`, 把指定key迁移, 0是值数据库0, redis中只有db0
+        - 重复执行3-4直到槽下所有的键数据迁移到目标节点
+        - 向集群内所有主节点发送`cluster setslot {slot} node {targetNodeId}`, 通知槽分配给目标节点
+    - 添加从节点
+
+
+#### 集群缩容
+
+- 下线迁移槽
+    - 因为节点是互通的, 下线一个节点就要让所有节点忘记它
+- 忘记节点
+    - `redis-cli cluster forget {downNodeId}`, 有效时间60s, 60秒, 如果有一个节点没有忘记downNodeId的话就会恢复
+- 关闭节点
+
+
+### 客户端路由
+
+#### moved重定向
+
+客户端向某个发送键命令, 哈希计算后发现这条命令的的槽是当前节点控制的, 则执行. 否则回复moved异常. 包含槽 ip:port
+客户端收到moved异常后, 再(如果不是集群模式的话, -c)手动向对应节点发送信息.
+
+
+#### ask重定向
+
+因为槽迁移的比较慢的, 如果发送命令后返回了moved异常, 但当我们对目标节点再次发送命令后, 发现节点已经迁移了. 这就比较尴尬.
+
+ask重定向就能解决这一问题. 客户端发送键命令到源节点, 但是发现节点此时正在做槽迁移, 那就会返回ask转向异常.
+当我们收到ask转向异常后, 我们向目标节点发送`Asking`命令, 再发送要执行的命令
+
+- moved: 槽在确定节点中
+- ask: 槽在迁移中, 不确定在哪个节点
+
+
+#### smart客户端: 追求性能
+
+
+### 批量操作
+
+当分布到多个节点后要怎么一次对所有节点进行操作呢?
+
+- 串行mget
+    - 效率底
+    - n次网络时间
+- 串行IO
+    - 在本地算出key的槽, 然后根据redis的的分组, 把key集中到一起再去访问redis对应的node(pipline)
+    - nodes次网络时间
+- 并行IO
+    - 多线程地执行串行IO
+- hash\_tag
+    - 性能最高但读写增加tag维护成本, tag分布容易倾斜
+
+
+### Redis Cluster的故障转移
+
+#### 故障发现
+
+节点间ping/pong, 原理类似sentinel
+
+- 主管下线
+- 客观下线
+
+
+#### 故障恢复
+
+- 检查资格
+    - 检查slave成为主节点的资格
+- 选举
+- 替换主节点
+
+
+
 
 
 
