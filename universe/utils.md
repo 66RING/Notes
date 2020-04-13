@@ -1,3 +1,8 @@
+---
+title: markdown utils
+date: 2019-4-5
+---
+
 $\sqrt{3x-1}+(1+x)^2$
 
 $$\begin{array}{c}

@@ -1,3 +1,8 @@
+---
+title: java review
+date: 2019-5-21
+---
+
 # java回顾
 
 ### 1.构造函数->子类隐式插入super()

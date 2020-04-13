@@ -1,3 +1,8 @@
+---
+title: python review
+date: 2019-5-21
+---
+
 # python回顾
 
 ### 2 vs 3:

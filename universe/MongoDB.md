@@ -1,3 +1,8 @@
+---
+title: mongoDB usage
+date: 2019-2-29
+---
+
 ### 结构:
 
 -db(database)
