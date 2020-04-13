@@ -1,7 +1,6 @@
 ---
 title: Golang
 date: 2019-08-05
-draft: true 
 ---
 
 非零基础笔记，掌握c的基础上记录

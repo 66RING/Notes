@@ -1,7 +1,6 @@
 ---
 title: Maven 基本操作
 date: 2019-9-15
-draft: true
 ---
 
 ### 基本操作

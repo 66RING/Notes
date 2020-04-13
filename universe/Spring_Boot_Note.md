@@ -1,7 +1,6 @@
 ---
 title: Spring Boot Note
 date: 2019-9-14
-draft: true
 ---
 
 Project that build with Maven

@@ -1,7 +1,6 @@
 ---
 title: Computer Organization
 date: 2019-12-10
-draft: true 
 ---
 
 ## 第二章

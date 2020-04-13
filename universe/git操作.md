@@ -1,7 +1,6 @@
 ---
 title: git操作
 date: 2019-9-8
-draft: true
 ---
 
 # Git 操作

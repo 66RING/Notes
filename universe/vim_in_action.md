@@ -1,4 +1,5 @@
---- title: vim实用技巧
+---
+title: vim实用技巧
 date: 2020-2-26
 ---
 
