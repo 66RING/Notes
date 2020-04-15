@@ -1,6 +1,7 @@
 ---
 title: markdown utils
 date: 2019-4-5
+tags: markdown, tools
 ---
 
 $\sqrt{3x-1}+(1+x)^2$

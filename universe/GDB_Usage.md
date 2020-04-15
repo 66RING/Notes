@@ -1,6 +1,7 @@
 ---
 title: GDB usage
 date: 2020-2-25
+tags: tools, gdb
 ---
 
 # Basic Usage

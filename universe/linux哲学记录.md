@@ -1,6 +1,7 @@
 ---
 title: Linux哲学记录
 date: 2020-2-25
+tags: linux
 ---
 
 #### 开发效率问题

@@ -1,6 +1,7 @@
 ---
 title: Python Tips
 date: 2020-2-28
+tags: python
 ---
 
 ### 装饰器(Decorator)

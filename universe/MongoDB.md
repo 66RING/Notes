@@ -1,6 +1,7 @@
 ---
 title: mongoDB usage
 date: 2019-2-29
+tags: mongoDB
 ---
 
 ### 结构:

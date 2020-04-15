@@ -1,6 +1,7 @@
 ---
 title: python review
 date: 2019-5-21
+tags: python
 ---
 
 # python回顾

@@ -1,6 +1,7 @@
 ---
 title: vim实用技巧
 date: 2020-2-26
+tags: vim
 ---
 
 # Vim实用技巧

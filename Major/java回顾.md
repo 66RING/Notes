@@ -1,6 +1,7 @@
 ---
 title: java review
 date: 2019-5-21
+tags: java
 ---
 
 # java回顾

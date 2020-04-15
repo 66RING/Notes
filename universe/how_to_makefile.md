@@ -1,6 +1,7 @@
 ---
 title: How to makefile
 date: 2020-2-26
+tags: makefile, tools
 ---
 
 # How to makefile

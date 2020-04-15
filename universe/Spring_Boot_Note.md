@@ -1,6 +1,7 @@
 ---
 title: Spring Boot Note
 date: 2019-9-14
+tags: spring, spring boot, java
 ---
 
 Project that build with Maven

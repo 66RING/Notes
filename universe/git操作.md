@@ -1,6 +1,7 @@
 ---
 title: git操作
 date: 2019-9-8
+tags: tools, git
 ---
 
 # Git 操作

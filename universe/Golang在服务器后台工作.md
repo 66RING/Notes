@@ -1,6 +1,7 @@
 ---
 title: Golang在服务器后台工作
 date: 2019-08-08 17:52:45
+tags: go, tools
 ---
 
 1.生产可执行文件	
