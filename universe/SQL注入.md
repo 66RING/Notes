@@ -37,3 +37,19 @@ SELECT * FROM users WHERE id='admin' or '1=1' and password='1234'
 SQL注入大同小异，但是每个数据库的SQL语句不一定相同，
 当然现在SQL注入的门槛越来越高了。
 
+
+## 注入分类
+
+- 根据注入点类型分类
+    - 数字型注入
+        - `www.xxx.com/log?id=1`
+        - `select * from table_name where id=1`
+    - 字符型注入
+        - `www.xxx.com/log?user=ring`
+        - `select * from table_name where name='ring'`
+        - 利用单引号闭合
+    - 搜索型注入
+- 根据提交方式分类
+    - get注入
+    - post注入
+    - cookie注入
