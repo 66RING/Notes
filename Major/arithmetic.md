@@ -2,6 +2,7 @@
 title: 算法学习   
 date: 2019-11-26  
 tags: 算法, c/c++
+mathjax: true
 ---
 
 # 排序
