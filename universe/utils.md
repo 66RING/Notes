@@ -18,6 +18,16 @@ $$\begin{array}{c}
 
 \end{array}$$
 
+
+$$\begin{aligned}
+loss &= H(p,q) \\
+&= -\sum{P_1(x) \log_2{Q_1(x)}} \\
+&= -\log_2{0.4}  \\
+&= 0.916
+\end{aligned}
+$$
+
+
 ``` mermaid
 gantt
     dateFormat DD-MM-YYY
