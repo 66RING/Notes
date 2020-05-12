@@ -201,24 +201,27 @@ operator * (...){}  //重载了*
 
 ### 模板&&泛型&&标准模板
 
-``` C++
-// 函数模板
-template <class T> re-type func(T x,T y){} <-跟在template后，就是函数模板，T代表一个类型,就会自动根据T的类型变化
-//使用
-    int i = 39;
-    int j = 20;
-    cout << "Max(i, j): " << Max(i, j) << endl; //自动根据类型来
- 
-    double f1 = 13.5; 
-    double f2 = 20.7; 
-    cout << "Max(f1, f2): " << Max(f1, f2) << endl; 
- 
-    string s1 = "Hello"; 
-    string s2 = "World"; 
-    cout << "Max(s1, s2): " << Max(s1, s2) << endl; 
 
+``` c++
+// 函数模板
+//template <class T> re-type func(T x,T y){} <-跟在template后，就是函数模板，T代表一个类型,就会自动根据T的类型变化
+//或使用template <typename T>
+//使用
+
+int i = 39;
+int j = 20;
+cout << "Max(i, j): " << Max(i, j) << endl; //自动根据类型来
+
+double f1 = 13.5; 
+double f2 = 20.7; 
+cout << "Max(f1, f2): " << Max(f1, f2) << endl; 
+
+string s1 = "Hello"; 
+string s2 = "World"; 
+cout << "Max(s1, s2): " << Max(s1, s2) << endl; 
 
 //类模板(同理
+
 template <class T> class classname{
 	int T;char T;T func(){}....
 }
@@ -226,27 +229,88 @@ template <class T> class classname{
 classname<T> a;
 
 //标准模板 如 (标准)类模板---> vector<type>
-#include <vector>
 Vector：Vector 是一个类模板。不是一种数据类型。 Vector<int>是一种数据类型。
-一、 定义和初始化
+//一、 定义和初始化
 Vector<T> v1; //默认构造函数v1为空
 Vector<T> v2(v1);//v2是v1的一个副本(拷贝构造?)
 Vector<T> v3(n,i);//v3包含n个值为i的元素
 Vector<T> v4(n); //v4含有n个值为0的元素
-二、 值初始化
-1> 如果没有指定元素初始化式，标准库自行提供一个初始化值进行值初始化。
-2> 如果保存的式含有构造函数的类类型的元素，标准库使用该类型的构造函数初始化。
-3> 如果保存的式没有构造函数的类类型的元素，标准库产生一个带初始值的对象，使用这个对象进行值初始化。
-三、Vector对象最重要的几种操作
-1. v.push_back(t) 在数组的最后添加一个值为t的数据
-2. v.size() 当前使用数据的大小
-3. v.empty() 判断vector是否为空
-4. v[n] 返回v中位置为n的元素
-5. v1=v2 把v1的元素替换为v2元素的副本
-6. v1==v2 判断v1与v2是否相等
-7. ！=、<、<=、>、>= 保持这些操作符惯有含义
-
+//二、 值初始化
+//1> 如果没有指定元素初始化式，标准库自行提供一个初始化值进行值初始化。
+//2> 如果保存的式含有构造函数的类类型的元素，标准库使用该类型的构造函数初始化。
+//3> 如果保存的式没有构造函数的类类型的元素，标准库产生一个带初始值的对象，使用这个对象进行值初始化。
+//三、Vector对象最重要的几种操作
+//1. v.push_back(t) 在数组的最后添加一个值为t的数据
+//2. v.size() 当前使用数据的大小
+//3. v.empty() 判断vector是否为空
+//4. v[n] 返回v中位置为n的元素
+//5. v1=v2 把v1的元素替换为v2元素的副本
+//6. v1==v2 判断v1与v2是否相等
+//7. ！=、<、<=、>、>= 保持这些操作符惯有含义
 ```
+
+模板只是为编译器指出了要怎么做，并不会减少实际的代码量。编译器会根据模板的类型生成函数。
+
+
+### 实例化和具体化
+
+#### 隐式实例化
+
+编译器使用模板为特定类型生成函数定义时，的到的是模板实例(instantiation)。
+
+在使用模板函数时，编译器会根据参数的类型自动对函数进行定义，这种实例化的方式称为 **隐式实例化**。如
+
+``` c++
+template <typename T> void Swap(T& a, T$ b); //或者使用 <class T>
+
+int a, b;
+double c, d;
+
+Swap(a, b);
+Swap(c, d);  // 根据参数实例化函数(int 或 double)
+Swap(a, c);  // 隐式实例化在这种情况就不行了，因为模板要求两个参数类型相同，因此需要显示实例化
+
+template <typename T> void Swap(T& a, T$ b){
+    A
+}
+```
+
+#### 显示实例化
+
+这意味着直接命令编译器生成特定的实例，其语法是
+
+``` c++
+template void Swap<double>(double, double);  // 编译器看到这种声明后，使用模板生成一个double类型的实例
+```
+
+也可在程序中调用函数来进行显示实例化
+
+``` c++
+cout << Swap<double>(a, c);  // 因为使用的是double类型的实例，所以上面两个参数不一致的问题的到解决，因为int可以赋值给double
+```
+
+#### 具体化
+
+具体化是具体对模板中某特定类型生成函数，具体化使用下面两个等价声明之一：
+
+``` c++
+template <> void Swap<int>(int&, int&);
+template <> void Swap(int&, int&);
+
+
+template <typename T> void Swap(T& a, T$ b){
+    A
+}
+
+template <> void Swap(class&, class&){  // 使用具体化函数处理特定类型
+    B
+}
+```
+
+
+
+
+
 
 ### 异常处理
 
