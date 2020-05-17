@@ -35,6 +35,6 @@ tags: tools, gdb
     - `set args [parameter]` for command line args
 - finish function and continue
     - `finish` for finish function
-    - `c` for continue until program exit
+    - `c` for continue until program exit or breakpoint
 - quit gdb
     - `q`
