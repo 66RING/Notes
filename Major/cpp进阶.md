@@ -77,6 +77,19 @@ where* one = new where{2.3, 3.2, 6.4}
 int* ar = new int[4]{2, 3, 3, 4}
 ```
 
+#### 初始化结构体
+
+``` 
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+ListNode* ls=new ListNode(0);
+// ls->val=0;ls->next=NULL;
+```
+
+
 #### 定位new运算符
 
 通常，new负责在堆中找到一个足以满足要求的内存块。new也可以指定要使用的位置：

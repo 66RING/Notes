@@ -205,7 +205,7 @@ $ grep -h '[A-Fa-z0-9]' test.txt
 | char       | description                                                |
 |------------|------------------------------------------------------------|
 | [:alnum:]  | alphanumeric characters.equivalent to[A-Za-z0-9]           |
-| [:word:]   | same as alnum, with the addition of the underscore char(_) |
+| [:word:]   | same as alnum, with the addition of the underscore char(\_) |
 | [:alpha:]  | [A-Za-z]                                                   |
 | [:blank:]  | space and tab char                                         |
 | [:digit:]  | number 0 through 9                                         |
