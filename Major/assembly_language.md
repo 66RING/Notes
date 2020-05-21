@@ -1621,6 +1621,164 @@ end start
 ```
 
 
+## 外中断
+
+要及时处理外设的输入，显然需要解决两个问题：
+- 外设的输入随时可能发生，CPU如何得知？
+- CPU从何处得到外设的输入？
+
+
+### 接口芯片和端口
+
+外设的输入不直接送入内存和CPU，而是送入相关的接口芯片的端口中;CPU向外设的输出也不是直接送入外设，而是先送入端口中，再由相关的芯片送到外设。CPU还可以向外设输出控制命令，而这些命令也是先送到相关芯片的端口中，然后再由相关的芯片根据命令对外设设施控制。
+
+
+### 外中断信息
+
+外设的输入随时可能发生，CPU如何得知？
+- 当CPU外部需要处理的事情发生时，相关的芯片将向CPU发出相应的中断信息，引发中断过程。
+
+在PC系统中，外中断源一共有以下两类：
+- 可屏蔽中断
+    - 可屏蔽中断是CPU可以不响应的外中断
+    - CPU是否响应可屏蔽中断看标志寄存器IF位的设置，IF=1则响应
+    - `sti`设置IF=1
+    - `cti`设置IF=0
+- 不可屏蔽中断
+    - 不可屏蔽中断的中断类型码固定为2
+
+
+### PC机键盘的处理过程
+
+- 1. 键盘输入
+    - 键盘上每个键相当于一个开关，键盘中有一个芯片对键盘上每个键的开关状态进行扫描
+    - 按下一个键，开关接通，芯片产生一个能说明按下键的位置的扫描码。扫描码送入主板上相关接口芯片的寄存器中，该寄存器的端口地址为60h
+    - 松开按键时也会产生扫描码，也被送入60h端口
+    - 一般称按下产生的扫描码为通码，松开产生的扫描码为断码，通码的第7位为0，断码的第7位为1，即：
+        - **断码=通码+80h**
+- 2. 引发9号中断
+    - 键盘输入到达60h端口时，相关的芯片就会向CPU发出中断类型为9的可屏蔽中断信息
+- 3. 执行int 9中断例程
+    - BIOS提供了int 9中断例程，用来进行基本的键盘输入处理
+
+
+### 编写int 9中断例程
+
+键盘输入的处理过程：
+- 1. 键盘产生扫描码
+- 2. 扫描码送入60h端口
+- 3. 引发9号中断
+- 4. CPU执行int 9中断例程处理键盘输入
+    - 从端口60h读入输入：`in al,60h`
+    - 调用BIOS的int 9中断例程
+
+BIOS提供的int 9中断例程已经对一些硬件细节进行了处理，我们只要在自己编写的中断例程中调用BIOS的int 9中断例程就可以自定义操作了。
+
+编程：在屏幕中间依次显示a～z，按下Esc后改变显示的颜色
+
+- 首先为了能够看清，应该在显示一个字母后延时一段时间
+- 将我们自己写的9号中断写入向量表，同时保存BIOS的int 9中断例程，以便之后调用
+    - 这里将原来的int 9中断例程的偏移地址和段地址保存在ds:[0]和ds:[2]单元中
+- 模拟int来实现对我们写的新中断例程进行调用
+
+``` 
+assume cs:code
+
+stack segment
+    db 128 dup (0)
+stack ends
+
+data segment
+    dw 0,0
+data ends
+
+code segment
+start:  mov ax,stack
+        mov ss,ax
+        mov sp,128
+
+        mov ax,data
+        mov ds,ax
+
+        mov ax,0
+        mov es,ax
+
+        push es:[9*4]
+        pop ds:[0]
+        push es:[9*4+2]
+        pop ds:[2]          ;将原来的int 9中断例程的入口地址保存在ds:0和ds:2单元中
+
+        mov ax,0b800h
+        mov es,ax
+        mov ah,'a'
+s:      mov es:[160*12+40*2] ;显示
+        call delay
+        inc ah
+        cmp ah,'z'
+        jna s
+
+        mov ax,0
+        mov es,ax
+
+        push ds:[0]
+        pop es:[9*4]
+        push ds:[2]
+        pop es:[9*4+2]      ;将中断向量表中的int 9中断例程的入口地址恢复为原来的地址
+
+        mov ax,4c00h
+        int 21h
+
+delay:  push ax
+        push dx
+        mov dx,1000h
+        mov ax,0
+s1:     sub ax,1
+        sbb dx,0
+        cmp ax,0
+        jne s1
+        cmp dx,0
+        jne s1
+        pop dx
+        pop ax
+        ret
+; -------新int 9中断例程--------
+int9:   push ax
+        push bx
+        push es
+
+        in al,60h
+
+        pushf
+        pushf
+        pop bx
+        and bh,111111100b
+        push bx
+        popf
+        call dword ptr ds:[0]   ;对int指令进行模拟，调用原来的int 9中断例程
+
+        cmp al,1
+        jne int9ret
+
+        mov ax,0b800h
+        mov es,ax
+        inc byte ptr es:[160*12+40*2+1] ;段地址控制的文本显示的信息，改变颜色
+
+int9ret:pop es
+        pop bx
+        pop ax
+        iret
+code ens
+end start
+```
+
+
+### 直接定址表
+
+
+
+
+
+
 
 
 
