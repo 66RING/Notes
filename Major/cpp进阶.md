@@ -187,5 +187,44 @@ Person one = {"Bob", 23};  //编译错误
     - 除非show方法为：`void show() const;`，这就是声明const成员函数的方法
     - 因此只要类方法不修改调用对象，就应该将其声明为const
 
+## 类和对象
+
+### 使用类
+
+#### 重载运算符
+
+- 格式：`operator op(argument-list)`
+    - 如`operator +()、operator *()`
+    - 不能是一个虚构的符号
+
+假设有个一个Bob类，并为它定义了一个`operator +()`成员函数，以重载+运算符。A、B和C都是Bob的对象。便可以编写如下等式：
+- `C = A + B`
+- 编译器发现操作数是Bob对象，因此使用相应的运算符函数代替上述运算符
+    - `C = A.operator+(B)`
+    - 这说明了运算符的原理
+
+重载限制：
+- 重载的运算符必须至少有一个操作数是用户自定义的类型，防止用户为标准类型重载运算符
+- 使用运算符不能违反运算符原来的语句规则
+- 不能修改运算符的优先级
+- 不能创造新的运算符
+
+
+## Map
+
+### unordered\_map
+
+``` c
+unordered_map<Type, Type> Hash;
+//索引、添加、修改
+Hash[key];
+Hash[1] = 2; //添加
+Hash[2] = 3; //修改
+//计数
+Hash.count(key);
+//删除
+Hash.erase(key);
+```
+
 
 
