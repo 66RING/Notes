@@ -19,15 +19,33 @@ tags: emacs, linux, editor
 - C for control
 - s for super
 
+- Move
+| Key  | action   |
+|------|----------|
+| c-f  | forward  |
+| c-b  | backward |
+| c-p  | previous |
+| c-n  | next     |
+| c-a  | ahead    |
+| c-e  | end      |
+| <++> | <++>     |
+
+- Action
+| Key  | action                   |
+|------|--------------------------|
+| c-w  | cut                      |
+| m-w  | copy                     |
+| c-y  | yank(paste)              |
+| m-<  | begin of file            |
+| m->  | end of file              |
+| c-k  | del to end of line(kill) |
+| <++> | <++>                     |
+| <++> | <++>                     |
+| <++> | <++>                     |
+
+- Edit
 | Key              | action                                 |
 |------------------|----------------------------------------|
-| c-f              | forward                                |
-| c-b              | backward                               |
-| c-p              | previous                               |
-| c-n              | next                                   |
-| c-a              | ahead                                  |
-| c-e              | end                                    |
-| <++>             | <++>                                   |
 | C-g              | 中断所有操作                           |
 | C-x C-f          | 打开文件                               |
 | C-x C-s          | save                                   |
@@ -40,6 +58,15 @@ tags: emacs, linux, editor
 | <++>             | <++>                                   |
 | <++>             | <++>                                   |
 
+- Search
+| Key  | action       |
+|------|--------------|
+| c-s  | search below |
+| c-r  | search above |
+| <++> | <++>         |
+| <++> | <++>         |
+
+
 
 ## Elisp
 
@@ -50,7 +77,7 @@ tags: emacs, linux, editor
 
 | 指令                                 | 功能                                          |
 |--------------------------------------|-----------------------------------------------|
-| (setq var)                           | 定义变量                                      |
+| (setq var [value])                   | 定义变量（赋值）                              |
 | (message var)                        | 格式化输出，同C                               |
 | (defun func)                         | 定义函数                                      |
 | (interactive)                        | 声明函数是交互式的函数，<M-x>可以找到这个函数 |
