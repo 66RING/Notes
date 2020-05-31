@@ -6,6 +6,16 @@ tags: linux
 
 # Command line 
 
+
+## Some Ussful tips
+
+- `#` can delete a sub-string **from the very beginning** , like `var=apple; echo ${var#app}`, which will print `le`. 
+    - `#`, delete a few things as posible
+    - `##`, (greedy)delete a more things as posible
+    - `%`, use like `#`, but it delete from the end
+        - `echo ${var%el}`, print app
+
+
 ## shebang
 a shebang is the interpreter of this script. like this
 ``` sh
