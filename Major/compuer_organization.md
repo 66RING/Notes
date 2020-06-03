@@ -5,51 +5,21 @@ tags: cs
 mathjax: true
 ---
 
-## 第二章
+## 简介
 
-### 2.2 浮点数的表示
-
-- 单精度IEEE754格式
-    - 真值变二进制数
-    - 二进制数移位变成$(-1)^S \times{2^e} \times {1.M}$
-        - $E = e + 01111111$ 加上偏移量127得到E
-    - 根据公式得到S,E,M后按照格式保存
-
-### Representation of data
-
-#### Overflow of Complement
-If a complement calculations run out of scope, it overflow. So we need to be careful.
+- 从纯文本的程序到可执行的编码，以`hello.c`为例
+    - 预处理：把头文件的内容直接插入程序文本。结果得到另一个c程序，通常以.i结尾
+    - 编译：编译器将本文文件hello.i翻译成文本文件hello.s，它包含一个汇编语言程序
+    - 汇编：汇编器将hello.s翻译成机器指令(编码)，把这些指令打包成一种叫做可重定位目标程序的格式，并将结果保存在目标文件hello.o中(一个二进制文件)。
+    - 链接：hello程序可能会用到许多函数，如printf。printf函数存在与一个名为printf.o的单独编译的与编译好了的目标文件中，这个文件需要以某种形式合并到我们的hello.o程序中。链接器就负责处理这种合并
 
 
-## Part.3
-
-### Cpu Subsystem
-
-Major component
-- Temporal parts
-- Control unit
-    - logic controler
-    - program controler
-- Cache, to balance cpu(hight speed) and register(low speed)
-- Register(heap)
-    - general register
-    - temporary register
-    - IR(instruction register)
-    - PC(process counter)
-    - PSW(program status register)
-    - MAR(address register)
-    - MBR(binary register)
-    - SP(stack pointer)
-- Arithmetic unit
-
-Control mode
-- Synchronous
-- Asynchronous
-
-Instruction type
-- CISC(Complex Instruction Set Computing)
-- RISC(Reduced Instruction Set Computing)
-- CISC-\>RISC
-
+- 虚拟内存：虚拟内存是一个抽象概念，它为每个进程提供一个假象，即每个进程都在单独的使用主存。每个进程看到的内存都是一致的，称为虚拟地址空间
+- 虚拟地址空间的结构：
+    - 程序代码和数据
+    - 堆：代码和数据区在进程一开始运行时就被指定了大小，与此不同，当调用像malloc和free这样的函数时，堆可以在运行时动态伸缩
+    - 共享库：大约在地址空间的中间部分是一块用来存放像C标准这样的共享库的代码和数据的区域
+    - 栈
+    - 内核虚拟内存：地址空间的顶部区域是为内核保留的。不允许任何程序的读写
 
 
