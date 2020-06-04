@@ -365,6 +365,28 @@ C++中可以将类声明放在另一个类中。在另一个类中声明的类�
     - exception类位于exception头文件中，可以把它用作其他异常的基类
 
 
+### RTTI
+
+RTTI是运行阶段类型识别(Runtime Type Identification)的简称。
+
+- C++有3个支持的RTTI元素
+    - dynamic\_cast：如果可能的话，将使用一个指向基类的指针来生成一个指向派生类的指针;否则返回空指针
+    - typeid：返回一个指出对象的类型的值
+    - type\_info：存储了有关特定类型的信息
+- 只能将RTTI用于包含虚函数的类层次结构，原因在与只有对于这种层次结构，才应该将派生类对象的地址赋给基类指针
+    - 因为如果使用虚方法关键字virtual，程序将根据引用或指针指向的对象的类型选择方法，就算使用基类指针接收，也会选择引用或指针指向的对象方法
+
+
+- dynamic\_cast:
+    - `dynamic_cast<Type *>(ps)`，ps指向一个对象
+    - 如果ps的类型可以安全的转换为`Type*`，运算符返回对象的地址;否则返回空指针
+    - 因此可以安全地`Base* pb = dynamic_cast<Base *>(ps)`
+- typeid和type\_info
+    - `typeid`运算符接收类名或者一个对象，返回一个对type\_info的的引用
+    - type\_info是在头文件typeinfo中定义的一个类。type\_info重载了==和!=运算符，以便可以对类进行对比
+        - `typeid(Base) == typeid(*pg)`如果pg是空指针将发生异常，异常类型是exception类派生来的
+        - type\_info的实现随厂商而异，但包含一个`name()`成员，该函数返回一个随实现而异的字符串，通常是类的名称
+
 
 ## 使用
 
