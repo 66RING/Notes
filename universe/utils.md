@@ -28,6 +28,13 @@ loss &= H(p,q) \\
 $$
 
 
+$$f(x)=
+\begin{cases}
+0& \text{x=0}\\
+1& \text{x!=0}
+\end{cases}$$
+
+
 ``` mermaid
 gantt
     dateFormat DD-MM-YYY
