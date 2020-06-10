@@ -627,7 +627,60 @@ ostream类对cout对象处理的输出进行缓冲，所以输出不会立即发
 
 ### 用cout进行格式化
 
+ostream类是从ios类派生而来的，而ios类从ios\_base类派生而来。ios\_base类存储了描述格式状态的信息。通过使用ios\_base的成员函数，可以控制字段宽度和小数位数。由于ios\_base类是ostream的间接基类，因此可将其方法用于ostream对象，如cout。
 
+- 调整进制，**设置持续到将格式状态设置为其他选项为止**，控制符不是成员函数，但也可`cout << hex;`调用
+    - `hex()`，设置后程序以十六进制形式打印整数值
+    - `oct()`，设置后程序以八进制形式打印整数值
+- 调整字段宽度
+    - `width` **成员函数** 将长度不同的数字放到宽度相同的字段中
+        - `width()`方法只影响将显示的下一个项目，然后字段宽度将恢复为默认值
+            - `cout.width(12);cout<<12<<"#";`只有12被放宽到12个字符，并右对齐，后面的将不受影响
+        - `int width()`，返回宽度当前值
+        - `int width(int i)`，将字段宽度设置为i个，并返回以前的字段宽度值
+        - 如果试图在宽度为2的字段中显示一个7位值，C++将增宽字段，以容纳该数据
+- 填充字符，默认情况下cout使用空格填充字段中未被使用的部分
+    - `fill()` **成员函数** 来改变填充的字符，如`cout.fill('*')`。新的填充字符将一直有效直到设置新的填充字符
+- 设置浮点数的显示精度有效位数
+    - `precision()` **成员函数** 改变精度。如`cout.precision(2);`。精度设置一直有效直到被重新设置
+- 打印末尾的0和小数点
+    - iostream没有提供专门用于这项功能的函数，但ios\_base类提供了一个`serf()`函数，能够控制多种格式化特性。这个类还定义了多个常量，可以用作改函数的参数
+    - cout显示末尾小数点`cout.setf(ios_base::showpoint);`
+        - 这会显示小数后的0,如精度为6时2会显示为2.00000
+
+`setf()`除了可以控制小数点的显示还有几个格式选项。ios\_base类有一个受保护的数据成员，其中的各位(这里称之为标记)分别控制着格式化的各个方面。打开一个标记称为设置标记(或位)，并意味着相应的位被设置为1.
+
+hex、dec、oct等控制符实际上就是通过控制技术系统的3个标记位实现的。`setf()`函数提供了另一种调整标记位的途径。`setf()`函数有两个原型
+- `fmtflags setf(fmtflags);`，其中哦fmtflags是bitmask类型的别名(typedef)，用于储存格式标记。
+    - 这个版本的setf用来设置单个控制位的格式信息，参数fmtflags是一个值，指出要设置哪一位。返回值是类型为fmtflags的数字，指出标记以前的设置
+    - ios\_base类定义了代表位值的常量：
+        - `ios\_base::boolalpha`，输入和输出的bool值，可以为true或false
+        - `ios\_base::showbase`，对于输出，使用C++基数前缀(0, 0x等)
+        - `ios\_base::showpoint`，显示末尾的小数点
+        - `ios\_base::uppercase`，对于十六进制输出，使用大写字母，E表示法
+        - `ios\_base::showpos`，在正数前面加上+。十进制才有效，因为十六进制八进制都被视为无符号
+    - 修改将一直有效直到被覆盖为止
+- `fmtflags setf(fmtflags, fmtflags);`
+    - 函数的这种格式用于设置有多位控制的格式选项
+    - 第一个参数包含了所需设置的fmtflags值，第二个参数指出要清理第一个参数中的哪些位
+        - 如，第3位为1表示以10为基数，第4位为1表示以8为基数，第5位为1表示以16为基数，如果要输出原来以10为基数，要设置为以16为基数，则要将第5位设置为1,和将第3位设置为0：这叫做清除位
+    - ios\_base类为此定义了常量
+        - `setf(ios_base::dec, ios_base::basefield)`，使用10为基数
+        - `setf(ios_base::oct, ios_base::basefield)`，使用8为基数
+        - `setf(ios_base::hex, ios_base::basefield)`，使用16为基数
+        - `setf(ios_base::fixed, ios_base::floatfield)`，使用定点计数法
+        - `setf(ios_base::scientific, ios_base::floatfield)`，使用科学计数法
+        - `setf(ios_base::left, ios_base::adjustfield)`，使用左对齐
+        - `setf(ios_base::right, ios_base::adjustfield)`，使用右对齐
+        - `setf(ios_base::internal, ios_base::adjustfield)`，符号或基数前缀左对齐，值右对齐
+        - 第二个参数清理一批相关位，然后第一个参数将其中1位设置为1
+- 调用setf的效果可通过`unsetf()`消除
+    - 原型为：`void unsetf(fmtflags mask);`，mask中位设置为1,将使对应的位被复位
+
+使用setf不是进行格式化、对用户友好的方法，C++提供了过个控制符，如hex、dex等。如：使用下列方式打开左对齐和定点选项`cout << left << fixed;`
+
+
+### 使用cin进行输入
 
 
 
