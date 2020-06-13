@@ -762,6 +762,97 @@ cin或cout对象包含一个描述流状态的数据成员。流状态由3个ios
 
 ### 文件输入和输出
 
+#### 简单文件的I/O
+
+要让程序写入文件，必须：
+- 1. 创建一个ostream对象来管理输出流
+- 2. 将该对象与特定的文件关联起来
+- 3. 以使用cout的方式使用该对象，唯一的区别是输出将进入文件，而不是屏幕
+
+``` c
+// 1. 包含头文件fstream，该文件包含iostream文件
+#include<fstream>
+
+// 2.声明一个ofstream对象
+ofstream fout;
+
+// 3. 将这个对象与特定的文件关联起来
+fout.open("hello.txt");
+// 或使用构造函数
+ofstream fout("hello.txt");
+
+// 4. 以使用cout的方式使用fout
+fout << "hello world";
+```
+
+由于ostream是ofstream的基类，因此可以使用所有的ostream方法，包括各种插入运算符定义、格式化方法和控制符。每创建一个对象，程序将为这个对象创建一个缓冲区。
+
+用上面这种方式打开文件进行输出时，如果没有这样的文件，将创建一个新的文件;如果有这样的文件，则打开并清空文件，输出将进入这个空文件中。
+
+读取文件与写入文件类似：
+- 1. 创建一个ifstream对象来管理输入流
+- 2. 将该对象与特定的文件关联起来
+- 3. 以使用cin的方式使用该对象
+
+当输入输出流对象过期时，到文件的连接将自动关闭。也可以使用`close()`方法来显式地关闭文件的连接。
+
+关闭这样的连接不会删除流，而只是断开流到文件的连接。流管理装置仍被保留。如：fin对象与它管理的输入缓冲区仍然存在。因此可以将流重新连接到同一个或另一个文件。
+
+
+#### 流状态检查
+
+C++文件流从ios\_base类继承了一个流状态成员。该成员存储了指出流状态的信息。当然还继承了报告流状态的方法，如`fin.is_open()`
+
+由于ifstream和istream对象一样，被放在需要bool类型的地方时，将被转换为bool值。如`if(fin)`
+
+
+#### 命令行处理
+
+C++有一种让在命令环境中运行的程序能够访问命令行参数的机制，方法是使用main函数的参数：`int main(int argc, char* argv[])`，其中argc为参数的个数，包括命令本身，argv是参数数组argv[0]指向命令行的第一个字符串(命令本身)，以此类推。
+
+
+#### 文件模式
+
+文件模式描述的是文件将被如何使用：读、写、追加等。将流与文件关联时，都可以提供指定文件模式作为第二个参数，如：
+
+``` c
+ifstream fin1("hello", mod1);
+ifstream fin2;
+fin2.open("hello", mod2);
+```
+
+ios\_base类定义了一个openmode类型，用于表示模式。可以选择iso\_base类中定义的多个常量来指定模式。
+
+| 常量                | 含义                           |
+|---------------------|--------------------------------|
+| `ios\_base::in`     | 打开文件，以便读取             |
+| `ios\_base::cout`   | 打开文件，以便写入             |
+| `ios\_base::ate`    | 打开文件，并移动到文件尾       |
+| `ios\_base::app`    | 追加到文件尾                   |
+| `ios\_base::trunc`  | 如果文件存在，则截短文件(清空) |
+| `ios\_base::binary` | 二进制文件                     |
+
+ifstream的open方法和构造函数默认用`ios_base::in`打开文件;ofstream默认用`ios_base::out|ios_base::trunc`打开文件。使用运算符OR将两个位值合并成一个可用于设置两个位的值。
+
+`ios_base::trunc`标记意味着打开已有的文件，以接受程序的输入时将被截短，即其以前的内容将被删除。
+
+C++语句`ifstream fin(filename, c++mode);`就像使用了的C的`fopen()`函数一样：`fopen(filename, cmode)`。其中c++mode是一个openmode值，如ios\_base::in;而cmode是相对应的C模式字样，如"r"。
+
+| C++模式                                             | C模式    | 含义                                     |
+|-----------------------------------------------------|----------|------------------------------------------|
+| `ios_base::in`                                      | "r"      | 打开以读取                               |
+| `ios_base::out`                                     | "w"      | 等价于`ios_base::out \| ios_base::trunc` |
+| `ios_base::out \| ios_base::trunc`                  | "w"      |                                          |
+| `ios_base::out \| ios_base::app`                    | "a"      | 打开写入，追加                           |
+| `ios_base::out \| ios_base::out`                    | "r+"     | 打开以读写，在文件允许的位置写入         |
+| `ios_base::out \| ios_base::out \| ios_base::trunc` | "w+"     | 打开以读写，截短                         |
+| `c++mode \| ios_base::binary`                       | "cmodeb" | 以C\+\+mode和二进制模式打开              |
+| `c++mode \| ios_base::ate`                          | "cmode"  |                                          |
+
+`ios_base::ate`和`ios_base::app`区别在于：app模式只是将数据添加到文件尾，而ate模式将指针放在文件尾巴
+
+
+
 
 ## 使用
 
