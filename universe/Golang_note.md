@@ -335,3 +335,24 @@ goroutine是golang中在语言级别实现的轻量级线程，仅仅利用 go �
 向channel传入数据， `CHAN <- DATA` , CHAN 指的是目的channel即收集数据的一方， DATA 则是要传的数据。
 
 从channel读取数据， `DATA := <-CHAN` ，和向channel传入数据相反，在数据输送箭头的右侧的是channel，形象地展现了数据从‘隧道’流出到变量里。
+
+
+## 杂项
+
+### 参数绑定
+
+以gin框架为例
+
+``` go
+type Person struct{
+    Name string  `json:"name" form:"name" binding:required`
+    Age int    `json:"age" form:"age"`
+    Address string  `json:"address" form:"addr"`
+}
+```
+
+` `` `之间的标记表明了了映射关系和数据来源，这样使用gin的`bind`函数就可生成Person实例。`json`标记表明了映射成json时使用的名称如name，而不是Name，或使用json中的对应字段完成映射。`form`标记表明了从表单中获取映射。`required`标记表明了必须要有这个参数，没有会报错。当然binding等标记还有其他用法，和自定义，详见官方文档。
+
+gin的这个binding功能使用了第三方的验证器，validator。
+
+
