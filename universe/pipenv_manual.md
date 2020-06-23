@@ -1,10 +1,46 @@
 ---
-title: pipenv usage
+title: pip venv tools usage
 date: 2019-1-3
 tags: python, pipenv, tools
 ---
 
-# Pipenv manual
+# Virtualenvwrapper
+
+## Install
+
+``` 
+pip install virtualenvwrapper
+```
+
+Some environment variable
+
+``` bash
+export WORKON_HOME=~/Envs  # specify home of venv
+
+export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3  # specify defaul python version 
+
+source /usr/local/bin/virtualenvwrapper.sh  # active virtualenvwrapper when open terminal
+```
+
+
+## Usage
+
+- New venv
+    * `mkvirtualenv your_venv_name --python=python_version`
+- Active/Switch between venvs
+    * `workon your_venv_name`
+- Quit
+    * `deactivate`
+- Delete
+    * `rmvirtualenv your_venv_name`
+- List All
+    * `lsvirtualenv `
+- Hook
+    * This hook is sourced after this virtualenv is activated
+    * Specify in `your_venv_home/your_venv_name/bin/postactive`
+
+
+# Pipenv Usage
 
 ## Install 
 
