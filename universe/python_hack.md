@@ -22,9 +22,13 @@ a.show()
 不知道scapy的类有那些方法时，可以使用`type(arg)`来查看类，然后网上查找。
 
 
-## ARP协议
+## 扫描探测
 
-IP地址和MAC地址的转换，询问目的机的MAC地址
+### ARP扫描/PING扫描
+
+ARP协议完成IP地址和MAC地址的转换，询问目的机的MAC地址
+
+通过ping扫描或arp扫描可以知道那些地址上有活动主机
 
 ``` python
 pkt = IP(dst='47.96.226.37', ttl=1, id=168)/ICMP(id=188, seq=1)
@@ -34,7 +38,9 @@ result[0].res[x][y].getlayer(ARP).fields['key']  # res产生清单，很多元�
 ```
 
 
+### TCP扫描
 
+利用tcp协议，扫描tcp的开放端口。发送SYN包，回复SYN ACK就说明端口开放 
 
 
 
