@@ -179,6 +179,16 @@ mathjax: true
 
 指令可以对这16个寄存器的低位字节中存放的不同大小的数据进行操作。
 
+| 指令      | 功能                      |
+|-----------|---------------------------|
+| \*AX      | 累加器Accumulator         |
+| \*BX      | 基地址寄存器Base Register |
+| \*CX      | 计数寄存器Count Register  |
+| \*DX      | 数据寄存器Data Register   |
+| \*BP      | 堆栈基指针Base Pointer    |
+| \*SI/\*DI | 变址寄存器Index Register  |
+| \*SP      | 堆栈顶指针Stack Pointer   |
+| \*S       | 段寄存器Segement Register |
 
 ## MIPS体系结构
 
