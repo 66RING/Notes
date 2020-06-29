@@ -1,12 +1,14 @@
 ---
 title: HashMap原理
-date: 2020-6-27
+date: 2019-6-27
 tags: java, hashmap
 ---
 
 ## 基本
 
 hashmap有数组+链表组成
+
+基于红黑树的hashmap就是当链表达到一定长度时把链表变成红黑树
 
 向map中put元素，如果key重复，会覆盖并把老的元素返回出来
 
@@ -79,7 +81,7 @@ return前的一系列移位操作把有效位全部变成了1
 - 解决哈希冲突
     * 计算hashcode的时候，有可能会得到同样的值，这时候发生哈希冲突
     * 链表法
-        + 插入在链表头部
+        + 插入在链表头部(1.7)
     * 再散列法
 
 ### get(key)方法
@@ -89,5 +91,14 @@ return前的一系列移位操作把有效位全部变成了1
     * 如果是链表法解决的哈希冲突则
         + 遍历寻找key
 
+
+## ConcurrentHashMap
+
+ConcurrentHashMap解决多线程情况下出现的问题
+
+ConcurrentHashMap使用一个并发级别来指定多少个元素共享一个锁，ConcurrentHashMap称这个所为segment。
+
+- 初始化
+    * 根据并发级别来确定segment的容量，一个segment对象就相当于一个小的hashmap
 
 
