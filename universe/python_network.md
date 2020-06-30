@@ -76,7 +76,9 @@ tags: python, network
 - 关闭listen后的套接字意味着被动套接字关闭了，新的客户端不能连接，但之前已经连接成功的客户端正常通信
 
 
-## 多任务:Thread的基本使用
+## 多任务
+
+### Thread的基本使用
 
 对于单核cpu，可以在程序间快速切换，以达到多任务的效果，如：qq执行0.00001s，然后切换到微信。如此快速切换以致于人无法察觉，来实现多任务。但本质操作系统调度，一次执行一个任务，这样的方式称为并发。
 
@@ -126,6 +128,57 @@ t2.start()
             + 添加超时时间
 
 
+### 进程方式
+
+需要`multiprocessing`模块
+
+``` python
+import multiprocessing
+p = multiprocessing.Process(target=func_pointer, args=(args,))
+p.start()
+```
+
+- 由于是进程，所有可以在shell中查看`ps -aux`，也可以进行任何进程操作
+    * 但是耗费的资源也比线程大
+- 进程间是互相独立的，进程间如何通信呢？
+    * 队列，直接在内存中操作
+        + **multiprocessing.Queue()**
+        ``` python
+        q = multiprocessing.Queue()
+        q.put(arg)
+        q.get()
+        q.get_nowait()
+        q.full()
+        q.empty()
+        ```
+        + 当队列为空时get方法会阻塞，get_nowait方法会引发异常来告诉你队列为空
+        + 如果队列满了put方法会阻塞
+    * 使用队列来减少进程的耦合(解耦)
+        + 进程A往queue填数据，只需关注写
+        + 进程B从queue取数据，只需关注读
+
+
+#### 进程池
+
+一个可以容纳很多进程的特殊容器。它 **重复利用进程池里的进程** ，因为进程并非越多越好，会增加操作系统调度的压力。进程池减轻了进程创建和销毁的负担。
+
+- 进程池创建
+    * `from multiprocessing import Pool`
+    * `po = Pool(n)`，设置最对创建的个数，这里是n
+        + 可以往里添加无数个，但最对同时运行n个进程，其他存起来
+    * 添加到进程池：`po.apply_async(func_pointer, (args,))`
+    * 进程池关闭`po.close()`
+    * `po.join()`等到进程池中所有子进程执行完成， **join必须放在close之后**
+        + 因为使用进程池不会阻塞主进程，所以可能子进程还没结束，主进程先结束了，导致所以子进程结束
+- 进程池里的任务产生的异常不会产生错误信息
+- 显示进度
+    * 通过队列在进程间通信，子进程完成后写入队列，主进程从队列读，统计
+        +  **进程的队列要使用 `multiprocessing.Manager().Queue()`**
+
+
+P46
+
+### 协程方式
 
 
 
