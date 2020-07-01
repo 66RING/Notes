@@ -176,10 +176,50 @@ p.start()
         +  **进程的队列要使用 `multiprocessing.Manager().Queue()`**
 
 
-P46
-
 ### 协程方式
 
+#### 迭代器
+
+- 可迭代
+    * `isinstance(ar, Iterable)`
+    * 必须实现`__iter__`方法， **返回一个迭代器** ，`return Iterator(self)`，如果这个类本身是个迭代器(实现了`__next__`)则可以返回self
+- 迭代器
+    * `isinstance(ar, Iterator)`
+    * 必须实现`__iter__`方法和 **`__next__`方法**
+    * 使用`raise StopIteration`来表示迭代结束
+    * `iter(Iterable)`方法气质其实调用了类的`__iter__()`，返回类的迭代器，for in就是调用了`__iter__()`获得迭代器的
+    * `next(Iterator)`方法调用迭代器的`__next__()`方法
+    * 转换成list转化成tuple也是使用了迭代器
+
+迭代器储存生成这个数据的方式，而不是生成这个数据的结果。占用极小的内存空间
+
+
+#### 生成器
+
+生成器是一种特殊的迭代器
+
+- 列表式创建生成器：`nums = (x for x in range(10))`
+    * 不同于`nums = [x for x in range(10)]`直接返回结果，生成器返回生成数据的方式
+- 函数变成生成器
+    * 使用`yield`返回生成器对象
+        + yield相当于返回值后把函数暂停，下次使用将从上一次的位置继续向下走
+        + 获取生成器return的结果，一般捕获异常，`except StopIteration as ret`，然后使用`ret.value`取得返回值
+- 通过`send`启动生成器：`gen.send(args)`
+    * 同一会执行一次`__next__`，但区别于`next`，`send`能往里传参数
+    * `ret = yield x`，由于`yield x`返回给外面，没有返回值，所以`ret=None`。send传递的参数args使得`ret=args`
+        + 一般用于更新状态
+    * 第一次迭代使用send会出错
+
+
+#### 使用yield实现多任务
+
+使用yield把普通函数转化成生成器，这样对于一个含有无限循环的函数，每轮yield后就会暂停，让下一行代码执行。这就实现了用函数实现并行。
+
+但不同于操作系统级的并行(上下文切换开销相当大)，这样的多任务就像使用一个函数一样简单。
+
+开销：$进程>线程>协程$
+
+p54
 
 
 
