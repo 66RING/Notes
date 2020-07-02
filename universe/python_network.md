@@ -219,7 +219,23 @@ p.start()
 
 开销：$进程>线程>协程$
 
-p54
+但这样存在一个问题，如果有100个这样的函数要写100个调用？这时需要使用`gevent`
+
+geven是一个基于协程的并发库
+
+- `greenlet`：对yield进行了封装
+    * 创建greenlet对象：`gr1 = greenlet(func_pointer)`，对函数进行封装，传入普通函数就行，不需要yield返回了。
+    * 切换：`gr1.switch()`切换到gr1(封装的函数)
+        + 如果在函数1中`switch`到函数2，函数2switch到函数1，就和yield效果一样
+- `gevent`：对greenlet进行封装
+    * 创建：`g1 = gevent.spawn(func, arg1, arg2, ...)`
+    * 特点：遇到`gevent.sleep()`会切换，greenlet遇到延时会等待
+        + 因此在结尾写上`g1.join()`(等待g1执行完成，实现了geven.sleep)，使它遇到了延时，它就自动切换执行
+        + `geven.joinall([list])`，把所有geven对象放入列表就会等待列表内所有
+    * `monkey.patch_all()`，是否所有的延时都要手动换成`geven.sleep`？
+        + 使用`monkey.patch_all()`它会自动将延时换成`geven.sleep`，包括网络延时
+
+P65
 
 
 
