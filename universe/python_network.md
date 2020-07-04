@@ -282,8 +282,75 @@ User-agent: Mozilla/5.0      # 发送请求的浏览器类型
     * 因为子进程会复制父进程的资源，所有子进程里close了父进程里还有close
 - 多线程web服务器
     * 如果是使用多线程Thread，不会复制父进程资源，子线程里close了父进程就不需要close了
+- 不论是多进程还是多线程，都要创建一个子进程/线程，如果有很多人同时请求服务(如双11)开销相当大
+- 使用协程的web服务器
+    * 1. 使用gevent
+    * 2. 非阻塞方式使用socket实现单进程单线程监听多个套接字
+    ``` python
+    s.setblocking(False)  # 使用非阻塞方式
+    client_socket_list = list()
+    while True:
+        try:
+           new_socket, new_addr = s.accept() 
+        except Exception as ret:
+            print(ret)
+        else:
+            new_socket.setblocking(False)  # 新socket使用非阻塞方式
+            client_socket_list.append(new_socket)
+     
+        for client_socket in client_socket_list:
+            try:
+                recv_data = client_socket.recv(1024)
+            except Exception as ret:
+                print(ret)
+            else:
+                if recv_data:
+                else:
+                    # 对方关闭了
+                    client_socket.close()
+                    client_socket_list.remove(client_socket)
+    ```
+        + 但这么做列表越大效率越低
 
-p74
+
+### 长连接
+
+- 长连接
+    * 用同一个连接获取数据
+    * http1.1
+- 短连接
+    * 获取一个数据建立一个连接
+    * http1.0
+
+我们之前每一轮都关闭连接，虽然说是HTTP1.1，实际我们一直用短连接的方式传输
+
+短连接模式，浏览器通过接受close知道包的内容范围。但如果使用长连接，连接不close，浏览器如何知道包的范围？
+
+使用长连接，需要在header中标注`Content-Length`，告诉浏览器包的长度，这样浏览器在获取全部内容后主动断开连接，服务器再断开。
+
+
+### epoll
+
+在单进程单线程服务多用户的实例中，使用列表把所有连接存储起来。但这样随着列表变大，效率将变低。因为需要拷贝fc(文件描述符)到内核的内存空间，这样轮循+拷贝的方式效率相当低。
+
+epoll有个特殊的内存空间，操作系统和应用程序共用。在这个内存中的所有要监听的套接字检测时不采用轮循而是方式事件通知的方式。
+
+``` python
+import select  # 引入模块
+
+# 创建epoll对象
+epl = select.epoll()  # 创建这样的共享内存
+
+# 将监听套接字对应的fd注册到epoll
+epl.register(your_socket.fileno(), # fileno()返回fd
+            select.EPOLLIN)  # EPOLLIN表示监听是否有输入
+
+epl.poll()  # 默认阻塞，知道OS检测到数据到来，通过事件通知的方式告诉程序，才会解阻塞
+# 返回列表，一次通知多个[(fd, event), (套接字对应的文件描述符, 对应的事件)]
+```
+
+p84
+    
 
 
 
