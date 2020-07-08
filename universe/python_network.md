@@ -442,7 +442,145 @@ reload(somemodule)  # 使用这种方式在不退出程序的情况下重新导�
 ### 面向对象
 
 #### 多继承以及MRO顺序
-p102
+
+- 调用父类方法的方式
+    * 1. 通过父类的名字调用
+        + 缺点是会根据类递归的调用，无形中造成资源浪费。如
+        ``` python
+        Class A:
+            __init__(self):
+                new_socket
+        Class B(A):
+            __init__(self):
+                A.__init__(self)
+        Class C(A):
+            __init__(self):
+                A.__init__(self)
+        Class D(B, C):
+            __init__(self):
+                B.__init__(self)
+                C.__init__(self) 
+        # B和C的init分别调用A的init导致多创建一个socket，造成浪费
+        ```
+    * 2. 通过`super().xxx`调用
+        + 不是更具类递归的调用，而是根据`ClassName.__mro__`中的顺序调用，保证了每个类只调用一次
+        + 如果多继承了多个同名方法，则根据`ClassName.__mro__`中的顺序决定super().xxx调用的是哪个(先后顺序)
+        ``` python
+        Class A:
+            __init__(self):
+                new_socket
+        Class B(A):
+            __init__(self):
+                supter.__init__(self)
+        Class C(A):
+            __init__(self):
+                super.__init__(self)
+        Class D(B, C):
+            __init__(self):
+                super().__init__(self)
+        # 其中print(D.__mro__)=(D, B, C, A, object)
+        # 那么如果从D开始，如果父类都有调用super，则会根据mro中的顺序调用，即D、B、C、A
+        ```
+        + `super(ClassName, self)`，会从ClassName往后开始调用，如`super(B, self)`则顺序是B、C、A。默认从当前类开始
+
+
+#### 可变参数
+
+- `func(a, *args, **kwargs)`
+    * 一个`*`号以元祖的形式传递参数，变量名是args，`*`号只是告诉编译器
+    * 两个`*`号以字典的形式传递参数，变量名是kwargs
+        + **接收关键字参数** ：如`func(1, 2, 3, 4, age='12', name='ring')`
+            + args=(2, 3, 4)
+            + kwargs={'age': '12', 'name': 'ring'}
+        + 需要注意的是如果传的是一个字典，它并不是关键字参数，而是一个字典(一个整体)
+
+
+#### 静态方法和属性方法
+
+- 类对象和实例对象
+    * 创建一个对象会从模板类中调用`__new__`分配内存空间，`__init__`初始化内存空间，`__class__`指向创建这个实例对象的类对象
+    * 对于公有的方法、属性存储在类对象中
+        + 如方法`__inti__(self)`就不必每个实例都有一份，放在类对象中即可
+    * 对于特有的方法、属性存储在类对象中
+        + 如初始化name=ring，那么对于这个实例的name是ring，别的实例有所区别
+- 类方法、实例方法、静态方法
+    * 实例方法：一般的方法
+        + 很难修改类属性，若`obj.class_state="xx"`原来`class_state`是一个类属性。这个方法将导致实例里面新增一个名为`class_state`的属性
+            + 要修改也是可以的`obj.__class__.class_state="xx"`就可以修改
+        ``` python
+        class A:
+            # 实例方法
+            def func(self):  # 默认传实例对象的引用self
+                pass
+        ```  
+    * 类方式：用`@classmethod`装饰
+        ``` python
+        class A:
+            @classmethod  # 类方法
+            def func(cls):  # python解释器默认把类对象引用cls传入
+                pass
+        ```
+        + 可以修改类属性
+    * 静态方法：用`@staticmethod`装饰
+        + 相当于在类外定义一个函数， **不让python解释权默认传入类对象或实例对象** 。写在类中是为例在不同类中区分开来
+
+
+#### property属性
+
+- 用装饰器创建
+    * 让代码更简洁，调用一个函数像取值、赋值一样
+    * 在普通方法前用`@property`修饰，如。把调用方法改成"调用属性"，但实际还是调用方法，只是可读性更高
+        ``` python
+        class A:
+     
+            @property
+            def func(self):
+                return 0  # 必须返回一个值，且参数只有self
+
+        a = A()
+        a.func  # 可以通过a.func调用，而不用a.func()
+        ```
+    * 新式类(继承object，python3默认继承)中有3中property装饰器
+        ``` python
+        class A:
+     
+            @property
+            def func(self):
+                return 0   # 获取值
+     
+            @property.setter
+            def func(self, value):  # 要同名，且传入新值value
+                print("some")  # 设置值
+            # 如可以调用xxx.func = 100
+  
+            @property.deleter
+            def func(self):
+                print("some")  # 删除值
+            # 如可以调用del xxx.func
+        ```
+- 通过类属性创建
+    * `property(arg1, arg2, arg3, arg4)`
+        + 参数1是方法名，调用`对象.属性`时自动触发执行
+        + (可选)参数2是方法名，调用`对象.属性=xx`时自动触发执行
+        + (可选)参数3是方法名，调用`del 对象.属性`时自动触发执行
+        + (可选)参数4是字符串，调用`对象.属性.__doc__`时此参数是该属性的描述信息
+    ``` python
+    class A:
+ 
+        def func(self):
+            return 0 
+        
+        FUNC = property(func)
+
+    a = A()
+    a.FUNC 
+    ```
+
+p111
+
+
+
+
 
 
 
