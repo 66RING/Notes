@@ -576,7 +576,92 @@ reload(somemodule)  # 使用这种方式在不退出程序的情况下重新导�
     a.FUNC 
     ```
 
-p111
+#### 修改私有属性
+
+私有属性(在以`__`开头的变量)之所以无法访问是因为python悄悄改了变量名。如把`__func`改成了`_className__func`。所以使用这个改后的名就可以访问私有属性。这机制叫做名字重整。
+
+
+#### 魔法属性/方法
+
+- `__doc__`和`help()`
+    * 使用`var.__doc__`或`help(var)`可以查看写在开头的描述
+- `__module__`和`__class__`
+    * `__class__`表示当前操作的对象的类是什么
+    * `__module__`表示当前操作的对象是在哪个模块
+- `__init__`
+    * **初始化** 方法，创建类对象时自动触发执行
+- `__del__`
+    * 对象释放时，自动触发执行
+- `__call__`
+    * 对象后面加括号，触发执行
+    ``` python
+    obj = classA()
+    obj()   # obj.__call__()
+    ```
+- `__dict__`
+    * 类或对象的所有属性
+- `__str__`
+    * 如果一个类中定义了`__str__`方法，那么打印对象时，默认输出改方法的返回值
+- `__getitem__`、`__setitem__`、`__delitem`
+    * 如果类中实现了这3个方法，则可以当字典用
+    ``` python
+    class A:
+        def __getitem__(self, key):
+            print(key)
+         
+        def __setitem__(self, key):
+            print(key)
+         
+        def __delitem__(self, key):
+            print(key)
+    
+    odj = A()
+    res = obj['k1']   # __getitem__
+    obj['k2'] = 'abc' # __setitem__
+    del obj['k3']     # __delitem__
+    ```
+- `__getslice__`、`__setslice__`、`__delslice__`
+    * 如果类中实现了这3个方法，则可以用于分片操作，如列表
+    ``` python
+    class A:
+        def __setslice__(self, i, j):
+            pass
+         
+        def __setitem__(self, i, j):
+            pass
+         
+        def __delslice__(self, i, j):
+            pass
+    
+    odj = A()
+    obj[-1:1]            # __getslice__
+    obj[0:1] = [1, 2, 3] # __setslice__
+    del obj[0:2]         # __delslice__
+    ```
+
+
+#### with与上下文管理器
+
+使用with打开文件能够保证最终文件都会关闭。如果采用传统的`f = open()`则需要try-catch辅助。with是一种更简洁的写法。
+
+
+- 上下文管理器
+    * 任何实现了`__enter__()`和`__exit__()`方法的对象都可称之为上下文管理器。
+    * `__enter__()`返回资源对象
+    * `__exit__()`处理一些清理工作
+
+当一个对象实现了上下文管理器，就可以使用with语句了
+
+``` python
+with obj(args) as f:  
+    # obj()创建实例对象
+    # with自动调用了obj(上下文管理器)的__enter__方法，enter的返回值赋给f
+    # 如果产生了异常，将自动调用__exit__方法
+```
+
+
+p116
+
 
 
 
