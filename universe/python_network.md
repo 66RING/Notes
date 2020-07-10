@@ -660,7 +660,49 @@ with obj(args) as f:
 ```
 
 
-p116
+### 闭包
+
+多层函数嵌套、往往内部函数用到外部函数的变量，一个特殊的对象
+
+``` python
+def func(a, b):
+    def solve(x):
+        print(a*x + b)
+    return solve
+
+ans = func(1, 2)
+# 创造空间，包含参数a, b和solve函数。a, b相当于solve的全局变量
+# 类似类，但比类开销小
+ans(0)
+ans(1)
+ans(2)
+```
+
+
+#### 修改数据
+
+``` python
+def func():
+    x = 100
+    def solve():
+        nonlocal x  # 告诉解释器x不是solve中的，否则由于x=10的存在。会导致解释器认为x这个局部变量在声明前使用
+        print(x)
+        x = 10  
+        print(x)
+    return solve
+```
+
+
+### 装饰器
+
+
+
+
+## 数据库
+
+p116~p150
+
+
 
 
 
