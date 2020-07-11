@@ -671,7 +671,7 @@ def func(a, b):
     return solve
 
 ans = func(1, 2)
-# 创造空间，包含参数a, b和solve函数。a, b相当于solve的全局变量
+# 创造单独空间，包含参数a, b和solve函数。a, b相当于solve的全局变量
 # 类似类，但比类开销小
 ans(0)
 ans(1)
@@ -695,7 +695,124 @@ def func():
 
 ### 装饰器
 
+有时候我们需要进行一下重复的过程, 比如计算函数用时. 如果我们直接把逻辑写在函数内部, 逻辑混乱且可读性不高。这时我们就可以使用装饰器
 
+
+#### 装饰器的基本实现过程
+
+``` python
+def set_func(func):
+    def call_func():
+        func()
+    return call_func
+
+def test():
+    pass
+
+test = set_func(test)
+test()
+
+### 等价于
+
+@set_func  # 等价于test=set_func(test)
+def test():
+    pass
+```
+
+
+#### 有参数的装饰器实现过程
+
+``` python
+def set_func(func):
+    def call_func(a):  # 参数100会传到这
+        func(a)
+    return call_func
+
+def test(num):
+    pass
+
+test = set_func(test)
+test(100)
+```
+
+
+#### 不定参数的装饰器实现过程
+
+``` python
+def set_func(func):
+    def call_func(*args, **kwargs):  # 参数会传到这，这里的星号是告诉解释器
+
+        func(*args, **kwargs)  # 这里的星号是拆包!!!，否则就是一个列表、一个字典
+    return call_func
+
+def test(age, num, *args, &&kwargs):
+    pass
+
+test = set_func(test)
+test(100)
+```
+
+
+#### 带有返回值的装饰器实现
+
+``` python
+def set_func(func):
+    def call_func(*args, **kwargs): 
+
+        return func(*args, **kwargs)  # 比包里调用，返回出去
+    return call_func
+
+def test(age, num, *args, &&kwargs):
+    pass
+
+test = set_func(test)
+test(100)
+```
+
+
+#### 给装饰器的参数
+
+``` python
+def option(args):
+    def set_func(func):
+        def call_func(*args, **kwargs): 
+            return func(*args, **kwargs)
+        return call_func
+    return set_func
+
+@option(args)
+def test(age, num, *args, &&kwargs):
+    pass
+```
+
+装饰器需要一个函数指针，即@后跟函数名，由于option(args)不符合，所以先向下执行option(args)，返回的函数指针。@心满意足，用来装饰test函数
+
+
+#### 多个装饰器对同一个函数进行装饰
+
+先装下面的后装上面的。理解上面的实现过程。
+
+执行效果是先执行上面的再执行下面的。所以装饰的顺序和想要的逻辑执行顺序相同即可。
+
+
+#### 使用类当作装饰器
+
+原理同闭包。只是变量名指向的不是函数，而是实例对象。
+
+然后使用`变量名()`调用的是`实例对象.__call__()`
+
+``` python
+class Test(object):
+    def __init__(self, func):
+        self.func = func
+
+    def __call__(self):
+        return self.func()
+
+@Test
+def hello():
+    pass
+```
 
 
 ## 数据库
