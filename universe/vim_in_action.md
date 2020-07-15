@@ -83,6 +83,18 @@ tags: vim
 以此类推
 
 
+## Ctrl+x补全
+
+| 操作        | 描述                          |
+|-------------|-------------------------------|
+| c-x,c-r     | insert from a register        |
+| c-x,c-a     | last inserted text            |
+| c-x,c-]     | tag completion                |
+| c-x,c-f     | filename completion           |
+| c-x,c-p/c-n | context-aware word completion |
+| c-x,l       | context-aware line completion |
+
+
 ## 寄存器
 | 操作            | 描述                                   |
 |-----------------|----------------------------------------|
@@ -96,7 +108,6 @@ tags: vim
 等等
 
 
-
 ## Shell命令
 | 操作                 | 描述                                  |
 |----------------------|---------------------------------------|
@@ -105,6 +116,7 @@ tags: vim
 | :!{cmd}              | 在shell中执行{cmd}                    |
 | :read !{cmd}         | 把{cmd}的标准输出插入到光标下方       |
 | :[range]write !{cmd} | 以[range]作为{cmd}的标准输入          |
+
 
 ## 分屏操作
 | 操作      | 描述                   |
