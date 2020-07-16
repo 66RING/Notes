@@ -22,6 +22,7 @@ tags: vim
 | =i{               | =格式化?(缩进), inside {}                        |
 | :earlier/later 1m | 回到1min前/后                                    |
 | c-z               | 挂起vim,命令行下:$ fg可以恢复,jobs查看挂起的进程 |
+| c-a/c-x           | 数字加/减1                                       |
 
 
 ## 查找
