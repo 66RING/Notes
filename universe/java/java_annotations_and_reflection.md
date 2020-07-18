@@ -1,5 +1,5 @@
 ---
-title: [java]注解与反射
+title: java注解与反射
 date: 2020-7-17
 tags: java, annotations, reflection
 ---
@@ -66,6 +66,156 @@ public void Func(){ }
 
 `Class c1 = Class.forName("your.package.className");`
 
-p7
+
+#### 获取Class类是实例
+
+- 1. 已知具体类，通过类的class属性获取，改方法最为安全可靠，程序性能高
+    * `Class clazz = Person.class;`
+- 2. 已知某个类是实例，调用改实例的`getClass()`方法获取Class对象
+    * `Class clazz = person.getClass();`
+- 3. 已知一个类的全类名，且该类在类路径下，可通过Class类静态方法`forName()`获取，可能抛出ClassNotFoundException
+    * `Class clazz = Class.forName("demo01.Student");`
+- 4. 内置基本数据类型可直接用类名.Type
+- 5. 可以利用ClassLoader，如获得父类的类型`son.getSuperclass();`
+
+
+#### 获取类运行时结构
+
+获取Class类实例后可以通过以下方法获取类运行时结构
+
+- 获得属性
+    * `v = obj.getFields();`
+        + 可指定要获取的属性作为参数
+        + 获取公有的属性
+    * `v = obj.getDeclareFields();`
+        + 可指定要获取的属性作为参数
+        + 获取全部属性
+    * 使用：set，`v.set(obj, value);`
+- 获得方法
+    * `m = obj.getMethods();`
+        + 可指定要获取的方法(方法名和参数)作为参数
+        + 获取本类和父类的公有的方法
+    * `m = obj.getDeclareMethods();`
+        + 可指定要获取的方法(方法名和参数)作为参数
+        + 获取本类的全部方法
+    * 使用：Invoke(激活)，`m.invoke(obj, args);`
+- 获得构造器
+    * `obj = clazz.getConstructors();`
+        + 可指定要获取的构造器(需要的参数)作为参数
+        + 获取公有的构造器
+    * `obj = clazz.getDeclareConstructors();`
+        + 可指定要获取的构造器(需要的参数)作为参数
+        + 获取本类的全部构造器
+    * 使用：newInstance，`Type a = (Type)obj.newInstance(args);`
+- 获得泛型
+
+
+#### 内存分析
+
+- java内存
+    * 堆
+        + 存放new的对象和数组
+        + 可以被所有的线程共享，不会存放别的对象引用
+    * 栈
+        + 存放基本变量
+        + 引用对象的变量
+    * 方法区
+        + 可以被所有线程共享
+        + 包含了所有的class和stack变量
+- 类加载的过程
+    * 1. 类加载(Load)
+        + 将类的 **class文件** 读入内存，并为之创建一个java.lang.Class对象，此过程由类加载器完成
+        + 加载：将class文件字节码内容加载到内存，并将这些静态数据转换成方法区的运行时数据结构，然后生成一个代表这个类的java.lang.Class对象
+    * 2. 类的链接(Link)
+        + 将类的二进制数据合并到JRE中
+        + 连接：将java类的二进制代码合并到JVM的运行状态之中的过程
+    * 3. 类的初始化(Initialize)
+        + JVM负责对类进行初始化
+- 类的初始化
+    * 主动引用(一定发生类的初始化)
+        + 当虚拟机启动，先初始化main方法所在的类
+        + new一个类的对象
+        + 调用类的静态成员和静态方法
+        + 使用java.lang.reflect包的方法对类进行反射调用
+        + 当初始化一个类，如果其父类没有被初始化，则先初始化它的父亲
+    * 被动引用(不会发生类的初始化)
+        + 当访问一个静态域时，只有真正声明这个域的类才会被初始化。如：当通过子类引用父类的静态变量，不会导致子类初始化
+        + 通过数组定义类引用，不会触发类的初始化
+        + 引用常量不会触发类的初始化
+
+
+#### 类加载器的作用
+
+加载器将class文件字节码内容加载到内存，并将这些静态数据转换成方法区的运行时数据结构，然后生成一个代表这个类的java.lang.Class对象，作为方法区中数据的访问入口。
+
+类缓存：标准的JavaSE类加载器可以按要求查找类，一旦某个类被加载到类加载器中，它将维持加载(缓存)一段时间。JVM的垃圾回收机制可以回收这些Class对象。
+
+
+## 反射操作注解
+
+以ORM(Object relationship Mapping，对象关系映射)为例。类映射到数据库，类和表结构对应，属性和字段对应，对象和记录对应。
+
+``` java
+public class Students{
+    public static void main(String[] args) throws ClassNotFoundException{
+        // 反射创建对象
+        Class c1 = Class.forName("pkg.of.yours.Student");
+
+        // 通过反射获得注解
+        Annotation[] annotations = c1.getAnnotations();
+        for(Annotation annotation : annotations){
+            System.out.println(annotation);
+        }
+
+        // 获得注解的value的值
+        TableStudent tablestudent = (TableStudent)c1.getAnnotation(TableStudent(TableStudent.class));
+        String value = tablestudent.value();
+        System.out.println(value);
+        
+        // 获得类指定的注解
+        Field f = c1.getDeclareField("name");
+        // 反射回去对象的属性
+        FieldStudent annotation = f.getAnnotation(FieldStudent.class);
+        System.out.println(annotaion.columName());
+        System.out.println(annotaion.len());
+
+    }
+}
+
+
+@TableStudent("db_student")
+class Student{
+    @FieldStudent(columName = "db_age", len = 10)
+    private age;
+    @FieldStudent(columName = "db_name", len = 10)
+    private name;
+    // getter and setter and construction
+}
+
+
+// 自定义类上的注解
+@Target(ElementType.TYPE) 
+@Retention(RetentionPolicy.RUNTIME)
+@interface TableStudent{
+    String value();
+}
+
+// 自定义属性上的注解
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
+@interface FieldStudent{
+    String columName();
+    int len();
+}
+```
+
+<++>
+
+
+
+
+
+
+
 
 
