@@ -150,7 +150,74 @@ imgOutput = cv.warpPerspective(img, matrix, (width, heigh))
         + 因此需要自己写些函数来有机结合他们
 
 
-### 彩色图像
+### 检测颜色
+
+- 色彩捕获
+- 1. 将图像转换成HSV`imgHSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)`
+- 2. 编写TrackBars以辅助我们找出最佳值
+    ``` python
+    # 新建一个窗口
+    cv2.nameWindow("TrackBars")
+    cv2.resizeWindow("TrackBars", 640, 240)  # 通过winName找到想要的win
+
+    # 创建跟踪栏
+    # cv2.createTrackbar("barName", "winName", min, max, func)
+    # func接受一个值，当Trackbar的值改变值执行对应操作
+    # 这样的trackbar有6个，包含所有的色相最大最小饱和度等
+    cv2.createTrackbar("Hue min", "TrackBars", 0, 179, func)
+    cv2.createTrackbar("Hue max", "TrackBars", 179, 179, func)
+    cv2.createTrackbar("Sat min", "TrackBars", 0, 255, func)
+    cv2.createTrackbar("Sat max", "TrackBars", 255, 255, func)
+    cv2.createTrackbar("val min", "TrackBars", 0, 255, func)
+    cv2.createTrackbar("val max", "TrackBars", 255, 255, func)
+    ```
+    * 跟踪trackbar的值`val = cv2.getTrackbarPos("barName", "winName")`
+    * 无限循环以实时更新
+- 3. 创建mask遮罩`mask = cv2.inRange(img, lower, upper)`
+    * `lower = np.array([min1, min2, ..., minN])`
+    * `upper = np.array([max1, max2, ..., maxN])`
+- 4. 把遮罩显示出来调整trackbar，以找到合适的值
+- 5. 使用遮罩和原始图片创建新图片即可得到抽取颜色后的图片
+    * `res = cv2.bitwise_and(img, img, mask=mask)`，and:按位与操作
+- 堆叠图像，而不是一个一个显示所有图像
+
+
+### 检查图形
+
+- 1. 转化成灰度图，以便找到拐角
+    * `imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)`
+- 2. 添加一些模糊
+    * `imgBlur = cv2.GaussianBlur(imgGray, (kernel,), sigma)`
+- 3. 描边
+    * `imgCanny = cv2.Canny(imgBlur, threshold, threshold)`
+- 4. 检测轮廓
+
+    ``` python
+    def getContours(img):
+        contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        for cnt in contours:
+            area = cv2.contoursArea(cnt)
+            if area>500:  # 通过面积来消除噪声
+                cv2.drawContours(drawToImg, cnt, -1, (B, G, R), thick) # -1 画所有轮廓
+                # 计算轮廓长度
+                peri = cv2.arcLength(cnt, True)  # true表示封闭
+                # 计算拐点位置
+                approx = cv2.approxPolyDP(cnt, 0.02*peri(分辨率), True)
+                # 计算角
+                objCor = len(approx)
+
+                # 画边框，实现有个方框包围的效果
+                x, y, w, h = cv2.boundingRect(approx)
+                cv2.rectangle(drawToImg, (x, y), (x+w, y+h), (B, G, R))
+                
+    ```
+
+
+### 检查面部
+
+min101
+
+
 
 
 
