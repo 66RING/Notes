@@ -215,7 +215,47 @@ imgOutput = cv.warpPerspective(img, matrix, (width, heigh))
 
 ### 检查面部
 
-min101
+opencv使用训练得到的级联(Cascade)文件来处理图像。opencv提供了一些默认的Cascade，可以处理人脸、车牌、眼睛等等。
+
+- 引入Cascade，如
+    * `faceCascade = cv2.CascadeClassifier("path/to/Cascade/file")`
+- 把图像换成灰度图
+- 使用引入的Cascade处理图像
+    * `faces = faceCascade.detectMultiScale(img, scale, minimum_neighbor)`
+- 画框框
+    ``` python
+    for (x, y, w, h) in faces:
+        cv2.recrangle(img, (x, y), (x+w, y+h), (B, G, R), thick)
+    ```
+
+## 使用
+
+### 检查画笔颜色并在图像中画出
+
+- 1. [颜色检测](#检测颜色)，创建蒙版
+    * 为同时应对多种色彩，可以将检查到的颜色的参数记录在一个列表中
+- 2. 试着[描出颜色的轮廓](#检查图形)
+    * 只是为了给出明显的反馈，用完可以删除
+- 3. 使用轮廓的参数如x，y就可确定一点的位置
+- 4. 然后就可画出想要的BGR颜色
+    * 创建一个点的列表，每次绘制出所有点[x, y, color]
+
+
+### 物体扫描
+
+- 预处理
+    * [调整大小](#摄像头获取)
+    * [使用灰度图](#转换灰度)
+    * [模糊](#模糊)
+    * [描边](#边缘检测器)
+        + 调整边框粗细等
+- 找到主体
+    * 预处理好的图像该如何找到主体?
+    * 可通过[拐角数](#检查图形)、最大面积等判断
+- 通过主体的拐角进行[变换](#变换)
+
+
+### 车牌识别
 
 
 
