@@ -230,6 +230,8 @@ opencv使用训练得到的级联(Cascade)文件来处理图像。opencv提供�
 
 ## 使用
 
+[源码](https://github.com/murtazahassan/Learn-OpenCV-in-3-hours)
+
 ### 检查画笔颜色并在图像中画出
 
 - 1. [颜色检测](#检测颜色)，创建蒙版
@@ -256,6 +258,15 @@ opencv使用训练得到的级联(Cascade)文件来处理图像。opencv提供�
 
 
 ### 车牌识别
+
+- 1. [引入Cascade](#检查面部)，用于识别车牌号
+- 2. 框出
+- 3. 把识别出来的[数字放在图片的适当位置](#绘制图形)
+- 4. 保存识别的图片
+    ``` python
+    cv2.imwrite("path/to/file", img)
+    ```
+
 
 
 
