@@ -1,5 +1,5 @@
 ---
-title: Golang
+title: Golang基础
 date: 2019-08-05
 tags: go, golang
 ---
