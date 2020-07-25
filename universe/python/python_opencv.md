@@ -157,7 +157,7 @@ imgOutput = cv.warpPerspective(img, matrix, (width, heigh))
 - 2. 编写TrackBars以辅助我们找出最佳值
     ``` python
     # 新建一个窗口
-    cv2.nameWindow("TrackBars")
+    cv2.namedWindow("TrackBars")
     cv2.resizeWindow("TrackBars", 640, 240)  # 通过winName找到想要的win
 
     # 创建跟踪栏
@@ -196,13 +196,13 @@ imgOutput = cv.warpPerspective(img, matrix, (width, heigh))
     def getContours(img):
         contours, hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
         for cnt in contours:
-            area = cv2.contoursArea(cnt)
+            area = cv2.contourArea(cnt)
             if area>500:  # 通过面积来消除噪声
                 cv2.drawContours(drawToImg, cnt, -1, (B, G, R), thick) # -1 画所有轮廓
                 # 计算轮廓长度
                 peri = cv2.arcLength(cnt, True)  # true表示封闭
                 # 计算拐点位置
-                approx = cv2.approxPolyDP(cnt, 0.02*peri(分辨率), True)
+                approx = cv2.approxPolyDP(cnt, 0.02*peri, True)
                 # 计算角
                 objCor = len(approx)
 
