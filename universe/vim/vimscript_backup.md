@@ -120,7 +120,7 @@ augroup END
 " }}}
 ```
 
-In normal mode, type `za`. Vim will fold/unfold the lines starting at the one containting `{{{` and ending at `}}}`
+In normal mode, type `za`. Vim will fold/unfold the lines starting at the one containting `3{` and ending at `3}`
 
 `:h foldlevelstart`
 
@@ -342,7 +342,131 @@ The problem is that `normal!` dosen't parse special charater sequences like `<cr
 ```
 
 
+### Demos
+
+#### Grep Operation, Part One
+
+`:nnoremap <leader>g :grep -R '<cWORD>' %<cr>`
 
 
+##### Escaping Shell Command Argument
 
+Try the mapping on the word `that's`. It won't work, because the single quote inside the word interferes with the quotes in the grep command!
+
+To get around this we can use Vim's `shellescape` function. `:h shellescape()` and `:h escape`
+
+The problem is that **Vim performed the `shellescape()` call before it expended out special string like `<cword>`.** So `:echom shellescape("<cWORD>")` is literally output `'<cword>'`
+
+To fix this we'll **use the `expand()` function to force th expansion of `<cword>` into the actual string** before it gets passed to `shellescape`.
+
+try following over the word like `that's`:
+
+``` vim
+:echom expand("<cWORD>")
+:echom shellescape(expand("<cWORD>"))
+```
+
+Finally, try `:nnoremap <leader>g :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr>:copen<cr>`
+
+- `:h copen`, 
+    * Open a window to show the current list of errors
+- `:h silent`
+    * The `silent` command just runs the command that follows it while hiding any messages it would normally display
+
+
+#### Grep Operator, Part Two
+
+- Create a File
+    * Inside `.vim/plugin` create file named `grep-operato.vim`
+    * This is where you'll place the code.
+- Skeleton
+    * To create a new Vim operator you'll start with two components:a function and a mapping
+        ``` vim
+        nnoremap <leader>g :set operatorfunc=GrepOperator<cr>g@
+
+        function! GrepOperator(type)
+            echom "Test"
+        endfunction
+        ```
+    * we set the `operatorfunc` option to our function
+    * then we run `g@` which calls this function as an operator
+        + **try type `g@` in normal mode**
+- Visual Mode
+    * Add another mapping `vnoremap <leader>g :<c-u>call GrepOperator(visualmode())<cr>`
+        + `<c-u>` to say "delete from the cursor to the bebginning of the line"
+        + **`visualmode()` is a built-in Vim function** that return a one-character string representing the last type of visual mode. "v、V and Crtl-v"
+    
+
+##### Motion type
+
+``` vim
+nnoremap <leader>g :set operatorfunc=GrepOperator<cr>g@
+vnoremap <leader>g :<c-u>call GrepOperator(visualmode())<cr>
+
+function! GrepOperator(type)
+    echom a:type
+endfunction
+```
+
+- Pressing `viw<leader>g` echoes `v` because we were in characterwise visual mode.
+- Pressing `Vjj<leader>g` echoes `V` because we were in linewise visual mode.
+- Pressing `<leader>giw` echoes `char` because we used a characterwise motion with the operator.
+- Pressing `<leader>gG` echoes `line` because we used a linewise motion with the operator.
+
+
+##### Copying the Text
+
+Edit a function look like this:
+
+``` vim
+nnoremap <leader>g :set operatorfunc=GrepOperator<cr>g@
+vnoremap <leader>g :<c-u>call GrepOperator(visualmode())<cr>
+
+function! GrepOperator(type)
+    if a:type ==# 'v'
+        execute "normal! `<v`>y"
+    elseif a:type ==# 'char'
+        execute "normal! `[v`]y"
+    else
+        return
+    endif
+
+    echom shellescape(@@)
+endfunction
+```
+
+- `==#` case-sensitive comparison
+- **`normal!` dose two things**:
+    * Visually select the range of text we want by:
+        + Moving to mark at the beginning of the range.
+        + Entering characterwise visual mode.
+        + Moving to the mark at the end of the range.
+    * Yanking the visually selected text.
+- `@@` is the "unnamed" register: the one that Vim places text into then yank or delete by default
+
+
+#### Grep Operator, Part Three
+
+**Namespacing** 
+
+Our script create a function named `GrepOperator` in the global namespace.
+
+We can avoid polluting the global namespace by tweaking a couple of lines in our code.
+
+``` vim
+nnoremap <leader>g :set operatorfunc=<SID>GrepOperator<cr>g@
+vnoremap <leader>g :<c-u>call <SID>GrepOperator(visualmode())<cr>
+
+function! s:GrepOperator(type)
+endfunction
+```
+
+- modified the function name to start with `s:` which places it in the current script's namespace
+- modified the mapping and prepended the `GrepOperator` function name with `<SID>` so they could find the function.
+    * If we hadn't done this they would have tried to find the function in the global namespace, which wouldn't have worked
+
+`:h <SID>`
+ 
+
+### List
 
