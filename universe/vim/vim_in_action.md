@@ -148,4 +148,6 @@ tags: vim
 - `qq`：用寄存器q录制宏
 - `qQ`:往寄存器q中追加操作
 - `:put q`：把寄存器q的内容粘贴到文档，以便修改
+    * Or `["x]p`
 - `:d q`：复制回寄存器
+    * `["x]d{motion}` delete text move over [into register x], like`"qd3d`删除三行，到寄存器q中

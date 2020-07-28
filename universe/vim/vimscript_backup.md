@@ -470,3 +470,115 @@ endfunction
 
 ### List
 
+Vim List is much like python.
+
+- Lists
+    * `:echo ['foo', 3, 'bar']`
+    * `:echo ['foo', [3, 'bar']]` of course can be nested
+- Indexing
+    * `:echo [0, [1, 2]][1]` will display `[1, 2]`
+    * `:echo [0, [1, 2]][-2]` will display `0`
+- Slicing
+    * `:echo ['a', 'b', 'c', 'd', 'e'][0:2]`
+    * `:echo ['a', 'b', 'c', 'd', 'e'][:2]`
+- Concatenation
+    * `:echo ['a', 'b'] + ['c']`
+- Built-in List Function
+    * `:call add(list, 'b')` append `b` 
+    * `:echo len(list)`
+    * `:echo get(foo, 100, 'default')`
+        + The `get` function will get the item at the given index from the given list, or return the given default value if the index is out of range in the list.
+    * `:echo index(foo, 'b')`
+        + return the first index of `b`, or `-1` if not in list
+    * `:echo join(list, '--')` join item in list together into a string
+    * `:call reverse(list)`
+
+`:h functions`
+
+
+### Looping
+
+- For Loops
+    ``` vim
+    for i in [1, 2, 3]
+    endfor
+    ```
+- While Loops
+    ``` vim
+    let c = 1
+    while c <= 4
+        let c += 1
+    endfor
+    ```
+
+
+### Dictionaries
+
+- Dictionaries
+    * `:echo {'a': 1, 100: 'foo'}`
+- Indexing
+    * `:echo {'a': 1, 100: 'foo',}['a']`
+    * Or Javascritp-style "dot" `:echo {'a': 1, 100: 'foo',}.a`
+- Assigning and Adding `:let foo = {'a': 1}`
+    * Assigning: `:let foo.a = 100` 
+    * Add: `:let foo.b = 200`
+- Removing Entries
+    * `:let test = remove(foo, 'a')`
+        + Remove the entry with the given key
+        + And return the removed value
+    * `unlet foo.b`
+        + Also removes entries, but you can't use the value
+- Dictionary Functions
+    * `:echom get({'a': 100}, 'b', 'default')`
+        + just like get function for lists
+    * `:echom has_key({'a': 100}, 'a')`
+        + return `0` as falsy
+    * `:echo items({'a': 100, 'b': 200})`
+        + You can pull the key-value pairs out of a dict with `item`
+        + display like `[['a', 100], ['b', 200]]`
+
+
+### Toggling
+
+For boolean options we can use `set someoption!` to "toggle" the option.If we want to toggle a non-boolean option we'll need to do a bit more work.
+
+Like this. Remember Vim treats the 0 as falsy and any other number as truthy
+
+``` vim
+function! FoldColumnToggle()
+    if &foldcolumn
+        setlocal foldcolumn=0
+    else
+        setlocal foldcolumn=4
+    endif
+endfunction
+
+" Or
+
+function! QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+    else
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction
+```
+
+- `:h wincmd`
+- `:h winnr()`
+
+
+### Functional Programming
+
+
+
+
+
+
+
+
+
+
+
