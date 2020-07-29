@@ -573,11 +573,167 @@ endfunction
 ### Functional Programming
 
 
+#### Immutable Data Structures
+
+Vim dosen't have any immutable collections, but by create some helper functions we can fake it to some degree.
+
+Like this:
+
+``` vim
+function! Sorted(l)
+    let new_list = deepcopy(a:l)
+    call sort(new_list)
+    return new_list
+endfunction
+```
+
+Vim's `sort()` sorts the list in place, so we create a full copy so original list won't changed.
 
 
+#### Functions as Variables
+
+Vimscript supports using variables to store functions, but the syntax is a bit obtuse.
+
+If a Vimscript variable refers to a function it must start with a capital letter.
 
 
+#### Higher-Order Functions
 
+``` vim
+function! Mapped(fn, l)
+    let new_list = deepcopy(a:l)
+    call map(new_list, string(a:fn) . '(v:val)')
+    return new_list
+endfunction
+
+:h map()
+:h function()
+```
+
+
+### Paths
+
+- Relative Paths
+    * `:echom expand('%')`. `%`means the file you're editing.
+- Absolute Paths
+    * `:echom expand('%:p')`. The `:p` in the string tells Vim that you want the absolute path.
+    * `:echo fnamemodify('foo.txt', ':p')` did the same. `fnamemodify()` is a Vim function that's more flexible than `expand()` in that you can specify any file name, not just special stirngs.
+- Listing Files
+    * `:echo split(globpath('.', '*'), '\n')`, list of files in a specific directory(here is all files of current dir).
+    * You can recursively list file with `**`:`:echo split(globpath('.', '**'), '\n')`
+
+
+## Creating a Full Plugin
+
+### Basic Layout
+
+- Files in `~/.vim/colors` are treated as color schemes
+- Files in `~/.vim/plugin` will each be run once every time Vim starts
+- Files in `~/.vim/ftdetect` will also be run every time you start Vim
+    * `ftdetect` stands for "filetype detection"
+    * The file in this dir should set up autocommmands that detect and set the `filetype` of files
+- Files in `~/.vim/ftplugin`. When Vim sets a buffer's `filetype` to a value it then looks for a file(or dir) in `ftplugin` that matches and run it.
+    * The naming of these files matters!
+    * Because these files are run every time a buffer's filetype is set they must only set buffer-local options! If they set options globally they would overwrite them for all open buffers!
+- Files in `~/.vim/indent` are a lot like `ftplugin` files. They get loaded based on their names.
+- Files in `~/.vim/compiler` work exactly like `indent` files.
+    * They should set compiler-related options in the current buffer based on their names
+- Files in `~/.vim/after` Files in this dir will be loaded every time Vim start, but after the file in `~/.vim/plugin`
+- Files in `~/.vim/autoload` 
+- Files in `~/.vim/syntax` When Vim sets a buffer's `filetype` to a value it then looks for a file(or dir) in `syntax` that matches and run it.
+- Files in `~/.vim/doc` is where you can add doc for your plugin
+
+
+### Runtimepath
+
+Much like `PATH` on `Linux/Unix/BSD` systems, Vim has the runtimepath setting which tells it where to find files to load.
+
+`:set runtimepath?`
+
+So a plugin manager automatically add paths to your `runtimepath` when you load vim
+
+
+### Detecting Filetype
+
+Vim dosen't what a `.type` file is yet.
+
+Create `ftdetect/TYPE.vim`
+
+`au BufNewFile,BufRead *.TYPE set filetype=TYPE`
+
+
+### Basic Syntax Highlighting
+
+- `:help syn-keyword`
+- `:help iskeyword`
+- `:help group-name`
+- `:help syntax`
+
+Create a `syntax/potion.vim` file and set you buffer filetype to potion `:set filetype=potion`. The `to`, `times` and `if` words will be highlighted as keywords.
+
+``` vim
+syntax keyword potionKeyword to times
+syntax keyword potionKeyword if
+highlight link potionKeyword Keyword
+```
+
+These two lines show the basic structure of simple sytax highlight in Vim.
+
+- You first define a "chunk" of syntax using `syntax keyword` or a related command (which we'll talk about later)
+- You then link "chunks" to highlighting groups. A highlighting group is something you define in a color scheme, for example "function names should be blue".
+
+
+#### Highlighting Functions
+
+Another standard Vim highlighting group is `Function`.
+
+``` vim
+syntax keyword potionFunction print join string
+highlight link potionFunction Function
+```
+
+
+#### Advanced Syntax Highlighting
+
+Because some character not in `iskeyword` we need to use a regular expression to match it. We'll do this with `syntax match` instead of `syntax keyword`.
+
+``` vim
+syntax match potionComment "\v#.*$"
+highlight link potionComment Comment
+```
+
+We use `syntax match` which tells Vim to match regexes instead of literal keywords.
+
+
+#### Highlighting Operators
+
+Another part we need to regexes to highlight is operators. `:h group-name`
+
+``` vim
+syntax match potionOperator "\v-\="
+highlight link potionOperator Operator
+```
+
+
+#### Highlighting Strings
+
+`:help syn-region`
+
+To highlight strings, we'll use the `syntax region` command.
+
+``` vim
+syntax region potionString start=/\v"/ skip=/\v\\./ end=/\v"/
+highlight link potionString String
+```
+
+You'll see the string between "" is highlighted!
+
+- Regions hava a "start" pattern and an "end" pattern that specify where they start and end
+- The `skip` argument tells Vim to ignore this matching region
+    * The "skip" argument to `syntax region` allow us to handle string escapes like `"she said: \"hello\"!"`
+
+
+### Basic Folding
 
 
 
