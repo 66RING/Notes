@@ -4,6 +4,136 @@ date: 2020-7-23
 tags: go
 ---
 
+## GoTest
+
+使用go test，文件名格式有要求`XXX_test.go`
+
+
+## 杂项
+
+###  字符串变量结构
+
+- 不同于C语言字符串以`\0`结尾，golang字符串中的字符可以是任何字符，因为它的结构为: `| data | len |`
+- 因此你可以像这样`str[2]`读取字符串内容，但不能修改它
+
+
+### 切片
+
+slice有三个部分
+
+- data(元素存哪里)
+- len(存了多少)
+- cap(可以存多少)
+- 因此slice结构为 `| data | len | cap |`
+
+``` go
+var ints[]int = make([]int, 2, 5)
+ints = append(ints, 1)
+
+ints: | data | 3 | 5 |
+
+| 0 | 0 | 1 | 0 | 0 |
+```
+
+当使用new创建字符串切片如`ps := new([]string)`，会分配一个slice的三部分结构`| data=nil | 0 | 0 |`，返回值就是slice的起始地址。但它不负责底层数组的分配，所以ps指向nil
+
+通过`append(*ps, "hello")`添加元素，它就会slice开辟底层数组(上节说的string结构)
+
+但是slice不是必须指向数组的开头，因为我们可以把不同是slice关联到同一个数组`arr[a:b]`，他们会共用底层数组
+
+``` go
+arr := [7]int{0, 1, 2, 3, 4, 5, 6}
+// arr 是一个长度为7的int数组
+var s1 []int = arr[1:4]
+var s2 []int = arr[3:]
+
+//左闭右开，则s1结构为
+| data | 3 | 6 |  // 可以继续添加元素
+// s2为
+| data | 4 | 4 |  // 如果继续添加元素，则开辟新数组并拷贝原数据
+```
+
+slice扩容的步骤：
+
+- 根据slice的扩容规则，预估
+    * 如果扩容前(oldLen)翻倍还是小于所需最小容量(cap)，则新容量(newCap)等于最小容量
+    * 否则
+        + 如果oldLen < 1024 , 直接翻倍newCap = oldCap x 2
+        + 否则扩1/4，newCap = oldCap x 1.25
+- 分配内存
+    * golang的内存管理模块会提前申请好一部分常用规格的内存，如8、 16 ...字节
+    * 然后分配最接近需求的内存
+
+
+### 内存对齐
+
+[building](https://www.bilibili.com/video/BV1Ja4y1i7AF)
+
+因此好的go程序结构体字段的顺序也是有讲究的
+
+
+### 闭包
+
+go将作为参数、函数返回值、绑定到变量的函数称为 **Function Value** ，Function Value本质上是个指针，但不直接指向函数入口，而是指向一个`runtime.funcval`结构体，这个结构体里只有一个地址，就是这个函数的入口地址。
+
+``` go
+type funcval struct{
+    fn uintptr
+}
+```
+
+编译器会为同一个函数的Function Value指定相同的funcval。
+
+Golang使用funcval接口体包装函数地址的原因：为了处理闭包的情况。举个闭包的例子
+
+``` go
+func create() func()int{
+    c:=2
+    return func() int {
+        return c
+    }
+}
+```
+
+c这样的变量称为 **捕获变量** 。闭包对象在运行时是才创建。当一个变量接受调用时，如`f1 := create()`会在堆中创建一个funcval结构体和捕获变量列表。当另一个变量调用时又生成另一个funcval和捕获变量列表。这样每个闭包的状态(捕获变量)可能有所不同，这就是为什么称闭包为有状态的函数。
+
+有了funcval的结构就可以通过funcval的指针找到函数入口，通过与funcval的偏移量找到捕获变量。
+
+#### 变量逃逸
+
+考虑捕获的变量处理初始化外还被修改的情况
+
+``` go
+func create() (fs [2]func()){
+    for i:=0; i<2; i++{
+        fs[i] = func(){
+            fmt.Println(i)
+        }
+    }
+    return
+}
+
+func main(){
+    fs := create()
+    for i:=0; i<len(fs); i++{
+        fs[i]()
+    }
+}
+```
+
+结果输出都是2，原因如下。
+
+在`create()`函数中，因为i被闭包捕获，局部变量i改为堆分配，在create函数的栈中值保存i的地址(&i)。第一次for创建funcval和捕获列表(i的地址)，这样闭包函数就和外层函数操作同一个变量，第二次for循环仍是funcval和i的地址。因为操作的是同一个变量，而闭包函数捕获的是i的地址，所以两次输出的结果其实都是create堆分配中的i(2)。
+
+闭包导致的局部变量堆分配就是变量逃逸的一种场景。闭包这么做是为了保持捕获变量在外层函数与闭包函数中的一致性。
+
+
+### defer
+
+defer会在函数结束前倒序执行。
+here <-
+
+
 ## Context
 
 ### 常见的控制并发的两种方式
