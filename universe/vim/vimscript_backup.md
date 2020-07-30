@@ -6,6 +6,7 @@ tags: backup, vim, vimscript
 
 Remenber to use `:h <arg>` for help
 
+Ref: [https://learnvimscriptthehardway.stevelosh.com/](https://learnvimscriptthehardway.stevelosh.com/)
 
 ## Basic
 
@@ -734,6 +735,147 @@ You'll see the string between "" is highlighted!
 
 
 ### Basic Folding
+
+- `:help usr_28`
+- `:help fold-XXX`
+
+
+- Manual
+    * You create the folds by hand and they stored in RAM. When you close Vim they go away.
+- Marker
+    * Vim folds your code based on characters in the actual text.
+    * Usually these characters put in comments (like`{{{`), but in some languages you can get away with using something in the language's syntax itself, like `{` in javascript file.
+    * It may seem ugly to clutter up your code with comments, but it let you hand-craft folds for a specific file.
+- Diff
+    * A special folding mode used when diff'ing files.
+- Expr
+    * This lets you use a custom piece of Vimscript to define where folds occur.
+- Indent
+    * Vim uses your code's indentation to determine folds.
+
+`setlocal foldmethod=<method>` and play around with `zR`, `zM`, `za`, `zf`...
+
+
+#### Advanced Folding
+
+- Folding Theory
+    * Each line of code in a file has a "foldlevel". This is always either zero or a positive interger.
+    * Lines with a foldlevel of zero are never include in any fold
+    * Adjacant line with the same foldlevel are folded togerther
+    * If a fold level X is closed, any subsequent lines with a foldlevel greater then or equal to X are folded along with it until you reach a line with a level less than X.
+
+
+##### Expr Folding
+
+``` vim
+setlocal foldmethod=expr
+setlocal foldexpr=GetPotionFold(v:lnum)
+
+function! GetFold(lnum)
+    return '0'
+endfunction
+```
+
+- first line tells Vim to use `expr` folding
+- second line defines the expression Vim should use to get the foldlevel of a line
+    * When Vim runs the expression it will set `v:lnum` to the line number of the ling it wants to know about.
+- The expr function return a String and not an Integer
+
+Our funciont return `'0'` for every lines, so Vim won't fold andthing at all.
+
+
+##### Blank Lines
+
+Modify the `GetFold` function to look like this:
+
+``` vim
+function! GetPotionFold(lnum)
+    if getline(a:lnum) =~? '\v^\s*$'
+        return '-1'
+    endif
+
+    return '0'
+endfunction
+```
+
+- Use `getline(a:lnum)` to get the content of the current line as a String.
+    * This regex `\v^\s*$` will match "beginning of line, any number of whitespace characters, end of line"
+
+
+##### Special Foldlevels
+
+Your custom folding expression can return one of a few "special" strings that tell Vim how to fold the line.
+
+`-1` is one of these special strings. It tells Vim that the level of this line is "underfined", which means "the foldlevel of this line is equal to the foldlevel of the line above or below it"
+
+
+##### An Indentation Level Helper
+
+To tackle non-blank lines we'll need to know their indentation level.
+
+``` vim
+function! IndentLevel(lnum)
+    return indent(a:lnum) / &shiftwidth
+endfunction
+```
+
+And run `:echom IndentLevel(1)` to see line 1 indent level.
+
+
+### Section Movement Theory
+
+If you've never used Vim's section movement commands(like: `[[`, `]]`, `[]`, `][`) take a second and read `:help section`
+
+
+#### Nroff Files
+
+The four "section movement" commands are conceptually meant to move around between "sections" of a file.
+
+These commands are designed to work with [nroff files](https://en.wikipedia.org/wiki/Nroff) by default.
+
+
+### External Commands
+
+The `:!` command (pronounced "bang") in Vim runs external commands and display their output on the screen.
+
+Vim doesn't pass any input to the command then run this way: `:!cat`
+
+To run an external command without the `Press ENTER or type command to continue` prompt, use `:silent !`. Note that this command is `:silent !` and not `:silent!`
+
+
+#### system()
+
+The `system()` Vim function takes a command string as a parameter and returns the output of that command as String.
+
+You can pass a second string as an argument to `system()`. Run the following command: `:echom system("wc -c", "abcdefg")`
+
+If you pass a second argument like this, Vim will write it to a temporary file and pipe it into the command on standard input.
+
+
+#### Scratch Splits
+
+`:split BufferName` create an new splite for a buffer named `BufferName`
+
+
+#### append()
+
+The `append()` Vim function takes two arguments: a line number to append after, and a list of Strings to append as lines. For example:
+
+``` vim
+call append(3, ["foo", "bar"])
+```
+
+`:help append()`
+
+
+#### split()
+
+`split()` takes a String to split and regular expression to find the split points.
+
+`:help split()`
+
+
+### Autoloading
 
 
 
