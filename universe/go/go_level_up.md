@@ -131,7 +131,138 @@ func main(){
 ### defer
 
 defer会在函数结束前倒序执行。
-here <-
+
+``` go
+func A(){
+    defer B()
+    // do something
+}
+```
+
+
+#### Go 1.12
+
+在go1.12中编译后伪代码结构为：
+
+``` go
+func A(10){
+    r = deferproc(8, B)
+    if r>0 {  // if panic
+        goto ret
+    }
+    // do something
+    runtime.deferreturn()
+    return
+ret
+    runtime.deferreturn
+}
+```
+
+- deferproc把要执行的函数信息保存起来，称之为 **defer注册** 
+    * `func deferproc(size int32, fn *funcval)`, size指出defer函数的参数加返回值共占多少空间
+- runtime.deferreturn执行注册的defer函数
+    * 这样的先注册后调用来实现延迟执行
+    * defer信息会注册到一个链表，而当前执行的goroutine会在堆中创建一个`_defer`结构体，其中一个属性持有链表的头指针，新插入链表头，因此是后进先出，defer倒序执行
+
+``` go
+type _defer struct{
+    siz     int32    // 参数和返回值共占多少字节
+    started bool     // 是否已执行
+    sp      uintptr  // 调用者栈指针
+    pc      uintptr  // 返回地址
+    fn      *funcval // 注册的函数
+    _panic  *_panic 
+    link    *_defer  // next_defer
+}
+```
+
+Go语言会预先分配一块大小的\_defer池，需要defer时选择合适的取出，否则再进行堆分配。这样避免了频繁的堆分配//回收。
+
+这个go1.12版本的defer存在的问题就是慢：
+- 1. \_defer在堆分配，使用时要在堆和栈间来回拷贝
+- 2. 链表本身的操作就比较慢
+
+
+#### go1.13的优化策略
+
+在go1.13中编译后的伪代码结构为：
+
+``` go
+func A(){
+    var d struct{
+        runtime._defer
+        i int
+    }
+    d.siz = 0
+    d.fn = B
+    d.i = 10
+    r := runtime.deferprocStack(&d._defer)
+    if r>0 {
+     goto ret
+    }
+    //do something
+    runtime.deferreturn()
+    return
+ret:
+    runtime.deferreturn()
+}
+```
+
+1.13中通过增加d结构体这样的局部变量把defer信息保存在当前函数栈帧的局部变量区域，再通过deferproc把d这个结构体注册到defer链表中
+
+减少的defer信息的堆分配，\_defer也新增了`heap bool`的字段来表示是否为堆分配
+
+
+#### go1.14中defer的优化策略
+
+通过在编译阶段插入代码，把defer的执行逻辑展开在所属函数中，从而不需要创建\_defer结构体和defer链表
+
+``` go
+func A(i int){
+    defer A1(i, i*2)
+    if(i > 1){
+        defer A2()
+    }
+    return
+}
+```
+
+编译时defer函数如A1，所需的参数以局部变量的形式保存在所属函数中，然后在函数末尾插入`A1(保存的局部变量)`
+
+但像A2这样执行阶段才知道是否需要执行的defer函数怎么能直接插入呢？
+
+使用一个标识位`var df byte`每一位表示一个defer函数是否会执行，使用或运算来修改df标记位的信息。因此上述函数对应的编译后伪代码为：
+
+``` go
+func A(i int){
+    var df byte
+    //defer是否需要执行的标记位
+    var a, b int = i, i*2 
+    var m, n string = "hello", "ring"
+    //局部变量保存defer函数的参数
+    df |= 1 //defer函数A1必定会执行，所以直接
+    if i>1 {
+        df |= 2  //defer函数A2可能会执行，runtime才知道
+    }
+    if df&2 > 0 {
+        df = df&-2 //-2表示非2, 清零
+        A2(m, n)
+    }
+    fi df&1 > 0 {
+        df = df&-1
+        A1(a, b)
+    }
+    return
+}
+```
+
+官方称之为open coded defer
+
+1.13和1.14中的defer都不适用于循环中的defer，循环中的defer需要使用1.12版本的defer，因此都会有`heap bool`的标记
+
+但是1.14中的如果遇到panic，那么后面的defer将无法继续执行，又因为这样的open coded没有注册到链表，所有需要额外的栈扫描来发现。
+
+1.14中defer更快了，但panic更慢了。但是defer发生的概率比panic大得多
 
 
 ## Context
