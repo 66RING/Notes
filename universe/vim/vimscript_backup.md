@@ -336,7 +336,7 @@ Vim will delete the current line. The `normal` command will take into account an
 
 Vim has a `normal!` command to avoid user mapping. So write Vimscript should  **always** use `normal!`.
 
-The problem is that `normal!` dosen't parse special charater sequences like `<cr>`. Combining `normal!` with `execute` fixes that problem. Like this:
+The problem is that `normal!` dosen't parse special character sequences like `<cr>`. Combining `normal!` with `execute` fixes that problem. Like this:
 
 ``` vim
 :execute "normal! gg/print\<cr>"
@@ -744,7 +744,7 @@ You'll see the string between "" is highlighted!
     * You create the folds by hand and they stored in RAM. When you close Vim they go away.
 - Marker
     * Vim folds your code based on characters in the actual text.
-    * Usually these characters put in comments (like`{{{`), but in some languages you can get away with using something in the language's syntax itself, like `{` in javascript file.
+    * Usually these characters put in comments (like`3{`), but in some languages you can get away with using something in the language's syntax itself, like `{` in javascript file.
     * It may seem ugly to clutter up your code with comments, but it let you hand-craft folds for a specific file.
 - Diff
     * A special folding mode used when diff'ing files.
@@ -877,6 +877,103 @@ call append(3, ["foo", "bar"])
 
 ### Autoloading
 
+`:help autoload`
+
+Autoload lets you delay loading code until it's actually needed.
+
+Look at the following command:
+
+``` vim
+:call somefile#Hello()
+```
+
+If this function has already been loaded, Vim will simply call it normally. Otherwise Vim will look for a file called `autoload/somefile.vim`.
+
+If this file exists, Vim will load/source that file. It will then try to call the function normally.
+
+Inside this file, the function should be defined like this:
+
+``` vim
+function somefile#Hello()
+    " ...
+endfunction
+```
+
+You can use multiple `#` characters in the function name like `:call myplugin#somefile#Hello()`. And it will look for `autoload/myplugin/somefile.vim`
+
+If a autoload function like `somefile#Hello()` has been loaded, Vim doesn't need to reload the file to call it. 
+
+If `somefile#A()` has been load and `somefile#B()` doesn't load. At that time, you rewrite function A. Without closing Vim and call funcion B, Vim will reload this file and your modify in function A will be update.
+
+
+### Documentetion
+
+#### How Documentetion Works
+
+A documentation `filetype=help`.
+
+Create a file called `doc/somefile.txt` in you plugin repo. This is where we'll write help for our plugin.
+
+Open this file in Vim and run `:set filetype=help` so you can see the syntax highlighting as you type.
+
+
+#### Help Header
+
+The format of help files is a matter of personal taste, but better to be popular with the modern Vimscript community.
+
+- The first line of the file should contain the filename of the help file.
+    * `*myhelp.txt* functionality for the potion programming language`
+- Surrounding a word witd asterisks in a help file create a "tag" that can be jumped to.
+    * Run `:Helptags` to rebuild the index of help tags, and then open a new Vim window and run `:help myhelp.txt`. Vim will open your help document like any other one.
+- Title, description, authors and something
+    * The `~` characters at the end of the lines ensure that Vim dosen't try to highlight or hide individual characters inside the art.
+
+
+#### Table of Contents
+
+``` vim
+====================================================
+CONTENTS                                            *PotionContents*
+
+    1. Usage ................ |PotionUsage|
+    2. Mappings ............. |PotionMappings|
+    3. License .............. |PotionLicense|
+    4. Bugs ................. |PotionBugs|
+    5. Contributing ......... |PotionContributing|
+    6. Changelog ............ |PotionChangelog|
+    7. Credits .............. |PotionCredits|
+```
+
+- The line of `=` character will be syntax highlight. Use to divide.
+    * You can also use line of `-`
+- The `*PotionContents*` will create another tag, so run `:help PotionContents` to go directly to the table of contents.
+- Each of the word surrounded by `|` create a ling to a tag
+    * Users can press `<c-]>` in the file file to jump to the tag, Or click with mouse
+
+
+### The Command Command
+
+Read `:help user-commands`
+
+Some plugin hava commands like `:Gdiff` and leave it up to the user to decide how to call them.
+
+Commands like this are create with the `:command` command.
+
+
+### Omnicomplete
+
+- `:help ins-completion`
+- `:help omnifunc`
+- `:help compl-omni`
+
+Vim offer a number of different ways to complete text. The most powerful of them is "omnicomplete" which let you call a custom Vimscirpt function to determin completions.
+
+
+### Compiler Support
+
+Read `:help quickfix.txt`
+
+Vim offer much deeper support for interacting with compilers, including parsing compile error.
 
 
 
