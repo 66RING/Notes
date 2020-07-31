@@ -265,6 +265,81 @@ func A(i int){
 1.14中defer更快了，但panic更慢了。但是defer发生的概率比panic大得多
 
 
+### panic和recover
+
+上面defer章节说道每个goroutine有个`_defer`结构体，其实也有一个`_panic`结构体，里面包含panic链表的头指针。
+
+和defer一样发生新的panic时在头部插入新的panic结构体
+
+当发生panic时，后面的代码将不会继续执行，而是根据panic跳转，然后执行defer链表。
+
+执行defer时，会将`started`字段赋为true，把`_panic`字段指向当前的panic。如果defer函数能够正常结束，则移出defer链表执行下一个defer。
+
+如果defer不能正常结束，后面的代码页不会执行，在panic链表插入新的panic，称为当前执行的panic，然后同样取执行defer链表。但是发现`started`字段是true，于是根据记录的`_panic`指针找到对应的panic，把它标记为已终止。
+
+``` go
+type _panic struct{
+    argp      unsafe.Pointer // 当前要执行的defer的函数参数地址
+    arg       interface()    // panic的参数
+    link      *_panic        // 之前的panic
+    recovered bool           // 表示panic是否被恢复
+    aborted   bool           // 表示panic是否被终止
+}
+```
+
+之后打印panic信息，从链表尾开始，即panic发生的顺序输出。
+
+
+#### 有recover发生的panic
+
+recover函数把panic的`recovered`字段设为true
+
+``` go
+func A(){
+    defer A1()
+    defer A2()
+    // ..
+    panic("panicA")
+    // ...
+}
+
+func A2(){
+    p := recover()  // 把当前的panic置为已恢复
+    fmt.Println(p)
+}
+```
+
+每个defer执行完后都会检查当前panic是否被恢复，如果panic已恢复，则从链表中移除
+
+
+## Map
+
+Go语言中Map的底层实现是哈希表。map类型本质上是个指针\*hmap
+
+go语言哈希桶的选择采用的是与运算的方式，所以桶的个数m必须的2的次幂，这样m-1将得到`000111`的结构。因此`bucket = hash & (m-1)`
+
+``` go
+type hmap struct{
+    count      int   // 已经存储的键值对数目
+    flags      uint8 
+    B          uint8 // 记录桶的数目是2的多少次幂  
+    noverflow  uint16
+    hash0      uint32
+    buckets    unsafe.Pointer   // 记录桶的位置
+    oldbuckets unsafe.Pointer   // 记录旧桶的位置
+    nevacuate  uintptr          // 即将迁移的旧桶编号
+    extra      *mapextra // 记录溢出桶相关信息，桶满了链溢出桶，减少扩容次数
+}
+```
+
+map的扩容规则：
+- 如果负载因子(LoadFactor)超标：count/(2^B) > 6.5
+    * 翻倍扩容
+- 如果负载因子没有超标，但溢出桶(noverflow)较多(很多键值对被删除的情况)
+    * (B<=15 && noverflow >= 2^B) || (B>15 && noverflow >= 2^15)
+    * 等量扩容：创建和原来一样多的桶，把原数据迁移过去
+
+
 ## Context
 
 ### 常见的控制并发的两种方式
