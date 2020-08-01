@@ -340,6 +340,128 @@ map的扩容规则：
     * 等量扩容：创建和原来一样多的桶，把原数据迁移过去
 
 
+## Method
+
+创建一个类型A，并为他关联一个方法，如`func (a A)Name() string{}`。则可以通过类型A的变量来调用`a.Name()`。这种调用方式其实是语法糖，相当于`A.Name(a)`，a就是方法接收者，作为方法的第一个参数传入。
+
+go语言中，函数类型只与参数和返回值相关。所以对于下面的方法和函数：
+
+``` go
+func (a A)Name() string{ // method
+    return a.name
+}
+
+func NameOf(a A) string{
+    return a.name
+}
+
+func main(){
+    fmt.Println(reflect.TypeOf(A.Name)==reflectTypeOf(NameOf))
+}
+```
+
+如果上述的方法和函数类型值相等，则说明  **方法本质就是普通函数，方法接收者就是隐含的第一个参数** 
+
+这样就解释值接收者和指针接收者了:
+- `func (a A)Name()`则：
+    * `a.Name()` = `A.Name(a)`
+- `func (a *A)Name()`则：
+    * `pa = &a; pa.Name()` = `(*A).Name(pa)`，方法接收者是指针
+
+但是 **可以通过值接收者调用指针接收者的方法;通过指针接收者调用值接收者的方法** 是什么意思？
+
+这些其实也是语法糖。因为编译阶段会自动转换成需要的形式。如指针接受者调用值接收者的方法，编译成`(*pa).Name()`的形式
+
+
+## 接口
+
+### 类型系统
+
+反射、接口动态派发、类型断言该如何获取数据类型信息呢？
+
+- 给内置类型定义方法是不允许的
+- 接口类型是无效的方法接收者
+
+所以不会给内置类型或接口类型定义方法。
+
+不管是内置类型还是自定义类型，都有对应的描述信息，称为`类型元数据`。每种类型的类型元数据都是全局唯一的。类型元数据的结构`runtime._type`如下
+
+``` go
+type _type struct{
+    size       uintptr
+    prtdata    uintptr
+    hash       uint32
+    tflag      tflag
+    align      uint8
+    fieldalign uint8
+    kind       uint8
+    ...
+}
+
+此外还有各种类型额外需要描述的信息
+```
+
+`type MyType1 = int32`中`MyType1`和`int32`关联到同一个类型元数据，属于同一类型。而`type MyType2 int32`属于自定义类型`MyType2`会创建新的类型元数据，虽然和int32没有区别
+
+### 空接口
+
+空接口类型可以接收任何类型的数据
+
+``` go
+// interface{}
+type runtime.eface struct{
+    ...
+    _type *_type  //指向动态类型元数据
+    data unsafe.Pointer  // 指向动态值
+    ...
+}
+```
+
+当用空接口接收一个类型时，`_type`就会指向该类型的类型元数据，里面就要我们常用的描述信息;`data`将指向该类型的值
+
+
+### 非空接口
+
+一个变量要赋值给非空接口类型，必须实现改接口要求的所有方法。
+
+``` go
+// 非空接口
+type iface struct{
+    tab *itab
+    data unsafe.Pointer  // 同空接口
+}
+```
+
+接口要求的方法列表、接口动态类型信息都存储在`itab`结构体里：
+
+``` go
+type itab struct{
+    inter *interfacetype // 指向interface的类型元数据，方法列表就在其中
+    _type *_type  // 接口的动态类型元数据
+    hash  uint32  // 动态类型元数据中拷贝的类型哈希值
+    _     [4]byte 
+    fun   [1]uintptr  // 实现的接口要求的方法地址
+}
+```
+
+用到的itab结构体会被缓存起来，通过 接口类型和动态类型组合起来的key找到对应的itab指针
+
+
+### 类型断言
+
+[Ref](https://www.bilibili.com/video/BV1iZ4y1T7zF?p=3)
+
+REVIEW!!
+
+`接口.(具体类型)`
+
+- 空接口.(具体类型)
+    * 如`e.(*os.File)`，只需判断e的`_type`是否指向`*os.File`的类型元数据即可
+    * `r, ok := e.(*os.File)`，ok=true，r被赋值为e的动态值，否则r被赋类型零值
+- 非空接口.(具体类型)
+    * 通过接口类型和动态类型组合起来的key找到对应的itab指针
+
+
 ## Context
 
 ### 常见的控制并发的两种方式
