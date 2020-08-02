@@ -162,7 +162,134 @@ This is commonly called a “top-down” or “unidirectional” data flow.
 
 ### Handling Events
 
-https://reactjs.org/docs/handling-events.html
+With JSX you pass a function as the handler, rather than string.
+
+the Html:
+
+``` html
+<button onclick="activateLasers()">
+  Activate Lasers
+</button>
+```
+
+it is different in React
+
+``` javascript
+<button onClick={activateLasers}>
+  Activate Lasers
+</button>
+```
+
+``` javascript
+function ActionLink() {
+  function handleClick(e) {
+    e.preventDefault();
+    console.log('The link was clicked.');
+  }
+
+  return (
+    <a href="#" onClick={handleClick}>
+      Click me
+    </a>
+  );
+}
+```
+
+Here, `e` is a synthetic event. See the [SyntheticEvent](https://reactjs.org/docs/events.html) reference guide to learn more.
+
+In JavaScript, class methods are not [bound](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind) by defaul.
+
+Generally, if you refer to a method without `()` after it, such as `onClick={this.handleClick}`, you should bind that method. [how funcions work in JavaScript](https://www.smashingmagazine.com/2014/01/understanding-javascript-function-prototype-bind/).
+
+
+### Conditional Rendering
+
+Use JavaScript operators like `if` or `conditonal operator` to Conditional Rendering.
+
+
+### Lists and Keys
+
+#### Lists
+
+You can use `map()` to create `listItems` in React:
+
+``` javascript
+const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((number) =>
+  <li>{number}</li>
+);
+```
+
+When you render them, you’ll be given a warning that a key should be provided for list items.
+
+
+#### Keys
+
+Keys help React identify which items have changed, are added, or are removed. Keys should be given to the elements inside the array to give the elements a stable identity.
+
+If you choose not to assign an explicit key to list items then React will default to using indexes as keys.
+
+
+#### Extracting Components with Keys
+
+Keys only make sense in the context of the surrounding array.
+
+If you extract a ListItem components, you should keep the key on the `<ListItem />` element, but not inside.
+
+
+### Forms
+
+#### Controlled Components
+
+An input form element whose value is controlled by React in this way is called a “controlled component”.
+
+With a controlled component, the input’s value is always driven by the React state. For example:
+
+``` javascript
+class NameForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: ''};
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    alert('A name was submitted: ' + this.state.value);
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input type="text" value={this.state.value} onChange={this.handleChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+```
+
+- set `value` attribute
+    * the displayed value will always be `this.state.value`
+- `handleChange` 
+    * runs on every keystroke to update the React state, the displayed value will update as the user types
+
+
+### Composition vs Inheritance
+
+https://reactjs.org/docs/composition-vs-inheritance.html
+
+
+
 
 
 
