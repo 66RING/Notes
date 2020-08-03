@@ -312,7 +312,7 @@ func A2(){
 每个defer执行完后都会检查当前panic是否被恢复，如果panic已恢复，则从链表中移除
 
 
-## Map
+### Map
 
 Go语言中Map的底层实现是哈希表。map类型本质上是个指针\*hmap
 
@@ -340,7 +340,7 @@ map的扩容规则：
     * 等量扩容：创建和原来一样多的桶，把原数据迁移过去
 
 
-## Method
+### Method
 
 创建一个类型A，并为他关联一个方法，如`func (a A)Name() string{}`。则可以通过类型A的变量来调用`a.Name()`。这种调用方式其实是语法糖，相当于`A.Name(a)`，a就是方法接收者，作为方法的第一个参数传入。
 
@@ -373,9 +373,9 @@ func main(){
 这些其实也是语法糖。因为编译阶段会自动转换成需要的形式。如指针接受者调用值接收者的方法，编译成`(*pa).Name()`的形式
 
 
-## 接口
+### 接口
 
-### 类型系统
+#### 类型系统
 
 反射、接口动态派发、类型断言该如何获取数据类型信息呢？
 
@@ -403,7 +403,7 @@ type _type struct{
 
 `type MyType1 = int32`中`MyType1`和`int32`关联到同一个类型元数据，属于同一类型。而`type MyType2 int32`属于自定义类型`MyType2`会创建新的类型元数据，虽然和int32没有区别
 
-### 空接口
+#### 空接口
 
 空接口类型可以接收任何类型的数据
 
@@ -420,7 +420,7 @@ type runtime.eface struct{
 当用空接口接收一个类型时，`_type`就会指向该类型的类型元数据，里面就要我们常用的描述信息;`data`将指向该类型的值
 
 
-### 非空接口
+#### 非空接口
 
 一个变量要赋值给非空接口类型，必须实现改接口要求的所有方法。
 
@@ -447,7 +447,7 @@ type itab struct{
 用到的itab结构体会被缓存起来，通过 接口类型和动态类型组合起来的key找到对应的itab指针
 
 
-### 类型断言
+#### 类型断言
 
 [Ref](https://www.bilibili.com/video/BV1iZ4y1T7zF?p=3)
 
@@ -460,6 +460,80 @@ REVIEW!!
     * `r, ok := e.(*os.File)`，ok=true，r被赋值为e的动态值，否则r被赋类型零值
 - 非空接口.(具体类型)
     * 通过接口类型和动态类型组合起来的key找到对应的itab指针
+
+
+### 反射
+
+为了把类型原数据暴露给用户使用，需要反射机制。
+
+上章提到类型元数据储存在`runtime._type`下，但是是未导出的，所以在`reflect`包下定义的同样的`type`结构。两者是一样的。
+
+
+#### 通过反射获取类型信息
+
+`reflect`包中有`TypeOf`函数(`reflect.TypeOf`)用于获取一个变量的类型信息，接收空接口，返回`reflect.Type`类型
+
+``` go
+func TypeOf(i interface{}) Type{
+    eface := *(*emtpyInterface)(unsafe.Pointer(&i))
+    return toType(eface.typ)
+}
+```
+
+`Type`类型中提供了很多方法，用于获取类型信息，如`t.Name()`等。
+
+``` go
+func main(){
+    a := youpkg.youType{Key: "value"}
+    t := reflect.TypeOf(a)
+    fmt.Println(t.Name())
+}
+```
+
+- 传递空接口需要传递它的地址
+- go语言传参数都是值拷贝
+
+那为何`reflect.TypeOf(a)`可行呢？因为编译器做了优化，增加了一个临时变量作为a的拷贝，然后参数其实使用的是这个临时变量的地址。
+
+**所有参数为空接口的情况，都是这样传递拷贝后变量的地址** 
+
+
+#### 通过反射修改变量值
+
+`reflect`包中的`Value`类型:
+
+``` go
+type Value struct{
+    typ  *rtype         // 反射变量的类型元数据指针
+    ptr  unsafe.Pointer // 数据地址
+    flag //             位标识符，存储反射值的一些描述
+}
+```
+
+通常使用`reflect.ValueOf()`来获取一个`reflect.Value`，这个函数的参数也是空接口，和`TypeOf`处理参数的方式一样，但是`ValueOf`会显式的将参数指向的变量逃逸到堆上。
+
+一个通过反射修改变量的例子
+
+``` go
+// WRONG
+func main() {
+    a := "ring"
+    v := reflect.ValueOf(a)
+    v.SetString("hello ring")
+}
+
+// CORRECT
+func main() {
+    a := "ring"
+    v := reflect.ValueOf(&a)
+    v = v.Elem()
+    v.SetString("hello ring")
+}
+```
+
+上面的错误示范中，由于向`ValueOf()`直接传值，而这种的传递方式在上面`TypeOf`中说过，是创建一个临时的拷贝，所以修改的也将是临时的拷贝。所以会报错。所以需要反射a的指针。
+
+`v = v.Elem()`拿到`v.ptr`指向的变量a，并包装成`reflect.Value`类型
 
 
 ## Context
