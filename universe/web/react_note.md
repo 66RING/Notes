@@ -286,13 +286,58 @@ class NameForm extends React.Component {
 
 ### Composition vs Inheritance
 
-https://reactjs.org/docs/composition-vs-inheritance.html
+#### Containment
+
+Some component don't know their children ahead of time. We recommend that such component use the special `children` prop to pass children elements directly into their output.
+
+``` javascript
+function E(props) {
+    return (
+        <div>
+            {props.children}
+        </div>
+    )
+}
 
 
+function Hello(){
+    return (
+        <E>
+            <h1>hello</h1>
+        </E>
+    )
+}
+```
+
+Anything inside the `<E>` tag gets passed into the `E` component as `props.children`.
+
+Some time you might need multiple "holes" in a componnet. You can:
+
+``` javascript
+function E(props) {
+    return (
+        <div>
+            <div>{props.left}</div>
+            <div>{props.right}</div>
+        </div>
+    )
+}
 
 
+function Hello(){
+    return (
+        <E
+          left={
+              <h1>hello</h1>
+          }
+          right={
+              <h1>world</h1>
+          } />
+    )
+}
+```
 
 
+## Advanced
 
-
-
+https://reactjs.org/docs/accessibility.html
