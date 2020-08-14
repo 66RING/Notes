@@ -193,6 +193,23 @@ function ActionLink() {
     </a>
   );
 }
+
+// Or
+
+class Click extends React.Component{
+  function handleClick(e) {
+    e.preventDefault();
+    console.log('The link was clicked.');
+  }
+
+  render(){
+    return (
+      <a href="#" onClick={this.handleClick}>
+        Click me
+      </a>
+    );
+  }
+}
 ```
 
 Here, `e` is a synthetic event. See the [SyntheticEvent](https://reactjs.org/docs/events.html) reference guide to learn more.
