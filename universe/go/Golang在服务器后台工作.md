@@ -4,6 +4,20 @@ date: 2019-08-08 17:52:45
 tags: go, tools
 ---
 
+
+# <center>交叉编译<center>
+
+所谓交叉编译就是在一个平台生成另一个平台的可执行文件。
+
+- 通过`go tool dist list`查看支持情况
+- 步骤：
+    * 1. 设置目标平台以win-\>linux为例`set GOOS=linux`
+    * 2. 设置目标的GPU`set GOARCH amd64`
+    * 3. `go build`
+
+
+## 实战
+
 1.生产可执行文件	
 
 ```
