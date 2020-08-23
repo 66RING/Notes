@@ -665,6 +665,71 @@ GMP: G for goroutine协程、M for thread 线程，P for processor处理器
 
 ## Context
 
+在Go并发编程中用一个goroutine来处理一个任务，而一个goroutine又可以发起一个gorourine在处理一个子任务。这些场景中往往需要在API边界间以及过程之间传递截止时间，取消信号或其他与请求相关的数据。
+
+- Context的主要内容:一个接口，
+- 四种具体实现
+    * `emptyCtx`
+        + 本质上是个整形`type emptyCtx int`
+    * `cancelCtx`，一种可以取消的Context类型
+        ``` go
+        type cancelCtx struct{
+            Context
+            mu       sync.Mutex
+            done     chan struct{}
+            children map[canceler]struct{}
+            err      error
+        }
+        ```
+        + `done`用于获取Context的取消通知
+        + `children`用于存储以当前节点位根节点的所有可取消的Context，以便根节点取消时把它们一并取消
+    * `timerCtx`
+        ``` go
+        type cancelCtx struct{
+            cancelCtx
+            timer     *time.Timer
+            deadline  time.Time
+        }
+        ```
+        + 在cancelCtx的基础上又封装了一个定时器和截止时间，既可主动取消也可超时取消
+    * `valueCtx`
+        ``` go
+        type cancelCtx struct{
+            Context
+            key, value interface{}
+        }
+        func (c *valueCtx) Value(key interface{}) interface{}{
+            if c.key == key {
+                return c.val
+            }
+            return c.Context.Value(key)
+        }
+        ```
+        + 用来支持键值对打包
+        + 注意：字节点会覆盖父节点key相同的数据
+        + 为解决以上问题，可以不使用基础类型作为key，而是用自定义类型包装一下
+            + 如`type keya  string`，`type keyc string`
+- 六个函数
+    * `Background`
+        + 内部会创建`emptyCtx`
+        + 初始化时创建Context
+    * `TODO`
+        + 内部会创建`emptyCtx`
+        + 在本来外层应该传递Context但外层没有传递的时候使用
+    * `WithCancel`
+        + 可以把一个Context包装成cancelCtx，并提供一个取消函数
+        + `func WithCancel(parent Context) (ctx Context, cancel CancelFunc)`
+    * `WithDeadline`
+        + 可以把一个Context包装成timerCtx，指定一个时间点
+        + `func WithDeadline(parent Context, d time.Time) (Context, CancelFunc)`
+    * `WithTimeout`
+        + 可以把一个Context包装成timerCtx，接受一个时间段
+        + `func WithTimeout(parent Context, timeout time.Duration) (Context, CancelFunc)`
+    * `WithValue`
+        + 可以给一个Context附加一个键值对信息
+        + `func WithValue(parent Context, key, val interface{}) Context`
+
+
 ### 常见的控制并发的两种方式
 
 - 1. WaitGroup
