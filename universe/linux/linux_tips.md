@@ -61,7 +61,7 @@ a1 a2 a3 as input to read process
 
 ### Grep
 
-`grep [option] file1 file2...`
+`grep [option] file1 file2...`，support base regular expression，`egrep` or `grep -E` support extended Regex
 
 The most commonly used
 | options  | description                    |
