@@ -114,7 +114,7 @@ tags: linux
 
 `VARNAME=VALUE`
 
-- 引用：`$VAENAME` or `${VARNAME}`
+- 引用：`$VAENAME` or `${VARNAME}`，注意`$()`是引用执行结果，而`{}`才是引用内容
 - 环境变量：作用域为当前shell或器子进程
     * 用`export`导出，`export var=value`
 - 位置变量
