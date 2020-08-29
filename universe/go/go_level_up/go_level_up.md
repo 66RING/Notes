@@ -9,6 +9,42 @@ tags: go
 使用go test，文件名格式有要求`XXX_test.go`
 
 
+## go工具使用
+
+- `go <command> [arguments]`
+    * build, 编译
+    * install，区别与build，install会编译后将输出文件打包成库放在pkg下
+    * fmt，把所有代码标准化/格式化编码风格
+    * test，运行当前包目录下的tests
+        + 一般以`XXX_test.go`位文件名
+
+
+### Test写法
+
+- 每个test文件必须引入`testing`
+- test文件下的每一个test case必须以Test开头并符合TestXxx形式，否则go test会直接跳过测试不执行
+- `test case`的入参为`*testing.T`或`b *testing.B`
+    * `T`普通入参
+    * `B`如果是测试性能的test
+- `t.SkipNow()`跳过当前test，并且直接PASS处理，继续下一个test
+    * 必须写在第一行
+- test的顺序
+    * go并不会保证多个TestXxx是顺序执行的，但通常是顺序执行
+    * 使用`t.Run`来执行subtests可以做到控制test输出以及test顺序
+    * 使用TestMain作为初始化test，并使用`m.Run()`来调用其他tests可以完成一些需要初始化的testing，比如数据库连接，文件打开等
+
+
+#### Test之benchmark
+
+`go test -banch=.`
+
+- benchmark函数一般以Benchmark开头
+    * `func BenchmarkXxx(b *testing.B)`
+- benchmark的case一般会跑b.N次，而且每次执行都会如此
+- 在执行过程中会根据实际case的执行时间是否稳定增加b.N的次数以达到稳态
+    * 由于b.N会动态改变，所以要测试的函数必须是有稳态的，否则bench可能不会停止
+
+
 ## 杂项
 
 ###  字符串变量结构
