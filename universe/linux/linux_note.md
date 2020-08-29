@@ -125,6 +125,9 @@ tags: linux
     * `$#`，参数个数
     * `$*`，参数列表
     * `$@`，参数列表
+- 声明`declare [OPTION] VAR=VALUE`
+    * `declare -i SUM=0`，声明整形变量SUM
+    * `declare -x A=0`，声明export变量A
 
 
 ### 条件判断
@@ -158,3 +161,50 @@ fi
     * `-f FILE`，是否普通文件
     * `-d FILE`，是否为目录
     * `-r/w/x`，是否可读写执行
+
+
+### 文本处理
+
+#### sed
+
+流编辑器(Stream EDitor, sed)。行编辑器。默认将输出到屏幕
+
+`sed [option] 'AddressCommand' file...`
+
+- option
+    * `-n`静默模式，不再显示模式空间中的内容
+    * `-i`修改原文件
+    * `-r`使用扩展正则表达式
+- Address:
+    * 1. Startline,Endline
+        + \$ 表示最后一行
+    * 2. /RegExp/
+    * 3. /pattern1/,/pattern2/
+        + 从被1匹配到的行开始到被2匹配的行结束
+    * 4. Startline, +N
+        + 从起始行开始向后N行
+- Command
+    * `d`删除
+        + 如`sed 1,2d`
+    * `p`显示符合条件行
+    * `a string`在指定行后追加
+    * `i string`在指定行前面加
+    * `r FILE`将指定文件的内容添加都符号条件的行
+    * `w FILE`将地址指定的范围的行保存到指定文件中
+    * `s/pattern/string/[opt]`查找并替换
+        + `g`全局替换
+        + `i`忽略大小写
+        + 分隔符号不一定是`/`也可是`@, #, ~...`等
+    * 引用匹配串
+        + `&`整个串
+        + `\1`第1组
+
+
+### 生成列表
+
+`seq [OPTION] [FIRST] [INCREMENT] LAST`
+
+
+
+
+
