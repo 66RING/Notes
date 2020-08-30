@@ -78,6 +78,20 @@ tags: linux
     * `[]`：指定范围内的任意单个字符
     * `[^]`：指定范围外的任意单个字符
     * 特殊字符，形如`[:punct:]`。`[:punct:]`所有的标点符号
+- 生成列表
+    * `seq [OPTION] [FIRST] [INCREMENT] LAST`
+- `xargs`
+    * 从标准输入接收命令并执行
+- `w`
+    * 显示已登录的用户
+- `last`
+    * 显示登录日志，即显示`/var/log/wtmp`文件
+- `lastb`
+    * 显示错误的登录日志，即显示`/var/log/btmp`文件
+- `lastlog`
+    * 显示每一个用户最近一次的成功登录信息
+- `basename`
+    * 显示文件的基路径名
 
 
 ## 管道及IO重定向
@@ -130,7 +144,7 @@ tags: linux
     * `declare -x A=0`，声明export变量A
 
 
-### 条件判断
+### 条件分支
 
 ``` shell
 if expression; then
@@ -149,7 +163,7 @@ fi
     * 因为if语句取的是表达式执行状态的结果，所以如果条件判断是命令则不需要中括号，如`if test expression; then`
 - shell中进行算数运算
     * **shell把所有的变量都当作字符**，所以要进行算数运算需要额外操作
-    * 1. `let`，见`help let`。如`c=$a+$b`
+    * 1. `let`，见`help let`。如`let c=$a+$b`
     * 2. `$[expression]`。如`c=$[$a+$b]`
     * 3. `$(())`。如`c=$(($a+$b))`
     * 4. `expr expression`，表达式中，各操作数和操作符直接要有空格，且要使用命令引用。因为本质是调用`expr`程序。如`c=$(expr $a + $b)`
@@ -161,6 +175,35 @@ fi
     * `-f FILE`，是否普通文件
     * `-d FILE`，是否为目录
     * `-r/w/x`，是否可读写执行
+- 组合测试条件
+    * `-a`，逻辑与
+    * `-o`，逻辑或
+    * `!`，非
+    * 也可以使用`[ expression ] || [ expression ]`
+
+
+#### switch case
+
+``` bash
+case SWITCH in
+    value1)
+        statement
+        ...
+        ;;
+    value2|value3)
+        statement
+        ...
+        ;;
+    [0-9])
+        statement
+        ...
+        ;;
+    *)
+        statement
+        ...
+        ;;
+esac
+```
 
 
 ### 文本处理
@@ -195,14 +238,34 @@ fi
         + `g`全局替换
         + `i`忽略大小写
         + 分隔符号不一定是`/`也可是`@, #, ~...`等
+        + `%`全文查找
     * 引用匹配串
         + `&`整个串
         + `\1`第1组
 
 
-### 生成列表
+### 特殊权限
 
-`seq [OPTION] [FIRST] [INCREMENT] LAST`
+- SUID：文件运行时，相应进程的属主是程序文件自身的属主，而非启动者
+    * `chmod u+s FILE`
+    * `chmod u-s FILE`
+    * 如果FILE本身就有执行权限，则SUID显示为s，否则为S
+- GUID：文件运行时，相应进程的属组是程序文件自身的属组，而非启动者所属的基本组
+    * `chmod g+s FILE`
+    * `chmod g-s FILE`
+- Sticky：在一个公共目录，每个用户都可以创建文件，删除自己的文件，但不能删除别人的文件
+    * `chmod o+t DIR`
+    * `chmod o-t DIR`
+- 也可用`111`，二进制表示
+
+- FACL, Filesystem Access Control List
+    * `setfacl OPTION FILE`
+        + `-m`，设定
+            + `u:UID:perm`
+            + `g:GID:perm`
+        + `-x`，取消设定
+    * `getfacl FILE`
+
 
 
 
