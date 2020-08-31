@@ -267,6 +267,78 @@ esac
     * `getfacl FILE`
 
 
+## 文件系统
+
+### 创建设备节点
+
+`mknod`
+
+``` shell
+                         主设备号  次设备号             
+crw-rw----+ 1 root video      81,   2   Aug 31 17:04 video2
+```
+
+
+### 文件系统
+
+文件系统类型众多，接口可能各异，软件开发不可能要为每种文件系统的不同接口编写代码，那就本末倒置了。所以 **Linux使用VFS(虚拟文件系统)作为翻译官** 以支持众多文件系统。
+
+linux常用的文件系统有ext3、ext4、xfs...
+
+创建文件系统：`mkfs`
+
+- 格式化
+    * 高级格式化：创建文件系统`mkfs`
+
+
+### 内存
+
+linux使用线性虚拟内存做中介，从虚拟内存映射到物理内存。当物理内存满时，将闲置的程序内存放到交换空间。
+
+查看内存以及交换空间`free`，默认单位是字节，`free -m`以兆为单位显示。
+
+- 交换空间扩容
+    * 1. 新建分区
+    * 2. 创建交换分区文件系统`mkswap /path/dev`
+    * 3. 启用交换空间`swapon /path/dev`，关闭交换分区`swapoff /path/dev`
+
+
+### dd命令
+
+`man dd` conver and copy a file，转换并复制文件。取别于cp，cp是以文件为单位复制，而dd复制的是底层是数据流。cp复制文件需要将文件从文件系统读取到内存，然后再从内存复制到文件系统的其他位置。而dd复制相当于直接复制文件的二进制代码。
+
+dd的好处是可以只复制文件的某一部分。
+
+- `dd if=<src> of=<tar>`
+    * dd备份
+        + `dd if=/dev/sda of=/mnt/usb/mdr.bak bs=512 count=1`
+        + `dd if=/mnt/usb/mdr.bak of=/dev/sda bs=512 count=1`
+        + 每次复制512byte，共复制1次
+    * 用dd做磁盘镜像
+        + `dd if=/path/dev of=/path/xxx.iso bs=1M count=1024`
+        + 还可以用来做磁盘性能测试
+
+
+### fstab文件
+
+文件系统配置文件`/etc/fstab`文件系统表。初始化时会自动挂载此文件中定义的每个文件系统
+
+```
+要挂载的设备 挂载点 文件系统类型 挂载选项 转储频率 文件系统检测次序
+    转储频率 表示多长时间(天)做次备份
+    文件系统检测次序 只有根可以为1
+```
+
+
+### mount命令
+
+- `mount DEVICE MOUNT_POINT`
+    * `-o loop`挂载本地回环设备。**如iso镜像**
+    * `-a`挂载定义在fstab中的所有文件系统 
+
+当`umount`busy时，可以使用`fuser -v /mount/point`查看谁在访问。使用`fuser -km /mount/point`杀死所有进程
+
+
 
 
 
