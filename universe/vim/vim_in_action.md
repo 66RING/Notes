@@ -24,6 +24,12 @@ tags: vim
 | c-z               | 挂起vim,命令行下:$ fg可以恢复,jobs查看挂起的进程 |
 | c-a/c-x           | 数字加/减1                                       |
 | {}                | 跳转到上一个/下一个段落                          |
+| q:, q/, q?        | 打开命令历史                                     |
+| gv                | 选择上一次的选择                                 |
+| g <c-a>/<c-v>     | visual mode下                                    |
+| :g/regex/ex       | run the Ex command only on teh line that match   |
+| :v/regex/ex       | run the Ex command only on teh line not match   |
+| :windo {ex}      | run ex on all windows  |
 
 
 ## 查找
