@@ -85,6 +85,14 @@ git commit // 会打开文件让你添加描述
 git commit -m "描述" // 快捷添加描述提交
 ```
 
+
+### PR
+
+- 1. fork from rep
+- 2. make some change on a new branch of the fork rep
+- 3. commit and pr
+
+
 ### 不让git管理指定文件
 
 ```
