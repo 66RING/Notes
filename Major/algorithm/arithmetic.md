@@ -558,6 +558,7 @@ void func(Node* head){
                 continue;
             }else{  // 第二次来此节点
                 mostRight.right = nullptr
+                // cur = cur.right; //跳过or not
             }
         }
         cur = cur.right;
@@ -871,6 +872,24 @@ if(MST中边不够V-1条)
     * 妙：通过交换位置维护已选数，回溯时再换回来
         + 1. 优化空间，不需要而外空间保存已选
         + 2. 优化未选数查询，交换后已选的数都排在了前头，未选的数从剩余长度开始就是
+
+``` c
+void backtrack(vector<vector<int>>& res, vector<int>& output, int first, int len){
+    // 所有数都填完了
+    if (first == len) {
+        res.emplace_back(output);
+        return;
+    }
+    for (int i = first; i < len; ++i) {  // first表示要插入的位置，i表示要选择插入的对象
+        // 使用交换来维护已选数组
+        swap(output[i], output[first]);
+        // 继续递归填下一个数
+        backtrack(res, output, first + 1, len);
+        // 撤销操作
+        swap(output[i], output[first]);
+    }
+}
+```
 
 
 # 位运算
