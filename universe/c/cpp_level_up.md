@@ -933,7 +933,7 @@ void show(T value, Args... args){
 
 ## 使用	
 
-### Map	
+## Map	
 
 ### unordered\_map	
 
@@ -948,6 +948,11 @@ Hash.count(key);
 //删除	
 Hash.erase(key);	
 ```	
+
+## Queue
+
+### priority_queue
+
 
 ### 位运算符
 
@@ -971,4 +976,30 @@ Hash.erase(key);
 | ^=     | 按位异或且赋值运算符 |
 | \|=    | 按位或且赋值运算符   |
 
+
+### 伪函数Functor
+
+伪函数不是一个函数，而是一个类或结构体。伪函数 **必须充值`()`运算符** ,通过重载`()`运算符来执行函数。
+
+之所以需要伪函数是因为，在传递函数指针在函数内部调用函数，如果我们需要在函数使用一个全局变量，而不能通过在最外层设置全局变量(可能污染命名空间)，那么伪函数是类的属性就起到重要作用。
+
+``` 
+class Func{
+public:
+    Func(string str) : ss(str){}
+    void operator() (string str){
+        cout << str << " " << ss <<endl;
+    }
+private:
+    string str;  // 一旦类构造好，那它就是类的全局属性
+}
+
+void realFunc(string str, Func myfunc){
+    myfunc(str);  // 正式调用
+}
+
+int main(){
+    realFunc("hello", Func("ring")); // 传入时构造好
+}
+```
 

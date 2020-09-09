@@ -4,11 +4,6 @@ date: 2020-7-23
 tags: go
 ---
 
-## GoTest
-
-使用go test，文件名格式有要求`XXX_test.go`
-
-
 ## go工具使用
 
 - `go <command> [arguments]`
