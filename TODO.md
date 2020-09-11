@@ -22,5 +22,4 @@
 - react advance
     * https://reactjs.org/docs/accessibility.html
 - 算法实战
-    * ui框架
     * go -> ui
