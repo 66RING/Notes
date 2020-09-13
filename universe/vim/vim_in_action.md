@@ -158,3 +158,33 @@ tags: vim
     * Or `["x]p`
 - `:d q`：复制回寄存器
     * `["x]d{motion}` delete text move over [into register x], like`"qd3d`删除三行，到寄存器q中
+
+
+## 目录操作
+
+### 利用%进行文件操作
+
+只读寄存器%中储存有当前文件路径，通过关键字可以展开到绝对路径、所在目录等信息。
+
+``` vimscript
+:echo expand('%:t')  " 文件名
+:echo expand('%:p')  " 绝对路径
+:echo expand('%:p:h') " 所在目录
+:echo expand('%:p:h:t') " 所在目录名
+```
+
+ **p表示path，h表示head，t表示tail** 
+
+
+### 打开目录
+
+如果打开的是目录，则Vim会使用`Explore`打开。当然也可手动在一个文件中`:Explore`打开当前目录。
+
+- `:Sexplore`，水平分割打开目录
+- `:Vexplore`，垂直分割打开目录
+
+
+
+
+
+
