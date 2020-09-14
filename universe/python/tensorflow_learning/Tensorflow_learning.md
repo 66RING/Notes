@@ -624,12 +624,12 @@ grad2 = tape.gradient(loss,[w])  # 可调用多次
     - 常用于多分类问题，因为它把logits转换为prob
     - 区别于一般的转换成prob的方法，Softmax会把大的放大，小的缩小；拉大差距(sotf version of max)
     - 求导:把先把分子分母看做整体`f(x)和g(x)`然后相当于$\frac{\partial p_i}{\partial a_j}=\frac{f'(x)g(x)-f(x)g'(x)}{g(x)^2}$;注意i和j不同的情况要分开讨论
-        - 结果$
-        \frac{\partial p_i}{\partial a_j} = \begin{cases}
-        p_i(1-p_1), & \text{if } i=j  \\
-        -p_jp_i, & \text{if } i\neq j 
-        \end{cases}
-        $
+        - $$
+            \frac{\partial p_i}{\partial a_j} = \begin{cases}
+            p_i(1-p_1), & \text{if } i=j  \\
+            -p_jp_i, & \text{if } i\neq j 
+            \end{cases}
+          $$
 
 
 
