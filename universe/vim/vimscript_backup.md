@@ -1,5 +1,5 @@
 ---
-title: vimscript学习
+title: learn vimscript the hard way
 date: 2020-5-1
 tags: backup, vim, vimscript
 ---
