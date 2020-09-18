@@ -1,4 +1,5 @@
 - vim API
+    * lua 实现个eleline
     * https://neovim.io/doc/user/
     * https://neovim.io/doc/user/remote_plugin.html
     * `<Plug> <SNR> <SID>`
@@ -6,10 +7,10 @@
 - RPC
 - what is Travis CI
 - 算法
+    * 冗余连接II
+        + https://leetcode-cn.com/problems/redundant-connection-ii/
     * 解数独
         + https://leetcode-cn.com/problems/sudoku-solver/
-    * N皇后
-        + https://leetcode-cn.com/problems/n-queens/solution/nhuang-hou-by-leetcode-solution/
     * 有效状态自动机
         + https://leetcode-cn.com/problems/n-queens/submissions/
 - **平衡二叉树(AVL)，字串匹配**
@@ -27,3 +28,4 @@
     * https://reactjs.org/docs/accessibility.html
 - 算法实战
     * go -> ui
+- 如何做一个终端模拟器
