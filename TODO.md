@@ -3,8 +3,8 @@
     * https://neovim.io/doc/user/
     * https://neovim.io/doc/user/remote_plugin.html
     * `<Plug> <SNR> <SID>`
-- IRC
-- RPC
+- go语言圣经
+    * 
 - what is Travis CI
 - 算法
     * 冗余连接II
