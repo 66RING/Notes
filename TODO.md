@@ -1,10 +1,11 @@
 - vim API
-    * lua 实现个eleline
+    * lua实现个eleline
+    * lua实现一个nvim-fold
     * https://neovim.io/doc/user/
     * https://neovim.io/doc/user/remote_plugin.html
     * `<Plug> <SNR> <SID>`
 - go语言圣经
-    * 
+    * https://books.studygolang.com/gopl-zh/ch4/ch4-06.html
 - what is Travis CI
 - 算法
     * 冗余连接II
