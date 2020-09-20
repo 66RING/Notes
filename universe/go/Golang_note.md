@@ -323,6 +323,8 @@ string:=strconv.FormatInt(int64,10)
 
 `go func{}`以并发形式执行而不需等待执行完成
 
+当一个goroutine尝试在一个channel上发送(`ch<- expression`)或接收(`<-ch`)时，这个goroutine会阻塞在调用处，直到另一个goroutine从这个channel中接受或发送。
+
 
 ### 箭头符:\<-
 
