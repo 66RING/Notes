@@ -873,4 +873,54 @@ go worker(valueCtx)
 - Context是线程安全的，可以放心的在多个goroutine中传递
 
 
+## go语言圣经
+
+### 复合数据结构
+
+#### 文本和HTML模板
+
+`text/template`和`html/template`等模板包提供了一个将变量值填充到一个文本或HTML格式的模板机制。方便完成简复杂的格式打印
+
+一个模板是一个字符串或一个文件，里面包含了一个或多个有双花括号包含的`{{action}}`对象。每个action都包含一个 **用模板语句书写的表达式** 。模板语言包含通过选择结构体的成员、调用函数方法、流程控制和range循环语句。
+
+``` go
+const templ = `{{.TotalCount}} issues:
+{{range .Items}}----------------------------------------
+Number: {{.Number}}
+User:   {{.User.Login}}
+Title:  {{.Title | printf "%.64s"}}
+Age:    {{.CreatedAt | daysAgo}} days
+{{end}}`
+```
+
+- action基本语法
+    * "."是action中的**当前值** 概念，被初始化位调用模板时的参数
+    * `{{.TotalCount}}`表示结构体中的TotalCount成员，以默认值打印
+    * `{{range .Items}}`和`{{end}}`对应一个循环action，它们之间的内容会被展开多次，循环每次迭代的当前值对应items元素
+    * `|`类似pipe，将前一个表达式的结果作为后一个函数的输入
+        + `printf`是一个内置的函数
+        + `daysAgo`是一个自己定义的函数`func daysAgo(t time.Time) int{}`
+- 生成模板输出需要两个处理步骤
+    * 分析模板并转换为内部表示，然后基于指定的输入执行模板
+        ``` go
+        report, err := template.New("report").
+            Funcs(template.FuncMap{"daysAgo": daysAgo}).
+            Parse(templ)
+        if err != nil {
+            log.Fatal(err)
+        }
+        ```
+        + `template.New`创建并返回一个模板
+        + `Func`方法将`daysAgo`等自定义函数注册到模板中，并返回模板
+        + `Parse`函数分析模板
+        +  **如果模板解析失败将是一个致命错误**，可以使用`template.Must`辅助函数化简这个致命错误的处理`template.Must(template.New())`
+    * 使用模板
+        + `report.Execute(os.Stdout, YourObj)`
+- `html/template`使用同理，这个包已经自动将特殊字符转意了
+    * 如果使用`text/template`生成html模板，则如果有参数中有`<link>...</link>`等字符，则生成到html上将是`<a><link>...</link></a>`，导致html结构改变。而使用`html/template`会自动转意，解决这个问题
+
+
+
+
+
 
