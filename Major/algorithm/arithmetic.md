@@ -586,7 +586,6 @@ void func(Node* head){
 - 有两个孩子
     - 找到左子树的最大或右子树的最小替换被删除节点...有效降低树的高度
 
-
 ``` c 
 BinTree Delete( BinTree BST, ElementType X ) 
 { 
@@ -621,6 +620,10 @@ BinTree Delete( BinTree BST, ElementType X )
     return BST;
 }
 ```
+
+#### BST的性质
+
+- 1. **BST的中序遍历是一个非递减的有序序列**
 
 
 ### 平衡二叉树
