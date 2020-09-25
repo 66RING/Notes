@@ -8,6 +8,7 @@ tags: vim
 
 
 ## 杂项
+
 | 操作              | 描述                                             |
 |-------------------|--------------------------------------------------|
 | o                 | 切换高亮中光标所在的端点                         |
@@ -30,6 +31,15 @@ tags: vim
 | :g/regex/ex       | run the Ex command only on teh line that match   |
 | :v/regex/ex       | run the Ex command only on teh line not match   |
 | :windo {ex}      | run ex on all windows  |
+
+
+## 状态保存
+
+| command    | action                                                                                |
+|------------|---------------------------------------------------------------------------------------|
+| :mkview    | 保留当前buffer的一些状态，如fold状态，小而精                                          |
+| :loadview  | 恢复当前buffer，mkview保留的状态                                                      |
+| :mksession | 保留当前vim状态成.vim文件，包括所有的window等，大而全。由于是.vim，可以通过source恢复 |
 
 
 ## 查找
