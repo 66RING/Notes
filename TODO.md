@@ -1,15 +1,18 @@
+- 用morris遍历改进以下
+    * https://leetcode-cn.com/problems/convert-bst-to-greater-tree/submissions/
 - vim API
     * lua实现个eleline
-    * lua实现一个nvim-fold
     * https://neovim.io/doc/user/
     * https://neovim.io/doc/user/remote_plugin.html
     * `<Plug> <SNR> <SID>`
 - go语言圣经
-    * https://books.studygolang.com/gopl-zh/ch4/ch4-06.html
+    * https://books.studygolang.com/gopl-zh/ch5/ch5.html
 - what is Travis CI
 - 算法
     * 冗余连接II
         + https://leetcode-cn.com/problems/redundant-connection-ii/
+    * 监控二叉树
+        + https://leetcode-cn.com/problems/binary-tree-cameras/
     * 解数独
         + https://leetcode-cn.com/problems/sudoku-solver/
     * 有效状态自动机
