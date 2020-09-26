@@ -27,7 +27,7 @@ mathjax: true
     - 按照$D_N > D_{N-1}...>D_1$进行排序,后一次会保持前一次的顺序,故可用
     - 但最终都要进行1排序
 
-``` c
+```c
 for(D=N/2;D>0;D/=2){  // 希尔增量序列。Hibbard增量序列:Dk=2^k-1...等等
     for(p=D;p<N;p++){  // 插入排序
         Tmp = A[p];
@@ -46,7 +46,7 @@ for(D=N/2;D>0;D/=2){  // 希尔增量序列。Hibbard增量序列:Dk=2^k-1...等
 
 **构建方法**
 
-``` c
+```c
 // 法一：上浮下沉法(小顶堆为例)
 // 从第一个非叶子节点开始，以它为子树，先自下而上把小的节点上浮，到达子树根节点后自上而下把大的节点下沉
 // 知道根节点结束
@@ -69,8 +69,6 @@ void createHeap(int *heap,int len){
         }
     }
 }
-
-
 // 法二：插入法
 // 从根节点出发，若父节点比插入元素大，则调整位置，如此循环，保证父节点小于子节点
 void createHeap(int *heap,int len){
@@ -123,7 +121,7 @@ void createHeap(int *heap,int len){
 按照此法输出就是拓扑排序  
 
 
-``` c
+```c
 Queuezero Q;   // 储存入度为零的,即前头没有限制了的
 
 for(i=0;i<|V|;i++){    // 记录最先的入度为0的节点
@@ -231,7 +229,7 @@ if(cnt!=|V|)
 
 利用前缀表的原理：对于一个子串(如：ababc)，所有可能的前缀:
 
-``` 
+```c
 a
 a b
 a b a
@@ -241,7 +239,7 @@ a b a b c
 
 我们需要找出每种可能中最长的、非本身的公共前后缀，因为如果前后缀相同的话，当后缀失去匹配时，可从前缀结束的地方开始匹配，而不是从头开始。
 
-``` 
+```c
 a               null    0
 a b             null    0
 a b a           a       1
@@ -262,7 +260,7 @@ a b a b c       null    0  <一般剔除字符串本身,在开头填-1
 
 对于ababc，可以划分为：
 
-``` c
+```c
 a
 长的1,不需要前缀表辅助匹配。得到前缀表：
 [-1]
@@ -301,7 +299,7 @@ for(j=1;j<len;j++){
 
 关于序列化和反序列化，如何序列化就如何反序列化。如使用先序遍历序列化，得到`1 2 3 # #`，那么也使用先序遍历反序列化得到
 
-``` c
+```c
     1
    2 
   3
@@ -310,7 +308,7 @@ for(j=1;j<len;j++){
 
 需要注意的是，一个节点的value表示完毕时，要给出特殊的字符序列化，否则序列化的结果可能会有歧义。
 
-``` c
+```c
     12     1
   3      23
 如果value表示完不给出特殊字符，那都是
@@ -334,13 +332,13 @@ Manacher依旧是穷举每一个位置，但是它会动态规划`f(i)`。遍历
     * 1. 当回文中心不在最右回文右边界中时，就暴力扩。
     * 2. 当回文子串，中心在最大回文右边界内，且对称点的回文左右半径在最右回文边界对应的回文左右半径内
         + 那就可以通过对称点直接得出改点的回文半径
-        ``` 
+        ```c
         [ ( o ) a ( o ) ]
         L   i   c   i   R
         ```
     * 3. 当回文子串，中心在最大回文右边界内，且对称点的回文左右半径不在最右回文边界对应的回文左右半径内
         + 那到R回文，因为y!=Y，不然最大回文半径还会扩大
-        ``` 
+        ```c
         ( y[ o   ) a     o ]Y
            L i     c     i R 
         ```
@@ -349,7 +347,7 @@ Manacher依旧是穷举每一个位置，但是它会动态规划`f(i)`。遍历
 
 #### Manacher模板
 
-``` c
+```c
 // 用#预处理好字符串m
 
 // 用rs储存回文半径
@@ -384,7 +382,7 @@ for(int i=1;i<len;i++){
     * 当窗口左边界向右，检查队列前面的值的index是否过期，过期则弹出
 - 这么一来，队列顶部的数就是当前窗口中的最大值
 
-``` 
+```c
 struct Node {
     val
     index
@@ -413,7 +411,7 @@ struct Node {
 
 对数组中的每个元素找出它左边最近的大于它的值和右边最近大于它的值。要求时间复杂度O(n)。如：
 
-``` 
+```c
 3 5 2 4 6
     左      右
 3   null    5
@@ -446,7 +444,7 @@ struct Node {
 
 给定一个整形矩阵map，其中的值只有0和1两种，求其中全是1的所有矩形区域中，最大的矩形区域中1的数量
 
-``` 
+```c
 1 0 1 1
 1 1 1 1
 1 1 1 0
@@ -493,9 +491,9 @@ struct Node {
             + 如果i，j匹配
             + 如果i，j不匹配
 
-暴力递归
+- 暴力递归
 
-``` c
+```c
 bool process(string& str, string& exp, int i, int j){
     if(j == exp.size()){
         return i == str.size();
@@ -516,7 +514,7 @@ bool process(string& str, string& exp, int i, int j){
 }
 ```
 
-动态规划
+- 动态规划
 
 building...
 
@@ -539,7 +537,7 @@ Morris遍历是在空间复杂度为O(1)的情况下遍历树的方法。它利�
     * 2. 如果`mostright`的右指针指向cur，让cur右移，然后让其指向空
 - 3. 没有右孩子遍历结束
 
-``` c
+```c
 void func(Node* head){
     if(head==nullptr){
         return
@@ -567,6 +565,62 @@ void func(Node* head){
 ```
 
 
+#### Morris后序遍历
+
+Morris遍历在遍历右子树时无法一步一步后退，这会导致需要回溯时不是全部都能单步回溯。
+
+```c
+  1
+    \
+      2
+    /   \
+   5      3
+            \
+              4
+```
+
+后序遍历获得左字节点后就可输出，但是要在根节点前输出右子节点，需要外的操作。可以将整个"右斜"的树记录然后逆序输出，就是后序的结果。
+
+```cpp
+vector<int> postorderTraversal(TreeNode* root){
+    vector<int> ans;
+    TreeNode* mostRight;
+    TreeNode* head = new TreeNode(0);
+    head->left = root;
+    while(head){
+        mostRight = head->left;
+        if(mostRight){
+            while(mostRight->right && mostRight->right!=head){
+                mostRight = mostRight->right;
+            }
+            if(mostRight->right == nullptr){
+                mostRight->right = head;
+                head = head->left;
+                continue;
+            }else{
+                TreeNode* temp = head->left;
+                vector<int> rtree;
+                // 第二次访问节点时，其"孤立左节点"一定都已输出，且正是后序需要的在右节点前输出
+                // 遍历整个右长树，然后reverse就是后序的右节点和根节点的输出
+                while(temp!=mostRight){
+                    rtree.push_back(temp->val);
+                    temp = temp->right;
+                }
+                rtree.push_back(temp->val);
+                reverse(rtree.begin(), rtree.end());
+                for(auto i: rtree){
+                    ans.push_back(i);
+                }
+                mostRight->right = nullptr;
+            }
+        }
+        head = head->right;
+    }
+    return ans;
+}
+```
+
+
 ### 二叉搜索树
 
 - 左边孩子比根节点小
@@ -586,7 +640,7 @@ void func(Node* head){
 - 有两个孩子
     - 找到左子树的最大或右子树的最小替换被删除节点...有效降低树的高度
 
-``` c 
+```c 
 BinTree Delete( BinTree BST, ElementType X ) 
 { 
     Position Tmp; 
@@ -683,7 +737,7 @@ BinTree Delete( BinTree BST, ElementType X )
         + C和它的右子节点交换
         + C右子节点的左子树成为C的右子树
         + 右子变新爹，右子的左子变老爹的右子，老爹变新爹左子
-        ``` 
+        ```
         # LEFT-ROTATE(T, x)
         y = x.right
         x.right = y.left
@@ -763,7 +817,7 @@ BinTree Delete( BinTree BST, ElementType X )
 
 $T=O(V^3)$  
 
-``` c
+```c
 // 核心
 // 顶点i到顶点j,顶点间的最短路就在矩阵显示出来了
 for(k = 0;k<N;k++){
@@ -793,7 +847,7 @@ $T=E\log{E}$
 - 核心思想,每个顶点都是一棵树,把森林连成树
 - 找最短且不构成回路的边,又因为每个顶点都是一棵树,每个边都把森林连成树
 
-``` c
+```c
 MST={};  // 最小生成树
 E;   // 边集
 while(没够V-1条边&&E没空){
@@ -858,7 +912,7 @@ if(MST中边不够V-1条)
 
 给定一个 没有重复 数字的序列，返回其所有可能的全排列。
 
-``` 
+```
 输入: [1,2,3]
 输出:
 [
@@ -876,7 +930,7 @@ if(MST中边不够V-1条)
         + 1. 优化空间，不需要而外空间保存已选
         + 2. 优化未选数查询，交换后已选的数都排在了前头，未选的数从剩余长度开始就是
 
-``` c
+```c
 void backtrack(vector<vector<int>>& res, vector<int>& output, int first, int len){
     // 所有数都填完了
     if (first == len) {
@@ -929,7 +983,7 @@ $$
 
 ## 不用额外空间交换量整数的值
 
-``` c
+```c
 a = a0;
 b = b0;
 a = a^b;  // a=a0^b0, b=b0
@@ -971,8 +1025,58 @@ a = a^b;  // a=a0^b0^a0=b0, b=a0
     * 动态规划规定每一种递归状态下的计算顺序，依次进行计算
     * 动态规划严格规定计算顺序，存在进一步优化的可能
 
+building...
 
 
+# 大数据
+
+## Map-Reduce
+
+- Map
+    * 通过哈希函数把大任务分成子任务
+- Reduce
+    * 把子任务并发处理，然后合并结果
+- 注意点
+    * 备份的考虑，分布式存储的设计细节(多少备份合适)
+    * 任务分配策略与任务进度跟踪
+    * 多用户权限控制
+
+以下的经典用map-reduce解决问题的方案
+
+### 例题
+
+统计一篇文章中每个单词出现次数
+
+- 文章预处理，抓取有效单词
+    * 去除标点，去除连字符，处理缩写等
+- map阶段
+    * 对每个单词生成词频为一的记录，如(dog, 1), (cat, 1)
+    * 通过哈希函数将所有单词分成若干个子任务
+        + 每个子任务会包含若干种单词，但同一种单词不会被分配到不同子任务中
+        + 这样一来相同的都能被统计到
+- reduce阶段
+    * 所有子任务记录合并
+
+
+## 海量数据处理
+
+- 1. 分治，通过哈希函数将大任务分流
+    * 难点在于通讯、时间和空间的估算
+
+
+### 例题
+
+对10亿个ip地址排序，已知每个ip地址只会出现一次
+
+- 普通方法
+    * 每个ip转换成无符号整数
+    * 10亿个整数约占4G空间
+- bitmap
+    * 每个ip转换成无符号整数
+    * 申请一个$2^32$的bit类型的数组，空间约128m
+    * 如果整数k出现则把第k-1位bit描黑
+    * 从0位置遍历，把ip通过位置还原即可
+    
 
 
 
