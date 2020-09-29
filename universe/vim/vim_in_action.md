@@ -6,7 +6,6 @@ tags: vim
 
 # Vim实用技巧
 
-
 ## 杂项
 
 | 操作              | 描述                                             |
@@ -194,6 +193,26 @@ tags: vim
 - `:Vexplore`，垂直分割打开目录
 
 
+# Vim Doc File
+
+## Insert模式下的快速操作
+
+- 修正操作
+    * `<c-w>`，向后删除一个词
+    * `<c-u>`，删除整行
+- 从寄存器插入
+    * `<c-r>{reg}`
+    * `<c-r><c-r>{reg}`，不翻译特殊字符，如回车、退格等
+- 插入Digraphs
+    * `<c-k>{key}`，插入一个digraphs，如®等键盘没有的字符，具体key看`:digraphs`
+- 重复操作
+    * `<c-a>`，输入你上次在Insert模式下的输入
+    * `<c-@>`，输入你上次在Insert模式下的输入，然后退出Insert模式
+    * `<c-y>`，插入鼠标上方的字符
+- 快速执行普通模式
+    * `<c-o>{cmd}`
+- **Omni Completion**
+    * building, see `compl-omni-filetype` and `ft-c-omni`
 
 
 
