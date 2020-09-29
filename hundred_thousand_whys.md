@@ -13,6 +13,14 @@ Rust has a specfial  *Memory Management* , which is an **COMPILE-TIME memnory ma
 - Rust: Ideally not to manage pointers manually, it has a compile-time borrow check.
 
 
+## Diff in DOS, Mac and Unix file
 
+The old Teletype machine used two character to satrt a new line. One to move the carriage(return \<CR\>) back to first position.
+
+Back in the day, storage was expensive. Some people decided they did not need two character for end-of-line.
+
+- The Unix people decided they use `Line Feed` only for end-of-line
+- The Apple people decided they use `<CR>`
+- The Window forks decided to keep the old `<CR><LF>`
 
 
