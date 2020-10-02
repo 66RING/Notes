@@ -109,7 +109,7 @@ tags: vim
 | c-x,c-]     | tag completion                |
 | c-x,c-f     | filename completion           |
 | c-x,c-p/c-n | context-aware word completion |
-| c-x,l       | context-aware line completion |
+| c-x,c-l       | context-aware line completion |
 
 
 ## 寄存器
@@ -199,7 +199,7 @@ tags: vim
 
 - 修正操作
     * `<c-w>`，向后删除一个词
-    * `<c-u>`，删除整行
+    * `<c-u>`，向前删除整行
 - 从寄存器插入
     * `<c-r>{reg}`
     * `<c-r><c-r>{reg}`，不翻译特殊字符，如回车、退格等
