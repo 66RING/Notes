@@ -8,6 +8,7 @@ tags: lua
 
 类似python等脚本语言，在循环、方法、条件等语句需要使用end表示结束，因此不像python那样依靠缩进。
 
+- 解释器执行`lua <filename>`
 - 编译后执行：(不透露源码)
     * `luac x.lua`
     * `lua x.out`
