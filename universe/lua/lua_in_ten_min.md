@@ -1,5 +1,5 @@
 ---
-title: lua快速上手
+title: lua学习笔记
 date: 2020-7-23
 tags: lua
 ---
@@ -202,6 +202,39 @@ lua本身没有面向对象，但是可以通过某种方式实现
         end
         ```
 
+# Lua高级编程
+
+## metatable元表
+
+我们无法直接对table进行操作，lua提供元表允许我们改变table的行为，每个行为关联对应的元方法
+
+当lua试图对两个table进行操作时，先检查两者之一是否有元表，然后调用对应的方法
+
+- `setmetatable(table, metatable)`，把metatable设置位table的元表
+- `getmetatable(table)`，获取table的元表
+
+```lua
+mytable = {}
+mymetatable = {}
+setmetatable(mytable,mymetatable) -- 把 mymetatable 设为 mytable 的元表
+
+-- 也可一行实现
+mytable = setmetatable({},{})
+-- 然后获取元表来设置
+getmetatable(mytable)
+```
+
+## 元方法
+
+- `__index`方法
+    * 当访问table时，一个键没有值，则寻找`__index`中对应键的值或调用`__index`函数
+    * 如果`__index`是table，返回对应键的值，否则nil
+    * 如果`__index`是两个参数(table, key)的函数，返回执行结果
+- `__newindex`方法
+    * 当给table中一个缺少的索引赋值时，会执行`__newindex`方法(如果存在的话)，**而不给这个索引赋值**
+    * 如果`__newindex`是table，则最newindex中的table对应的索引赋值，而不对原table赋值
+    * 如果`__newindex`是方法，则调用之
+- `__add`...等元方法
 
 
 
