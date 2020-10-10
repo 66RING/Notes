@@ -10,7 +10,7 @@ mathjax: true
 # 基本操作
 
 ### 图片读取展示  
-``` python
+```python
 import cv2  # 引入OpenCV
 img = cv2.imread('path',1)  # 读取图片，0是灰图，1是彩图
 cv2.imshow('image',img)  # 'image'打开的窗体的标题，img展示的内容
@@ -20,7 +20,7 @@ cv.imread 过程：1文件读取 2封装格式解析 3数据解码 4数据加载
 
 ### 读写操作  
 #### 图片读写  
-``` python
+```python
 import cv2
 img = cv2.imread('path',1)  # 读取图片，0是灰图，1是彩图
 cv2.imwrite("path",img)  # 1,图片名 2.图片数据
@@ -36,7 +36,7 @@ cv2.imwrite("path.png",img,[cv2.IMWRITE_PNG_QUALITY,0])
 ```
 
 #### 操作像素
-``` python
+```python
 import cv2
 img = cv2.imread("img.jpg",1)
 # OpenCv读取图片是bgr(rgb倒过来)，左上角开始的坐标轴
@@ -57,7 +57,7 @@ img[x,y] = (b,g,r)
 # OpenCv  
 
 ### OpenCv模块结构  
-``` 
+```
 to be continued
 ```
 
@@ -68,7 +68,7 @@ to be continued
 
 #### 基本操作 
 ##### 概况
-``` python
+```python
 import tensorflow as tf
 # 定义常量
 data1 = tf.constant(2.5)  # 指定数据类型可以加参数(2,dtype=tf.int32)
@@ -97,7 +97,7 @@ with sees:
 ```
 
 ##### 类型
-``` python
+```python
 # tensorflow运算的每个类型都要是tensor
 # 转换为tensor,如 a=np.arange(1)
 aa = tf.convert_to_tensor(a,dtye=tf.int32) #dtype=数据类型
@@ -118,7 +118,7 @@ a.numpy()  # tensor:a 就变成了numpy
 ```
 
 ##### 创建tensor
-``` python
+```python
 a.convert_to_tensor()
 
 # 初始化
@@ -143,7 +143,7 @@ idx = rf.random.shuffle(idx)  # (就好比生成了10组随机的通道(每个�
 
 ##### 索引与切片  
 
-``` python 
+```python 
 # 索引
 # numpy风格的索引，如：
 a.shape() = [1,2,3,4]
@@ -195,7 +195,7 @@ tf.boolean_mask(a,mask=[True,True,False],axis = 3)  # shape = [4,28,28,2]
 ```
 
 ##### 维度变换
-``` python
+```python
 # a.shape = [4,28,28,3]
 tf.reshape(a,[4,784,3])  # 4*28*28*3  ==  4*784*3 才能保证所有数据充分利用
 # 如果先偷懒的话可以用-1
@@ -224,7 +224,7 @@ tf.squeeze(a,axis=2)  # 把第二维度去掉
 - expand without copying data:扩张了一个数据,但实际上并没有复制出来多份
 <img src="./static/broadcasting.png" style="zoom:50%">
 
-``` python
+```python
 tf.broadcast_to
 # ape=[3,5]
 aa = broadcast_to(a,[4,3,5])
@@ -245,7 +245,7 @@ aa.shape = [4,3,5]
 ```
 
 ##### 数学运算
-``` python
+```python
 # element-wise: +-*/
 # shape一样，对应元素运算
 # (一般的运算,非矩阵...吧)
@@ -262,7 +262,7 @@ aa.shape = [4,3,5]
 ```
 
 ##### 手写数字识别,你可能用到
-``` python
+```python
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import datasets
@@ -307,7 +307,7 @@ for epoch in range(10):   # 对整个数据集循环,反复使用用一个数据
 ```
 
 ##### 合并与拼接
-``` python 
+```python 
 c =tf.concat([a,b],axis=0)   # a和b第0维度合并
 # 在原有维度上累加,不能生成新的维度
 
@@ -334,7 +334,7 @@ tf.unstack(a,axis=3,num_or_size_splits=[2,2,3])   # 指定拆开,拆开的低0�
   - 一范数..等等
 	$${||x||}_1 = \sum_k{|x_k|}$$  
 
-``` python
+```python
 ###  这里讨论的都是向量的范数(非矩阵)
 tf.norm(a)  # 二范数
 tf.norm(a,ord=1,axis=1)  # 一范数,同时把某维度看做整体来做范数
@@ -362,7 +362,7 @@ tf,unique(a)
 ```
 
 ##### 张量排序
-``` python
+```python
 tf.sort(a,direction='DESCENDING')  # 降序,  direction='ASCENDING'就能升序
 tf.argsort(a,direction='DESCENDING')  # 降序,返回的是位置:如[最大值位置，次大..]
 # 同理可与gather配合
@@ -388,7 +388,7 @@ res.values  # 返回值
 ```
 
 ##### 填充与复制
-``` python
+```python
 # 填充 pad
 tf.pad(a,[[2,0],[0,1]])  # 行上边边填充2行下边0行;列左0右1
 #          ^行  ^列  
@@ -401,7 +401,7 @@ tf.tile(a,[1,2])  # 第一维复制一次(不变),第二维复制2次
 ```
 
 ##### 张量的限幅
-``` python
+```python
 # 限制最小值
 tf.maximum(a,2)  # 返回a,2间的最大值,故a不会小于2,限制的最小值
 # 限制最大值
@@ -428,7 +428,7 @@ tf.clipe_by_norm(a,15)  # 相当于除模后乘15,改变了a的模
 ```
 
 ##### 高级操作
-``` python
+```python
 # 筛选 mask = [True,False,True]
 tf.where(mask)  # 没有参数,返回tensor中值是True的值的对应坐标tensor
 tf.where(mask,A,B)  # True时对A采样,False时对B采样
@@ -452,7 +452,7 @@ point_x,point_y = tf.meshgrid(x,y)
 #### 神经网络与全连接层
 
 ##### 数据集的加载(小型)
-``` python
+```python
 # 数据集准备
 (x,y),(x_test,y_test) = keras.datasets.mnist.load_data()  # 获取mninst数据集,返回各有不同
 # 返回的是numpy的格式
@@ -479,7 +479,7 @@ db4 = db3.repeat()  # 无限重复
 ```
 
 ##### 全连接层
-``` python
+```python
 # 每个节点跟每个节点连接——Dense
 x = tf.random.normal([4,728])  # 输入
 net = tf.keras.layers.Dense(512)  # 创建输出512的层
@@ -499,7 +499,7 @@ network.trainable_variables   # list[],可训练参数
 ```
 
 ##### 输出方式
-``` python
+```python
 # 输出范围压缩
 # sigmod函数(同理relu)
 y = tf.sigmod(x)   # x属于R,y属于[0,1]
@@ -516,7 +516,7 @@ tf.softmax(a)
 ##### 损失函数的计算
 - MSE  
 $$loss=\frac{1}{N}\sum(y-out)^2$$
-``` python
+```python
 loss1 = tf.reduce_mean(tf.square(y-out))
 loss2 = tf.reduce_mean(tf.losses.MSE(y,out))
 # loss1 = loss2 等价
@@ -558,7 +558,7 @@ $$
 然后lr,w1,b2...,多次学习后发现loss越来越小,即q = p  
 - 在tensorflow中的使用
 
-``` python 
+```python 
 tf.losses.categorical_crossentropy(p,q) # 函数的形式
 tf.losses.BinaryCrossentropy()(p,q)  # 类的形式
 tf.losses.binary_crossentropy(p,q) # 函数的形式 
@@ -579,7 +579,7 @@ tf.losses.categorical_crossentropy(one_hot,prob)  # 等价但不推荐
 $$ w_n = w - lr \times \frac{\partial{loss}}{\partial{w}} $$
 - 在tensorflow中的使用
 
-``` python 
+```python 
 with tf.GradientTape() as tape:  # 把计算过程包在里面
     tape.watch([w,b])  # 如果参数不是tf.variable类型话要用这个函数声明
     loss = f(x)
@@ -660,7 +660,7 @@ $\frac{\partial y}{\partial x} = \frac{\partial y}{\partial u}\frac{\partial u}{
     - 在代码中写入`summary_writer = tf.summary.create_file_writer(DIR)`
     - 拿到`summary_writer`后就可以忘里面喂数据
 
-``` python
+```python
 # 1,喂数据点
 with summary_writer.as_default():
     tf.summary.scalar('NAME1', float(LOSS), step=STEP)  # (图的名字,数据,坐标(默认是x轴))
@@ -699,7 +699,7 @@ with summary_writer.as_default():
 - Evaluate,测试
 - Predic,拿创建好的模型来预测
 
-``` python
+```python
 ### 一般的流程
 epoch in range(num):
     for step, (x, y) in enumerate(db):
@@ -756,7 +756,7 @@ pred = network(x)
     - compile/fit/evaluate
     - Sequential也是继承自该类，所以自定义的网络应该继承这个
 
-``` python
+```python
 class MyDense(layers.Layer):    # 自定义层继承
     
     def __init__(self, inp_dim, outp_dim):
@@ -786,7 +786,7 @@ layers.Dense(256, activation=tf.nn.relu),
     
 **save/load weights**
 
-``` python
+```python
 # save
 model.save_weights('PATH')
 
@@ -797,7 +797,7 @@ model.load_weights('PATH')
 
 **save/load entire model**
 
-``` python
+```python
 # save
 model.save('PATH')
 
@@ -807,7 +807,7 @@ model = tf.keras.models.load_model('PATH')  # 不需要人工创建网络
 
 **saved model**
 
-``` python
+```python
 # save
 tf.saved_model.saved(model, 'PATH')   # 标准的，可供其他模型使用的保存
 
@@ -841,7 +841,7 @@ f = imported.signature['serving_defaut']
 所以第三份是用来防止这种情况发生的，不参与训练的，最终检验模型的数据集
 
 
-``` python
+```python
 network.compile(
         optimizer=optimizers.Adam(lr=0.01),   
         loss=tf.loss.CategoricalCrossentropy(from_logits=True),   
@@ -861,7 +861,7 @@ network.evaluate(ds_val)   # test set
 ##### K-fold cross-validation
 由上面知，test set是完全不能动的，所以在切分的时候train set和val set可以随机的切分，可以防止网络记忆特性
 
-``` python
+```python
 # 在tensorflow中可以表现为
 shuffle(db)  # 打散
 splices()   # 切割
@@ -880,7 +880,7 @@ network.fit(db, validation_split=0.1)   # 按照9:1随机切分
     - loss加上lambda约束的一范式
     - $J(W;x,y)+\frac{1}{2} \times ||W||^2$
 
-``` python
+```python
 # 法一：在一层网络中添加kernel_regularizer参数
 keras.layers.Dense(16,
                     kernel_regularizer=keras.regularizers.L2(0.001)   # 0.001就是 lambda
@@ -900,7 +900,7 @@ loss = loss + 0.0001*loss_regularization
 ##### Momentum 动量
 由于梯度的更新，会有大幅的反复跳跃的现象，动量就是在更新方向的基础上结合上一阶段的方向进行梯度更新，从而使得更平缓，像踩刹车一样
 
-``` python
+```python
 optimizer = SGD(learing_rate=0.02, momentum=0.9)   # momentum 就在超参数lambda
 optimizer = RMSprop(learing_rate=0.02, momentum=0.9)
 optimizer = Adam(learing_rate=0.02,   # Adam没有momentum(内置),但有beta_1,beta_2
@@ -912,7 +912,7 @@ optimizer = Adam(learing_rate=0.02,   # Adam没有momentum(内置),但有beta_1,
 ##### Learning rate 学习率
 学习率动态调整来优化网络
 
-``` python
+```python
 optimizer = SGD(learing_rate=0.02)
 for epoch in range(100):
     # get loss
@@ -930,7 +930,7 @@ for epoch in range(100):
 ##### Dropout
 和overfitting的情况一样，为减少噪声的干扰，可以减少节点数(?矩阵里面的?),learning less to learning better
 
-``` python
+```python
 network = Sequential([layers.Dense(256, activation='relu'),
                       layers.Dropout(0.5),    # 0.5 rate to dropout
                       layers.Dense(256, activation='relu'),
@@ -940,7 +940,7 @@ network = Sequential([layers.Dense(256, activation='relu'),
 ```
 因为training和test的策略不同(training时为得到更好的w,b，而使用dropout的方法来减小overfitting,所以开启dropout，test是测试模型，所以不用开)
 
-``` python
+```python
 # training
 network(x, training=True)
 
@@ -972,7 +972,7 @@ $$
 - Stride
     - 把扫描的步长加大，就能减少输出的维度
 
-``` python
+```python
 layers.Conv2D(4, kernel_size=5, stride=1, padding='samd')  # 卷积核个数,5*5,步长,'same'可以保证输入维度等于输出
 ```
 
@@ -1130,7 +1130,7 @@ Both of they want to maximum and than get a nash equilibrium
 
 ### tensorflow运行机制
 
-``` python
+```python
 # 本质 tf = tensor + 计算图
 # tensor 数据
 # op 操作
@@ -1140,7 +1140,7 @@ Both of they want to maximum and than get a nash equilibrium
 
 ### 四则运算
 
-``` python
+```python
 # 如果是变量的话要先init
 tf.add(data1+data2)
 tf.multiply(data1,data2)
@@ -1155,7 +1155,7 @@ tf.get_default_session().run(dataCopy)
 
 ### 矩阵运算
 
-``` pyhon
+```pyhon
 # 数据装载
 x1 = tf.placeholder(tf.float32)
 x2 = tf.placeholder(tf.float32)
@@ -1234,7 +1234,7 @@ $$out = relu(h2@w_3 + b_3)$$
 
 tensorflow的弟弟版,因为他不能GPU计算
 ### 基本操作
-``` python
+```python
 x1 = np.array([第一行],[第二行]...)
 x1.shape   # 打印规模
 np.zeros([2,3])
@@ -1258,7 +1258,7 @@ x1*x2   # 加减乘除都是对应元素加减乘除
 
 ### 基本操作
 
-``` python
+```python
 x = np.array([1,2,3,4,5,6,7,8])
 y = np.array([1,2,3,4,5,6,7,8])
 
