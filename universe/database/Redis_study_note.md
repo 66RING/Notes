@@ -76,7 +76,7 @@ tags: redis
 
 ### 哈希
 
-结构: key -> (field -> value)
+语法: key -> (field -> value)。用于为哈希表中的字段赋值
 
 hash的所有命令都是h开头的
 | command             | desc                         | T(n) |
