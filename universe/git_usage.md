@@ -86,6 +86,7 @@ git push --set-upstream origin master
 或者
 git push -u origin master
 // 然后登录
+// push master分支到origin仓库
 
 4.记住密码
 git config credential.helper store
@@ -179,3 +180,105 @@ git把版本穿成一条时间线，每条时间线就是一个分支，每个�
 - 合并分支
     * `git merge <branch>`把指定分支合并到但前分支
 
+如果两个分支只形成一条时间线，则git可以`fast forward` "快速合并"，即`git merge dev`把HEAD和master的指针指向dev，即可
+
+```shell
+|
+* (master)
+|
+* dev
+```
+
+如果分支有各自的提交，则git无法执行"快速合并"
+
+```shell
+    |
+    * 
+    | \
+dev *  * master
+```
+
+
+#### 分支管理策略
+
+合并时，git会尽可能使用`Fast forward`模式，这模式下，删除分支后，会丢失部分分支信息。可以使用`--no-ff`参数来禁用`Fast forward`模式，以保留分支历史
+
+```shell
+初始情况
+|
+* master
+|
+* HEAD -> dev
+
+Fast forward合并
+|
+*
+|
+* HEAD -> dev, master
+
+no Fast forward合并
+|
+* 
+| \
+|  * dev
+| /
+*  HEAD -> master
+```
+
+
+#### 复制特定提交而不合并分支
+
+如果一个bug早期就存在了，那每个分支上这个bug都存在。git提供了复制特定提交到当前分支的功能`cherry-pick <commit_id>`
+
+这样一条命令就完成了修复bug，而不需要把分区合并
+
+
+### 保存工作区
+
+当你要修一个bug，但是你当前的工作没有完成(提交)时，使用`stash`功能可以把当前的工作现场保存起来。这样你转去修bug的时候就有一块干净的工作区了。
+
+- `git stash`
+    * 保存当前工作现场
+- `git stash list`
+    * 查看以保存工作现场
+- 工作现场恢复
+    * `git stash apply [stash_id]`
+        + 这种恢复后不会删除stash内容，需要`git stash drop`删除
+    * `git stash pop [stash_id]`
+        + 恢复的同时删除
+    * stash是栈的结构，所以apply和drop的时候默认都是操作栈顶的stash
+
+
+### 标签管理
+
+tag就是给commit起一个容易记住的名字，tag和commit是绑定在一起的
+
+- `git tag <name> [commit_id]`
+    * 给一个commit一个为名tag，默认是当前commit
+- `git tag -a <name> -m <desc> [commit_id]`
+    * 给`<commit_id>`(默认当前commit)创建一个带有说明信息`<desc>`的`<name>`标签
+- `git show <tagname>`
+    * 显示tag信息
+- `git tag -d <tagname>`
+    * 删除标签
+
+ **注意** ：标签是按字母排序的，而不是commit是时间顺序
+
+标签只会储存在本地，如果要推送到远程，使用`git push <origin> <tagname>`
+
+一次性推送所有标签`git push <origin> --tags`
+
+删除远程标签(前提是本地标签已经删除):`git push <origin> :refs/tags/<tagname>`
+
+
+### 多人协作
+
+TODO
+
+
+### 配置别名
+
+
+## 搭建Git服务器
+
+todo
