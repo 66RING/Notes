@@ -1,4 +1,25 @@
-- 卡特兰数公式
+- KMP!!!!!!
+    * remake /home/ring/Documents/Note/Major/algorithm/arithmetic.md
+- 1, 2, 4, 8字节寄存器的命名规则
+- NOTE about linux创建虚拟硬盘
+- epoll和kqueue
+    * https://www.cnblogs.com/FG123/p/5256553.html
+    * https://www.zhihu.com/question/20122137
+- what is SDS
+- 李龙海
+    * https://faculty.xidian.edu.cn/LLH1/zh_CN/index.htm
+- 裴庆祺
+    * https://faculty.xidian.edu.cn/PQQ/zh_CN/index.htm
+
+
+
+- learn QEMU (kvm)
+    * https://zhuanlan.zhihu.com/p/48664113
+    * https://wiki.archlinux.org/index.php/QEMU
+- 深入浅出写代理
+    * https://zhuanlan.zhihu.com/p/28645724
+- GO http 获取表单
+- 找家实习
 - https://github.com/liuchengxu/vim-clap/issues/521
 - vim API
     * lua实现个eleline
@@ -8,16 +29,18 @@
     * https://books.studygolang.com/gopl-zh/ch5/ch5.html
 - `mysql.Prepare()`预编译防注入的原理
 - 算法
+    * 树中距离之和
+        + https://leetcode-cn.com/problems/sum-of-distances-in-tree/
     * 秋叶收藏集
         * https://leetcode-cn.com/problems/UlBDOe/submissions/
     * 冗余连接II
         + https://leetcode-cn.com/problems/redundant-connection-ii/
-    * 监控二叉树
-        + https://leetcode-cn.com/problems/binary-tree-cameras/
     * 解数独
         + https://leetcode-cn.com/problems/sudoku-solver/
     * 有效状态自动机
         + https://leetcode-cn.com/problems/n-queens/submissions/
+    * 监控二叉树
+        + https://leetcode-cn.com/problems/binary-tree-cameras/
 - **平衡二叉树(AVL)，字串匹配**
 - 转用另一个补全框架
     * https://github.com/nvim-lua/completion-nvim
