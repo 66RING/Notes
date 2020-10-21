@@ -113,7 +113,7 @@ git commit -m "描述" // 快捷添加描述提交
     * `git switch -c <branch_name>`或`git checkout -b <branch>`
 - 从其他仓库下载(先同步)
     * `git fetch upstream`
-    * `git rebase`
+    * `git rebase upstream/<branch>`
     * 然后提交到自己仓库提pr`git push <origin> <branch>`
 - 修改代码
     * 提交当前分支到自己仓库
@@ -181,6 +181,8 @@ HEAD表示当前版本
 ### 分支管理
 
 git把版本穿成一条时间线，每条时间线就是一个分支，每个版本就是一个节点。当创建新分支dev时相当于创建了一个dev的指针指向当前节点，再把HEAD指向dev，然后就可以以此为基础往后建立时间线。
+
+缺省前缀(如`<remote>/<branch>`)的操作，默认对本地的branch操作，所以`fetch upstream`后log还看不到本地commit的变化，因为还在upstream里
 
 - 查看分支信息和commit
     * `git log --graph --pretty=oneline --abbrev-commit`
@@ -286,6 +288,23 @@ tag就是给commit起一个容易记住的名字，tag和commit是绑定在一�
 
 
 ### 多人协作
+
+- 查看分支信息
+    * `git remote -v`
+- 推送分支
+    * `git push <origin> <branch_name>`
+
+当小伙伴 **clone时，默认只能看到本地的master分支**。要在dev分支上开发就需要建立远程`origin`的`dev`分支到本地：
+
+```shell
+git checkout -b <local_branch> <origin>/<remote_branch>
+# 不能缺少<local_branch>，不然就变成了创建分支
+```
+
+如果git提示`no tracking information`，则说明本地分支和远程分支的连接关系没有建立，使用命令`git branch --set-upstream-to <branch_name> origin/<branch_name>`远程的branchname建立连接到本地的branchname
+
+
+#### Rebase
 
 TODO
 
