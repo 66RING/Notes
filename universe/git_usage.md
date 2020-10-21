@@ -104,9 +104,21 @@ git commit -m "描述" // 快捷添加描述提交
 
 ### PR
 
-- 1. fork from rep
-- 2. make some change on a new branch of the fork rep
-- 3. commit and pr
+- fork到自己仓库
+- clone自己仓库到电脑
+- 与源代码仓库建立连接
+    * `git remote add upstream <url>`
+    * 查看是否成功建立连接`git remote -v`
+- 创建分支
+    * `git switch -c <branch_name>`或`git checkout -b <branch>`
+- 从其他仓库下载(先同步)
+    * `git fetch upstream`
+    * `git rebase`
+    * 然后提交到自己仓库提pr`git push <origin> <branch>`
+- 修改代码
+    * 提交当前分支到自己仓库
+        + `git push origin <branch_name>`
+    * 提交pr
 
 
 ### 不让git管理指定文件
@@ -170,6 +182,8 @@ HEAD表示当前版本
 
 git把版本穿成一条时间线，每条时间线就是一个分支，每个版本就是一个节点。当创建新分支dev时相当于创建了一个dev的指针指向当前节点，再把HEAD指向dev，然后就可以以此为基础往后建立时间线。
 
+- 查看分支信息和commit
+    * `git log --graph --pretty=oneline --abbrev-commit`
 - 建立分支
     * `git branch <branch_name>`
     * `git switch -c`
