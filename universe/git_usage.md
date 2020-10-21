@@ -182,7 +182,7 @@ HEAD表示当前版本
 
 git把版本穿成一条时间线，每条时间线就是一个分支，每个版本就是一个节点。当创建新分支dev时相当于创建了一个dev的指针指向当前节点，再把HEAD指向dev，然后就可以以此为基础往后建立时间线。
 
-缺省前缀(如`<remote>/<branch>`)的操作，默认对本地的branch操作，所以`fetch upstream`后log还看不到本地commit的变化，因为还在upstream里
+缺省前缀(如`<remote>/<branch>`)的操作，默认对本地的branch操作，所以`fetch upstream`后log还看不到本地commit的变化，因为还在upstream里用`git log <remote>/<bracn>`查看
 
 - 查看分支信息和commit
     * `git log --graph --pretty=oneline --abbrev-commit`
