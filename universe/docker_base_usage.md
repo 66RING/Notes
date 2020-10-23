@@ -20,10 +20,24 @@ tags: docker
 ### 配置容器
 
 - 1. 交互式编辑
-    * `docker exec -it <ID|NAME> </bin/bash>`，交互式进入，安装编辑器编辑对应的配置文件
+    * `docker run -it <ID|NAME> </bin/bash>`，交互式进入，安装编辑器编辑对应的配置文件
+        + 见`man docker <COMMAND>`
+        + `-i`表示启动一个可以交互的容器
+        + `-t`表示分配一个pseudo-tty
+        + `-d`(detach)表示后台启动
+    * 在一个TCP端口上绑定一个服务
+        + `-p ip:[hostPort]:containerPort | [hostPort:]containerPort`
+        + `-P`暴露容器所有端口到宿主机上的随机端口
     * 安装ssh服务后，使用ssh进入编辑
         + 1. `apt-get install openssh-server`
         + 2. 修改配置文件，"PermitRootLogin without-password"去掉注释免密登录
         + 3. `service ssh start`
 - 2. `docker cp <CONTAINER:/path/to/conf> </source/file>`
+
+
+### 管理容器数据
+
+- 数据卷(volume)：
+    * `-v[=[[HOST-DIR:]CONTAINER-DIR[:OPTIONS]]]`
+    * TODO
 
