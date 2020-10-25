@@ -6,9 +6,9 @@ tags: vim, advanced
 
 ## \<SID\>
 
-> The string "<SID>" can be used in a mapping or menu.
+> The string `<SID>` can be used in a mapping or menu.
 >
-> When executing the map command, Vim will replace "<SID>" with the special key code <SNR>, followed by a number that's unique for the script, and an underscore.  Example: `:map <SID>Add` could define a mapping "<SNR>23\_Add".
+> When executing the map command, Vim will replace `<SID>` with the special key code `<SNR>`, followed by a number that's unique for the script, and an underscore.  Example: `:map <SID>Add` could define a mapping `<SNR>23\_Add`.
 
 When you map some thing to a `s:` function, which means you may call it may mapping outside of the script. Try the follow scirpts:
 
@@ -33,7 +33,7 @@ The `:scriptnames` command can be used to see which scripts have been sourced
 
 ## \<Plug\>
 
-> The special key name "<Plug>" can be used for an internal mapping, which is not to be matched with any key sequence.  This is useful in plugins
+> The special key name `<Plug>` can be used for an internal mapping, which is not to be matched with any key sequence.  This is useful in plugins
 
 As the doc file said, `<Plug>` key is often use in a internal mapping. Like:
 
