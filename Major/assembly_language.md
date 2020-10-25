@@ -1,5 +1,5 @@
 ---
-title: 汇编语言
+title: 汇编语言(Intel)
 date: 2020-5-9
 tags: 汇编语言
 mathjax: true
