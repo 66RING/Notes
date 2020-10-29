@@ -794,7 +794,83 @@ BinTree Delete( BinTree BST, ElementType X )
     *  **building** 
 
 
-### 哈夫曼树
+### 哈夫曼树(Huffman)
+
+两种编码方式
+
+- 等长编码
+    * 使用固定长度的位来对所有信号进行编码
+    * 简单但并不是每个信号出现的频率是一样的，所有对于对于经常出现的信号，需要使用很多的资源
+- 不等长编码
+    * 对于出现频率不同的信号可以采用不同长度的位进行编码
+    * 节省资源，但为保证译码唯一性需要进行复杂的操作
+
+我们可以使用二叉树来进行01编码，为了保证译码唯一性，则需要每个编码不能是其他任意一个编码的前缀。所以编码的结果必须都是出现在叶子节点。
+
+对于最优的编码，我们需要使得树的权值最小，那么权值大的节点应尽量靠近根节点，哈夫曼树就是为了解决最优编码问题产生的。
+
+**算法** :对于一组带权节点，每次选取最小和次小的的节点从原数组中删除，然后它们权值的和组成新的节点加入到原数组中，它们成为这个新节点的孩子。如此循环
+
+**数据结构**：
+
+```c
+typedef struct {
+    int weight;
+    int parent;
+    int Lchild;
+    int Rchild;
+} HNode;
+```
+
+由于哈夫曼树的两两节点合并组成的树，所以不会存在出度为1的节点，故共有2n-1个节点。开辟一个2n-1的数组，然后根据算法填充。
+
+| Id   | weight | parent | Lchild | Rchild |
+|------|--------|--------|--------|--------|
+| 0    |        |        |        |        |
+| 1    |        |        |        |        |
+| ...  |        |        |        |        |
+| 2n-2 |        |        |        |        |
+
+从没有标记父节点的节点中选择最小和次小的节点，组成新的节点，放入队尾
+
+```c
+// 初始化等操作
+for(int i=rear; i<2*n-1; i++){ 
+    findNodes(nodes, min, cmin); // 从没有parent的节点中找出最小和次小的节点
+    nodes[min].parent = i;
+    nodes[cmin].parent = i;
+
+    // 插入尾部
+    nodes[i].weight = nodes[min].weight + nodes[cmin].weight;
+    nodes[i].Lchild = min;
+    nodes[i].Rchild = cmin;
+}
+
+void findNodes(HNode* arr, int& min, int& cmin){
+    int min=MAXINT;
+    int cmin=MAXINT;
+    for(int i=0; i<arr.size; i++){
+        if(arr[i].parent == EMPTY){
+            if(arr[i].weight < min){
+                cmin = min;
+                min = arr[i].weight;
+            }else if(arr[i].weight < cmin){
+                cmin = arr[i].weight;
+            }
+        }
+    }
+}
+```
+
+构造好哈夫曼树后，译码和编码操作就简单了。
+
+- 译码: 
+    * 从根节点开始，0找左节点，1找右节点(与具体怎么建立的哈夫曼树有关)
+    * 遇到叶子节点则得到译码结果
+- 编码：
+    * 从叶子节点开始，向上寻找其父节点，如果节点是父节点的左孩子，则编码0，否则编码1，从尾向前填充
+    * 如`***010\0`
+    * 找到根节点则将编码传出即可
 
 
 ---
