@@ -1,11 +1,26 @@
 - KMP!!!!!!
     * remake /home/ring/Documents/Note/Major/algorithm/arithmetic.md
+    * 需要好好反思
+        + https://www.luogu.com.cn/problem/P3375
+- Linux资源限制
+    * https://gohalo.me/post/linux-resource-limit-introduce.html
+- blog to travel 
+    * https://gohalo.me/categories.html#Linux
+- 非递归写法
+    * https://leetcode-cn.com/problems/palindrome-linked-list/submissions/
+    * https://leetcode-cn.com/problems/palindrome-linked-list/solution/hui-wen-lian-biao-by-leetcode-solution/
+- 树同构
+    * https://pintia.cn/problem-sets/15/problems/711
 - 1, 2, 4, 8字节寄存器的命名规则
+- 陈海波操作系统
 - NOTE about linux创建虚拟硬盘
 - epoll和kqueue
     * https://www.cnblogs.com/FG123/p/5256553.html
     * https://www.zhihu.com/question/20122137
-- what is SDS
+- git多人协作笔记
+    * rebase
+- eggo
+
 - 李龙海
     * https://faculty.xidian.edu.cn/LLH1/zh_CN/index.htm
 - 裴庆祺
