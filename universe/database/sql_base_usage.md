@@ -20,6 +20,8 @@ CREATE TABLE `tbl_file`(
 - `UNIQUE KEY <name> (<name1...>)`表示name1...中所有字段是唯一的，命名为name
     * `INSERT IGNORE`时，要插入与unique相同的自动将会跳过
 - `KEY <name> (<name>)`
+- `SHOW CREATE TALBE <table_name>`
+    * 显示键表过程
 
 
 ### 插入

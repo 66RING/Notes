@@ -44,6 +44,8 @@
     * https://books.studygolang.com/gopl-zh/ch5/ch5.html
 - `mysql.Prepare()`预编译防注入的原理
 - 算法
+    * 求叶子到节点数字之和
+        + https://leetcode-cn.com/problems/sum-root-to-leaf-numbers/submissions/
     * 树中距离之和
         + https://leetcode-cn.com/problems/sum-of-distances-in-tree/
     * 秋叶收藏集

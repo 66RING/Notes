@@ -229,11 +229,13 @@ getmetatable(mytable)
 - `__index`方法
     * 当访问table时，一个键没有值，则寻找`__index`中对应键的值或调用`__index`函数
     * 如果`__index`是table，返回对应键的值，否则nil
-    * 如果`__index`是两个参数(table, key)的函数，返回执行结果
+    * 如果`__index`是函数，返回执行结果
+        + 可以有两个参数(table, key)
 - `__newindex`方法
     * 当给table中一个缺少的索引赋值时，会执行`__newindex`方法(如果存在的话)，**而不给这个索引赋值**
     * 如果`__newindex`是table，则最newindex中的table对应的索引赋值，而不对原table赋值
     * 如果`__newindex`是方法，则调用之
+        + 可以有三个参数(table, key, value)
 - `__add`...等元方法
 
 
