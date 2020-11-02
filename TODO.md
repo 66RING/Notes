@@ -1,3 +1,7 @@
+- !!!
+    * https://www.junmajinlong.com/shell/fd_duplicate/
+- 骏马金龙！！看爆!!
+    * https://www.junmajinlong.com/linux/index/
 - KMP!!!!!!
     * remake /home/ring/Documents/Note/Major/algorithm/arithmetic.md
     * 需要好好反思
@@ -6,6 +10,7 @@
     * https://gohalo.me/post/linux-resource-limit-introduce.html
 - blog to travel 
     * https://gohalo.me/categories.html#Linux
+- IPsec
 - 非递归写法
     * https://leetcode-cn.com/problems/palindrome-linked-list/submissions/
     * https://leetcode-cn.com/problems/palindrome-linked-list/solution/hui-wen-lian-biao-by-leetcode-solution/
@@ -20,12 +25,6 @@
 - git多人协作笔记
     * rebase
 - eggo
-
-- 李龙海
-    * https://faculty.xidian.edu.cn/LLH1/zh_CN/index.htm
-- 裴庆祺
-    * https://faculty.xidian.edu.cn/PQQ/zh_CN/index.htm
-
 
 
 - learn QEMU (kvm)
@@ -44,6 +43,10 @@
     * https://books.studygolang.com/gopl-zh/ch5/ch5.html
 - `mysql.Prepare()`预编译防注入的原理
 - 算法
+    * 单词拆分 II
+        + https://leetcode-cn.com/problems/word-break-ii/
+    * O(1) 时间插入、删除和获取随机元素 - 允许重复
+        + https://leetcode-cn.com/problems/insert-delete-getrandom-o1-duplicates-allowed/solution/
     * 求叶子到节点数字之和
         + https://leetcode-cn.com/problems/sum-root-to-leaf-numbers/submissions/
     * 树中距离之和
