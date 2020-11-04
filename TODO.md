@@ -43,6 +43,8 @@
     * https://books.studygolang.com/gopl-zh/ch5/ch5.html
 - `mysql.Prepare()`预编译防注入的原理
 - 算法
+    * 插入区间
+        + https://leetcode-cn.com/problems/insert-interval/submissions/
     * 单词拆分 II
         + https://leetcode-cn.com/problems/word-break-ii/
     * O(1) 时间插入、删除和获取随机元素 - 允许重复
