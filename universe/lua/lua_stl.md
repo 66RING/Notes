@@ -13,6 +13,10 @@ tags: lua
         + `%w`查找一个数字或字母
         + `%d`查找一个数字
         + `(%w+)=(%w+)`，`()`分组，返回成对的，`+`找一个及以上
+- `string.find(str, substr, [init, [end]])`
+    * 从字符串中搜索子串，返回位置索引，不存在返回nil
+- `string.gsub(mainString,findString,replaceString,num)`
+    * 替换，执行num次
 
 
 ## table
