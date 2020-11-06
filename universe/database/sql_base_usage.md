@@ -82,4 +82,28 @@ CREATE TABLE `tbl_file`(
 - 修改字段类型，`ALTER TABLE <表名> MODIFY <字段名> <数据类型>`
 
 
+### 简单运算
+
+#### 求和
+
+- `sum()`函数求和
+
+```sql
+SELECT
+    sum( <fild_name> [+ <fild_name>...] ) AS <alias>
+FROM
+    <table>
+```
+
+- `count()`计算总数，求平均
+
+```sql
+SELECT
+    sum( <fild_name> [+ <fild_name>...] )/count(*) AS <alias>
+FROM
+    <table>
+```
+
+- `LIMIT <range>`限制范围
+    * 如找前3行`... LIMIT 0,3`
 

@@ -1,5 +1,8 @@
-- !!!
-    * https://www.junmajinlong.com/shell/fd_duplicate/
+- mysql 笔记
+    * https://liuyanzhao.com/9823.html
+- 熟练使用gdb
+- 防火墙
+    * https://www.cnblogs.com/f-ck-need-u/p/7397146.html
 - 骏马金龙！！看爆!!
     * https://www.junmajinlong.com/linux/index/
 - KMP!!!!!!
