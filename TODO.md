@@ -1,10 +1,20 @@
-- mysql 笔记
-    * https://liuyanzhao.com/9823.html
+- 系统调用博文
+- 用费曼法做以下
+    * 狭义相对论
+    * 电磁学
+    * 功率
+    * 1.选个主题
+    * 2.以老师的视角解释
+    * 3.遇到问题回头看看
+    * 4.尽可能简单尽可能比喻
 - 熟练使用gdb
 - 防火墙
     * https://www.cnblogs.com/f-ck-need-u/p/7397146.html
 - 骏马金龙！！看爆!!
     * https://www.junmajinlong.com/linux/index/
+- 看看一个大佬
+    * https://github.com/117503445/XduCheckIn
+    * https://github.com/117503445/bilibili_auto_download
 - KMP!!!!!!
     * remake /home/ring/Documents/Note/Major/algorithm/arithmetic.md
     * 需要好好反思
@@ -14,17 +24,14 @@
 - blog to travel 
     * https://gohalo.me/categories.html#Linux
 - IPsec
-- 非递归写法
-    * https://leetcode-cn.com/problems/palindrome-linked-list/submissions/
-    * https://leetcode-cn.com/problems/palindrome-linked-list/solution/hui-wen-lian-biao-by-leetcode-solution/
 - 树同构
     * https://pintia.cn/problem-sets/15/problems/711
-- 1, 2, 4, 8字节寄存器的命名规则
 - 陈海波操作系统
 - NOTE about linux创建虚拟硬盘
 - epoll和kqueue
     * https://www.cnblogs.com/FG123/p/5256553.html
     * https://www.zhihu.com/question/20122137
+- linux内核代码情景分析
 - git多人协作笔记
     * rebase
 - eggo
@@ -74,7 +81,6 @@
 - ginblog
     * imagetools rotate(imagetools\_proxy)
     * gin 什么是托管
-- https://github.com/iggredible/Learn-Vim
 - vimspector
     * https://github.com/puremourning/vimspector
 - linux from scratch
