@@ -16,6 +16,9 @@ tags: docker
 - `docker inspect <CONTAINER>`查看详情
 
 
+## DockerFile语法
+
+
 ## 基本操作
 
 ### 配置容器
@@ -34,6 +37,15 @@ tags: docker
         + 2. 修改配置文件，"PermitRootLogin without-password"去掉注释免密登录
         + 3. `service ssh start`
 - 2. `docker cp <CONTAINER:/path/to/conf> </source/file>`
+- 3. 保存镜像
+    * `docker commit <ID|NAME> <NEW_IMG>`
+        + 通过名字或id保存一个容器为镜像
+    * 将镜像保存为`.tar`文件
+        + `docker save <NAME> > <tar>`
+        + 使用重定向符保存
+    * 使用`load`从`.tar`文件加载镜像
+        + `docker load < <.tar>`
+        + 输入如保存对称
 
 
 ### 管理容器
@@ -42,6 +54,7 @@ tags: docker
 使用数据卷(volume)，用于持久化共享数据
 
 - `-v[=[[HOST-DIR:]CONTAINER-DIR[:OPTIONS]]]`
+    * 将外部的目录/文件映射到docker内部
     * 可以挂载多个数据卷
     * 挂载主机目录或文件作为数据卷的话必须使用绝对路径
     * OPTION可以设置权限，ro只读
