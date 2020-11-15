@@ -71,11 +71,11 @@ objump -d a.o
 
 所以编译器通过这么一个简单的对函数名的改编(name mangling)就可以做到区分接受不同参数的同名函数的功能。
 
- **tips:** 使用`c++filt`可以查看原函数名。
+**tips:** 使用`c++filt`可以查看原函数名。
 
- 看这么一个函数`void func(s string){}`，反汇编后的函数名为：`<_Z4funcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE>`。
+看这么一个函数`void func(s string){}`，反汇编后的函数名为`<_Z4funcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE>`。
 
- 使用`c++filt`查看其原函数名：`c++filt _Z4funcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`
+使用`c++filt`查看其原函数名：`c++filt _Z4funcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE`。
 
 ```shell
 $ c++filt _Z4funcNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE 
