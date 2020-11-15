@@ -11,30 +11,32 @@ tags: tools, gdb
 
 ## Debugging with GDB
 
-- open file
+- Open file
     - here are two way
-    - `gdb filename`
+    - `gdb <file>`
         - `gdb path/to/main`
     - `gdb` -> `file path/to/main`
-- show list
+- Show list
     - use `l` command to show source code with line number
-- add breakpoint
-    - use `b linenum` to add breakpoint, such as `b 1` add breakpoint at line 1
-    - or use `b functionname` to add breakpoint, such as `b main` add breakpoint at main function
-- show breakpoint information
+- Add breakpoint
+    - use `b <LINENUM>` to add breakpoint, such as `b 1` add breakpoint at line 1
+    - or use `b <FUNCTIONNAME>` to add breakpoint, such as `b main` add breakpoint at main function
+- Show breakpoint information
     - `i b` i for information, b for breakpoint
-- delete breakpoint
-    - `d pointid` pointid from `i b`
+- **Inspect**
+    * use `print, inspect or p [OPTION...] [EXP]` to print value of expression EXP
+        + use `p a` will show information of variable `a` 
+- Delete breakpoint
+    - `d <BREAKPOINTNUM>` break point num from `i b`
     - `i b` information will be like a order list. If delete a pointid in the previous, the next point will just add in the end of the idlist.
-- run debug
+- Run debug
     - `r`
-    - use `p variable` will show the variable information
-- gdb controler
-    - `n` for next line, one step debugging
-    - `s` for step into(one step)
+- Gdb controler
+    - `n` **for next line**, one step debugging
+    - `s` **for step into**(one step)
     - `set args [parameter]` for command line args
-- finish function and continue
+- Finish function and continue
     - `finish` for finish function
     - `c` for continue until program exit or breakpoint
-- quit gdb
+- Quit gdb
     - `q`
