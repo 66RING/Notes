@@ -1,6 +1,9 @@
 ## Dshub
 
-- bt/pt?
+- metalink
+    * http
+    * bt/pt?
+    * ftp
 - bit coin reward
 - code support
 
