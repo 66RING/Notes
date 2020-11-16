@@ -1,3 +1,17 @@
+- 反向代理和负载均衡
+    * https://www.bilibili.com/video/BV1Bx411Z7Do
+- what is CI/CD(持续集成与持续交互)
+    * https://www.bilibili.com/video/BV1kt411E7p8
+    * travis ci
+        + https://www.bilibili.com/video/BV1Qt411g7nC
+- 一个多容器项目
+    * https://www.bilibili.com/video/BV1Wt411w72h
+- 两种跨域的姿势
+    * https://www.bilibili.com/video/BV1Kt411E76z
+- 页表
+    * https://www.bilibili.com/video/BV1jE411W7e8?p=5
+- 看爆
+    * https://space.bilibili.com/31273057/video?tid=0&page=4&keyword=&order=pubdate
 - 系统调用博文
 - 用费曼法做以下
     * 狭义相对论
@@ -8,6 +22,8 @@
     * 3.遇到问题回头看看
     * 4.尽可能简单尽可能比喻
 - 熟练使用gdb
+- 看爆up！！
+    * https://space.bilibili.com/31273057/video?tid=0&page=3&keyword=&order=pubdate
 - 防火墙
     * https://www.cnblogs.com/f-ck-need-u/p/7397146.html
 - 骏马金龙！！看爆!!
@@ -46,11 +62,8 @@
 - 找家实习
 - https://github.com/liuchengxu/vim-clap/issues/521
 - vim API
-    * lua实现个eleline
     * https://neovim.io/doc/user/
     * https://neovim.io/doc/user/remote_plugin.html
-- go语言圣经
-    * https://books.studygolang.com/gopl-zh/ch5/ch5.html
 - `mysql.Prepare()`预编译防注入的原理
 - 算法
     * 插入区间
@@ -72,7 +85,7 @@
     * 有效状态自动机
         + https://leetcode-cn.com/problems/n-queens/submissions/
     * 监控二叉树
-        + https://leetcode-cn.com/problems/binary-tree-cameras/
+       + https://leetcode-cn.com/problems/binary-tree-cameras/
 - **平衡二叉树(AVL)，字串匹配**
 - 转用另一个补全框架
     * https://github.com/nvim-lua/completion-nvim
