@@ -48,12 +48,13 @@ for(D=N/2;D>0;D/=2){  // 希尔增量序列。Hibbard增量序列:Dk=2^k-1...等
 ### 堆排序
 #### 小/大顶堆
 
-子节点比父节点小/大的二叉树  
+子节点比父节点小/大的二叉树，有时也称为最小堆/最大堆
 
 **构建方法**
 
+- 法一：上浮下沉法(小顶堆为例)
+
 ```c
-// 法一：上浮下沉法(小顶堆为例)
 // 从第一个非叶子节点开始，以它为子树，先自下而上把小的节点上浮，到达子树根节点后自上而下把大的节点下沉
 // 知道根节点结束
 void createHeap(int *heap,int len){
@@ -75,7 +76,11 @@ void createHeap(int *heap,int len){
         }
     }
 }
-// 法二：插入法
+```
+
+- 法二：插入法
+
+```c
 // 从根节点出发，若父节点比插入元素大，则调整位置，如此循环，保证父节点小于子节点
 void createHeap(int *heap,int len){
     heap[0] = -1000;
@@ -902,10 +907,39 @@ void findNodes(HNode* arr, int& min, int& cmin){
 ### Dijkstra算法
 
 解决单源路非递减顺序(没有负)最短路径问题
-- 对所有未检索的点进行标记:collected[v] = false
-- 从一点出发,记录所有邻接点,若邻接点加入后路径最短,则更新
-    - 类似BFS
-- 所有邻接点访问完后colleceted[v]=true,从下一个未检索的点继续循环,直到检索所有节点
+
+- 初始化
+    * 对所有未检索的点进行标记:collected[v] = false
+    * 使用`dist[i]=INF`记录源点到节点i的最短距离
+        + `dist[src]=0`
+    * 使用`path[i]`记录节点i的前驱节点，则从终点开始查找则得到最短路径
+- **从未收录的顶点中选择最dist最小者V**(贪心),对于V的所有未收录的邻接点W,若以V为中间节点到W的路径更短，则更新dist[W]
+    * 可用 **最小堆优化** 选择dist最小者的过程。cpp中可以使用`priority_queue<T>`
+- 所有邻接点访问完后collected[v]=true,重复第2步，直到所有节点都访问
+-  **原理** 
+    * TODO:为何要选dist最小者加入
+
+如此一来这条路径也一定是源点到这些中途节点的最短路径。
+
+```c
+void Dijkstra(Vertex s){
+    while(1){
+        V = 未收录顶点中dist最小者;   // 非常重要的一步
+        if(V未找到){
+            break;
+        }
+        collected[V] = true;
+        for(V的每个邻接点 W){
+            if(collected[W] == false){
+                if(dist[V]+E<V,W> < dist[W]){
+                    dist[W] = dist[V] + E<V,W>;
+                    path[W] = V;
+                }
+            }
+        }
+    }
+}
+```
 
 
 ### Floyd算法
