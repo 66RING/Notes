@@ -1,7 +1,7 @@
 ---
 title: Redis 学习笔记
 date: 2020-3-18
-tags: redis
+tags: redis, database
 ---
 
 # Redis学习笔记

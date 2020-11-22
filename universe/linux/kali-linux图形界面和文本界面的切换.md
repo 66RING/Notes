@@ -1,7 +1,7 @@
 ---
 title: kali linux图形界面和文本界面的切换
 date: 2019-9-2
-tags: kali, tools
+tags: kali, tools, linux
 ---
 
 kalilinux的图形界面和文本界面的切换

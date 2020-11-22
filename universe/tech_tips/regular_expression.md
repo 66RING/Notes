@@ -1,7 +1,7 @@
 ---
 title: 正则表达式基础语法
 date: 2020-1-23
-tags: Regex, 正则, tool
+tags: Regex, tech, tool
 ---
 
 Base/Extended Regex

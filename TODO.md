@@ -1,9 +1,13 @@
-- 反向代理和负载均衡
-    * https://www.bilibili.com/video/BV1Bx411Z7Do
+- KMP!!!!!!
+    * **remake** /home/ring/Documents/Note/Major/algorithm/arithmetic.md
+    * 需要好好反思
+        + https://www.luogu.com.cn/problem/P3375
+- 数据结构图好好耍耍
+    * https://www.luogu.com.cn/problem/P4779
+        + 小顶堆的创建以及动态调整
+    * try: Floyd
 - what is CI/CD(持续集成与持续交互)
     * https://www.bilibili.com/video/BV1kt411E7p8
-    * travis ci
-        + https://www.bilibili.com/video/BV1Qt411g7nC
 - 一个多容器项目
     * https://www.bilibili.com/video/BV1Wt411w72h
 - 两种跨域的姿势
@@ -11,7 +15,11 @@
 - 页表
     * https://www.bilibili.com/video/BV1jE411W7e8?p=5
 - 看爆
-    * https://space.bilibili.com/31273057/video?tid=0&page=4&keyword=&order=pubdate
+    * https://space.bilibili.com/31273057/video?tid=0&page=3&keyword=&order=pubdate
+- 看爆！
+    * https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/
+- packer, zephyr-nvim
+- 从零开始学微分
 - 系统调用博文
 - 用费曼法做以下
     * 狭义相对论
@@ -31,10 +39,6 @@
 - 看看一个大佬
     * https://github.com/117503445/XduCheckIn
     * https://github.com/117503445/bilibili_auto_download
-- KMP!!!!!!
-    * remake /home/ring/Documents/Note/Major/algorithm/arithmetic.md
-    * 需要好好反思
-        + https://www.luogu.com.cn/problem/P3375
 - Linux资源限制
     * https://gohalo.me/post/linux-resource-limit-introduce.html
 - blog to travel 

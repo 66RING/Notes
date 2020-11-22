@@ -1,7 +1,7 @@
 ---
 title: c++进阶
 date: 2020-5-15
-tags: c++
+tags: c, c++
 ---
 
 

@@ -249,6 +249,8 @@ if(cnt!=|V|)
 
 ### KMP算法
 
+TODO: **next** 和 **nextVal** 数组
+
 **要点：** 
 - 前缀表next(或者说match)函数的创建
 - 动态规划

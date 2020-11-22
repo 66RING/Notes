@@ -8,7 +8,7 @@
 - code support
 
 
-##  成绩系统
+## 成绩系统
 
 ## Auto rise script
 
