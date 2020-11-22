@@ -69,6 +69,7 @@ tags: operate, docker
     * `--link <name|id>[:alias]`
     * 一个连接允许源容器提供信息给目标容器，如数据库
 
+TODO move to advanced
 ##### Link的原理
 
 环境变量
