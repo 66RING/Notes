@@ -51,7 +51,8 @@ tags: linux, kernel
     * linux中用户可以设置nice值来 **影响优先级** (priority)，范围到`[-20, 19]`
         + `ps -l`，PRI字段可看到优先级，NI字段可看到nice值
     * **nice值越高优先级越低**
-        + 简记：表示一个进程对别的进程的nice程度。一个进程对别的进程越好就越不会抢占cpu，得到的时间越少，优先级越低
+        + 简记：一个nice的人往往是谦虚礼貌的，吃饭都是说"你先吃你先吃"，结果最后这个nice的人饿着了
+        + 一个进程对别的进程越nice就越不会抢占cpu，得到的时间越少，优先级越低
     * 可以通过`nice`命令设置进程优先级，`renice`命令来修改nice值
 - 静态优先级
     * 选择权在用户，用户可以设置nice值来影响优先级
@@ -64,15 +65,43 @@ tags: linux, kernel
 - ~~O(n)调度器~~
     * 起初采用线性表遍历寻找最高优先级进程O(n)，效率很低
 - O(1)调度器
-    * 优先级被映射成一定bitmap，在一个优先级上有进程则对应的bitmap会置1，cpu可以通过位运算快速取出优先级最高的进程
+    * 时间片分配，优先级被映射成一定bitmap，在一个优先级上有进程则对应的bitmap会置1，cpu可以通过位运算快速取出优先级最高的进程
 - CFS完全公平调度器
     * 分时间片，每个进程相对公平
-    * **virtualtime**，优先级高的进程虚拟时间增长慢，优先级低的进程虚拟时间增长慢
+    * **vruntime**，优先级高的进程虚拟时间增长慢，优先级低的进程虚拟时间增长慢
         + 如高优先级进程分到时间片10ms，而虚拟时间1ms
     * 取红黑树中虚拟时间最短(优先级最高)的进程进行调度
 
 
+### O1调度
 
+TODO https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/linuxde-jin-cheng-you-xian-ji.html
+
+O1调度的Linux2.6开始引入的，到Linux 2.6.23之后替换成了CFS。
+
+使用两个队列，活动队列和过期(expire)队列
+
+### CFS
+
+要做到完全公平，调度器要在一个较小的时间内把这n个进程调度执行一遍。这个较小的时间就是任意一个进程被调度的最大延迟时间，也叫做**调度周期`sched_latency_ns`**
+
+CPU只要对所有进程维护一个累积占用CPU时间数，就可以衡量出每个进程目前占用的CPU时间总量是多还是少，这个数字记录在 **vruntime** 中。进程以vruntime为key放到一个红黑数组成的队列中，每次调度都选择最左子树上的那个进程，即vruntime最少的进程，这样就能保证所有进程相对公平。
+
+
+#### CFS的优先级
+
+虽说完全公平，但CFS还是需要支持优先级的。优先级是通过时间消耗(vruntime增长)的快慢来决定的。高优先级进程时间增长慢，低优先级进程时间增长快。如低优先级的进程实际运行了1s，vruntime是1s，而高优先级的进程实际已经运行了10s，而vruntime才是1s，这样高优先级的进程就更大概率在最左子树，得到调度。
+
+调度并不在一个进程的vruntime大于最小vruntime的进程时发生，为了减少切换频率，CFS设计了`sched_min_granularity_ns`参数来设定进程执行之后的最小cpu占用时间。
+
+
+#### 新进程的vruntime值
+
+当已经有多个进程执行的很长时间时，新起一个进程，并让它vruntime为0，这显然是不公平的。因为需要分配给它很多时间来追赶其他进程的vruntime。所有CFS对每个CPU的执行队列都维护了一个`min_vruntime`值，用于记录这个CPU执行队列的最小vruntime值。因此新进程vruntime不是直接设为0，而是以`min_vruntime`为基础进行调整。
+
+需要考虑的因素很多，如子进程是否要先于父进程执行、还要防止进程不停的fork来获得很多的执行时间
+
+TODO: https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/linuxde-jin-cheng-you-xian-ji.html
 
 
 
