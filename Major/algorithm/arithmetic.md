@@ -676,7 +676,7 @@ vector<int> postorderTraversal(TreeNode* root){
 - 只有一个孩子
     - 子承父业
 - 有两个孩子
-    - 找到左子树的最大或右子树的最小替换被删除节点...有效降低树的高度
+    - 找到左子树的最大或右子树的最小(记为S)替换被删除节点，然后安顿好S的孩子。这里又相当于删除了S，可以递归一下。...有效降低树的高度
 
 ```c 
 BinTree Delete( BinTree BST, ElementType X ) 

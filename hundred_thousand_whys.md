@@ -23,6 +23,14 @@ Back in the day, storage was expensive. Some people decided they did not need tw
 - The Apple people decided they use `<CR>`
 - The Window forks decided to keep the old `<CR><LF>`
 
+
+## Why we need to 1==i
+
+We need to write `1==i` but not `i==i` in conditional statements.
+
+If we accidentally make a mistake `1=i`, compile with not pass
+
+
 ## 什么是websocket
 
 传统的http的客户端服务端模式是：客户端请求，等待服务端响应。因此服务端的相应很依赖于客户端的请求

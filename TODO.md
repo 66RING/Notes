@@ -1,3 +1,5 @@
+- HTTPS
+    * https://www.bilibili.com/video/BV1w4411m7GL
 - KMP!!!!!!
     * **remake** /home/ring/Documents/Note/Major/algorithm/arithmetic.md
     * 需要好好反思
@@ -6,18 +8,21 @@
     * https://www.luogu.com.cn/problem/P4779
         + 小顶堆的创建以及动态调整
     * try: Floyd
-- what is CI/CD(持续集成与持续交互)
-    * https://www.bilibili.com/video/BV1kt411E7p8
-- 一个多容器项目
-    * https://www.bilibili.com/video/BV1Wt411w72h
 - 两种跨域的姿势
     * https://www.bilibili.com/video/BV1Kt411E76z
 - 页表
     * https://www.bilibili.com/video/BV1jE411W7e8?p=5
+- AQS
+    * https://www.bilibili.com/video/BV12K411G7Fg
+- 深入浅出写代理
+    * https://zhuanlan.zhihu.com/p/28645724
 - 看爆
     * https://space.bilibili.com/31273057/video?tid=0&page=3&keyword=&order=pubdate
 - 看爆！
+    * https://zorrozou.github.io/
     * https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/
+- 计算机网络
+    * https://www.bilibili.com/video/BV124411k7uV
 - packer, zephyr-nvim
 - 从零开始学微分
 - 系统调用博文
@@ -60,8 +65,6 @@
 - learn QEMU (kvm)
     * https://zhuanlan.zhihu.com/p/48664113
     * https://wiki.archlinux.org/index.php/QEMU
-- 深入浅出写代理
-    * https://zhuanlan.zhihu.com/p/28645724
 - GO http 获取表单
 - 找家实习
 - https://github.com/liuchengxu/vim-clap/issues/521
@@ -94,6 +97,7 @@
 - 转用另一个补全框架
     * https://github.com/nvim-lua/completion-nvim
     * https://github.com/hrsh7th/vim-vsnip
+    * vim-closer
 - 无情的玩梗机
 - ginblog
     * imagetools rotate(imagetools\_proxy)
