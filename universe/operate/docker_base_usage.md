@@ -26,7 +26,7 @@ tags: operate, docker
         + `-t`表示分配一个pseudo-tty
         + `-d|--detach`表示后台启动一个容器
         + `-a|--attach`进入一个已经启动的容器
-            + 如果没有`-d`退出时容器会退出，使用`c-p c-q`退出时保持运行
+            + 使用`c-p c-q`退出容器时保持运行
     * 在一个TCP端口上绑定一个服务
         + `-p ip:[hostPort]:containerPort | [hostPort:]containerPort`
         + `-P`暴露容器所有端口到宿主机上的一个随机端口，如`0.0.0.0:32768->33060`
@@ -35,7 +35,7 @@ tags: operate, docker
         + 2. 修改配置文件，"PermitRootLogin without-password"去掉注释免密登录
         + 3. `service ssh start`
 - 2. `docker cp <CONTAINER:/path/to/conf> </source/file>`
-- 3. 保存镜像
+- 3. 保存容器为镜像
     * `docker commit <ID|NAME> <NEW_IMG>`
         + 通过名字或id保存一个容器为镜像
     * 将镜像保存为`.tar`文件
@@ -145,4 +145,17 @@ TODO move to advanced
 - STOPSIGNAL用于指定容器退出的信号
 - HEALTHCHECK用于指定容器健康检查的配置
 - SHELL用于指定脚本如windows镜像需要指定CMD /S /C
+
+
+## Play With Dockerhub
+
+- 创建一个帐号
+- 新建一个仓库
+- 登录
+    * `docker login`
+- 将容器/镜像保存为与仓库对应的镜像
+    * 如`66ring/centos:tagname`
+- 推到hub
+    * `docker push 66ring/centos:tagname`
+
 
