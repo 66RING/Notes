@@ -24,7 +24,9 @@ tags: operate, docker
         + 见`man docker <COMMAND>`
         + `-i`表示启动一个可以交互的容器
         + `-t`表示分配一个pseudo-tty
-        + `-d`(detach)表示后台启动
+        + `-d|--detach`表示后台启动一个容器
+        + `-a|--attach`进入一个已经启动的容器
+            + 如果没有`-d`退出时容器会退出，使用`c-p c-q`退出时保持运行
     * 在一个TCP端口上绑定一个服务
         + `-p ip:[hostPort]:containerPort | [hostPort:]containerPort`
         + `-P`暴露容器所有端口到宿主机上的一个随机端口，如`0.0.0.0:32768->33060`
