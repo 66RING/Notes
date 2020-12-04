@@ -79,6 +79,8 @@ TODO move to advanced
 
 ## Dockerfile
 
+Dockerfile是docker镜像的配置文件
+
 ### 基本语法
 
 - FROM
@@ -115,7 +117,7 @@ TODO move to advanced
     * `ARG <arg>[=<default>]`
     * 构造参数，作用同ENV，但作用域不同
         + ARG仅在Dockerfile中有效(即build中)
-        + 可以使用`docker build --build-arg`覆盖
+        + 可以使用`docker build --build-arg`覆盖，可以起到构建时传参的效果
 - VOLUME
     * `VOLUME ["dir1", "dir2"...]`或`VOLUME <dir>`
     * 定义匿名数据卷。如果启动容器时忘记挂载数据卷，就挂载到匿名数据卷
@@ -127,11 +129,15 @@ TODO move to advanced
 - WORKDIR
     * `WORKDIR <dir>`
     * 指定运行时的主目录
+        + 没有时自动创建
 - USER
     * `USER <user>[:<group>]`
     * 指定运行使用的用户和用户组
 - ONBUILD
     * 当前镜像构建时不执行，当当前进行作为其他镜像构建时才执行
+- LABEL
+    * `LABEL [<key>=<value>...]`
+    * 为docker镜像设置些标签，起区分作用，用`docker inspect`查看
 
 
 ###  构建镜像
