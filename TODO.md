@@ -1,5 +1,6 @@
-- HTTPS
-    * https://www.bilibili.com/video/BV1w4411m7GL
+
+- 页表
+    * https://www.bilibili.com/video/BV1jE411W7e8?p=5
 - KMP!!!!!!
     * **remake** /home/ring/Documents/Note/Major/algorithm/arithmetic.md
     * 需要好好反思
@@ -8,24 +9,34 @@
     * https://www.luogu.com.cn/problem/P4779
         + 小顶堆的创建以及动态调整
     * try: Floyd
+- master four
+    * https://www.bilibili.com/video/BV1qJ411w7du
+    * https://www.bilibili.com/video/BV1u7411z7Sv
+    * https://www.bilibili.com/video/BV1454y1X7rk
+    * https://www.bilibili.com/video/BV17V411S71E
 - 两种跨域的姿势
     * https://www.bilibili.com/video/BV1Kt411E76z
-- 页表
-    * https://www.bilibili.com/video/BV1jE411W7e8?p=5
 - AQS
     * https://www.bilibili.com/video/BV12K411G7Fg
 - 深入浅出写代理
     * https://zhuanlan.zhihu.com/p/28645724
+- HTTPS
+    * https://www.bilibili.com/video/BV1w4411m7GL
 - 看爆
+    * https://space.bilibili.com/31273057/video?tid=0&page=2&keyword=&order=pubdate
     * https://space.bilibili.com/31273057/video?tid=0&page=3&keyword=&order=pubdate
 - 看爆！
     * https://zorrozou.github.io/
     * https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/
+    * https://zorro.gitbooks.io/poor-zorro-s-linux-book/content/cgroup_linux_cpu_control_group.html
 - 计算机网络
     * https://www.bilibili.com/video/BV124411k7uV
-- packer, zephyr-nvim
+- zephyr-nvim nvim-telescope/telescope.nvim
 - 从零开始学微分
-- 系统调用博文
+- 博文
+    * 系统调用
+    * 内存
+    * 进程调度
 - 用费曼法做以下
     * 狭义相对论
     * 电磁学
@@ -35,19 +46,15 @@
     * 3.遇到问题回头看看
     * 4.尽可能简单尽可能比喻
 - 熟练使用gdb
-- 看爆up！！
-    * https://space.bilibili.com/31273057/video?tid=0&page=3&keyword=&order=pubdate
 - 防火墙
     * https://www.cnblogs.com/f-ck-need-u/p/7397146.html
 - 骏马金龙！！看爆!!
     * https://www.junmajinlong.com/linux/index/
-- 看看一个大佬
-    * https://github.com/117503445/XduCheckIn
-    * https://github.com/117503445/bilibili_auto_download
 - Linux资源限制
     * https://gohalo.me/post/linux-resource-limit-introduce.html
 - blog to travel 
     * https://gohalo.me/categories.html#Linux
+- mutt
 - IPsec
 - 树同构
     * https://pintia.cn/problem-sets/15/problems/711
@@ -67,7 +74,6 @@
     * https://wiki.archlinux.org/index.php/QEMU
 - GO http 获取表单
 - 找家实习
-- https://github.com/liuchengxu/vim-clap/issues/521
 - vim API
     * https://neovim.io/doc/user/
     * https://neovim.io/doc/user/remote_plugin.html
@@ -93,15 +99,10 @@
         + https://leetcode-cn.com/problems/n-queens/submissions/
     * 监控二叉树
        + https://leetcode-cn.com/problems/binary-tree-cameras/
-- **平衡二叉树(AVL)，字串匹配**
 - 转用另一个补全框架
     * https://github.com/nvim-lua/completion-nvim
     * https://github.com/hrsh7th/vim-vsnip
     * vim-closer
-- 无情的玩梗机
-- ginblog
-    * imagetools rotate(imagetools\_proxy)
-    * gin 什么是托管
 - vimspector
     * https://github.com/puremourning/vimspector
 - linux from scratch
@@ -110,4 +111,3 @@
     * https://reactjs.org/docs/accessibility.html
 - 算法实战
     * go -> ui
-- 如何做一个终端模拟器
