@@ -63,7 +63,7 @@ yum install audit-libs-devel binutils-devel elfutils-devel java-devel kabi-dw li
 
 ### 自定义内核
 
-在源码中使用`make menuconfig`可以进行内核选项的设置。当然也可以载入现成的配置文件。如本机(centos8)的内核配置文件就在`/boot/config-$(uname -r)`里。拷贝到源码所在目的`.config`文件，然后可以加载配置
+在源码中使用`make menuconfig`可以进行内核选项的设置，然后配置结果会保存在`.config`文件中，make时会根据`.config`的结果进行编译。当然也可以载入现成的配置文件。如本机(centos8)的内核配置文件就在`/boot/config-$(uname -r)`里。拷贝到源码所在目的`.config`文件，然后选择可以加载配置或者`make menuconfig`是选择LOAD加载指定文件
 
 ```sh
 cp /boot/config-$(uname -r) ./.config
