@@ -5,6 +5,18 @@ tags: c, c++
 mathjax: true
 ---
 
+## 读取字符串
+
+- 读取单个字符
+    * `getchar()`是`scanf("%c", c)`的简化版本，除了更简介无其他优势
+    * `getche()`，没有缓冲区，输入一个字符后立即读取，不等待用户按回车
+    * `getch()`，没有缓冲区，输入一个字符后立即读取，不等待用户按回车，区别于`getche`它**没有回显** 
+- 读取字符串
+    * `scanf("%s", str)`遇到空格后停止接收后面的字符串
+    * `gets()`有缓冲区，可以读取空格，直到回车才会结束
+    * `scanf("%[^\n]",str)`，可以读取带空格的字符串，直到回车才结束
+
+
 ## 函数指针
 
 函数指针声明如下
@@ -116,6 +128,30 @@ enum
 {
     MON=1, TUE, WED, THU, FRI, SAT, SUN
 } day; 
+```
+
+
+## goto
+
+向后跳转
+
+```c
+goto label;
+..       |
+..       |
+label:  <
+    statement;
+```
+
+向前跳转
+
+```c
+label:         <-|
+    statement    |
+..               |
+..               |
+goto label;     -
+    statement;
 ```
 
 
