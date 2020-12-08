@@ -23,7 +23,7 @@ tags: operate, linux
 cat /etc/sysconfig/network-scripts/ifcfg-ens0p8
 ```
 
-会得到如下:
+会得到如下结构:
 
 ```
 TYPE="Ethernet"
@@ -72,8 +72,37 @@ DNS1="8.8.8.8"
 
 ## 配置ssh
 
-默认防火墙的开启的，所有要为ssh开个门
+在virtual box虚拟机中，配置网络以方便使用ssh连接虚拟机
 
-`firewall-cmd --zone=public --add-port=22/tcp --permenent`
+- `设置`->`网络`->`网络地址转换(NAT)`->`高级`->`端口转发`
+- 配置转发规则，这里要添加ssh访问的规则
+    * 名称任意
+    * 主机IP可以不写，默认127.0.0.1
+    * 主机端口写一个未被使用的，如`2222`
+    * 子系统IP可以不写
+    * 子系统端口(这里是ssh则写22，同理ftp写21)
+- 虚拟机开启ssh服务
+    * `systemclt enable sshd`
+    * 默认防火墙的开启的，所有要为ssh开个门
+        + `firewall-cmd --zone=public --add-port=22/tcp --permenent`,`--permenent`表示永久生效
+- 配置ssh
+    * ssh配置文件`/etc/ssh/sshd_config`
 
-`--permenent`表示永久生效
+那么就可以通过主机`2222`端口转发访问了
+
+```sh
+ssh -p 2222 root@127.0.0.1
+```
+
+
+### 配置免密登录ssh
+
+主机生成密钥对
+
+```sh
+ssh-keygen -t rsa
+```
+
+将公钥`~/.ssh/id_ecdsa.pub`添加到子系统`~/.ssh/authorized_keys`文件末尾
+
+
