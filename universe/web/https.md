@@ -81,6 +81,7 @@ The police station here which we call it CA institution.
 - the whole process can be received but can't be faked
 
 (we trust browser, browser trust CA) 
+
 | Roles   | browser(user), web, CA                                                                                             |
 |---------|--------------------------------------------------------------------------------------------------------------------|
 | web     | through a serise of process to get the CA certification.                                                           |
