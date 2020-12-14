@@ -15,16 +15,16 @@ linux内核提供许多自定义的选项
 
 > [官方文档](https://wiki.centos.org/zh/HowTos/I_need_the_Kernel_Source)
 
-centos的内核使用rpm管理，所以在真正获得内核前你还需要使用rpm把内核安装到机器上。可以在`https://vault.centos.org/`下载对应的内核rpm包。如
+centos的内核使用rpm管理，所以在真正获得内核前你还需要使用rpm把内核安装到机器上。可以在`https://vault.centos.org/`下载对应的内核rpm包(**内核源码版本一定要和系统内核版本一致**)。如
 
 ```sh
-wget https://vault.centos.org/8.1.1911/BaseOS/Source/SPackages/kernel-4.18.0-147.el8.src.rpm
+wget https://vault.centos.org/8.3.2011/BaseOS/Source/SPackages/kernel-4.18.0-240.1.1.el8_3.src.rpm
 ```
 
 然后使用rpm安装内核源码
 
 ```sh
-rpm -i kernel-4.18.0-147.el8.src.rpm
+rpm -i kernel-4.18.0-240.1.1.el8_3.src.rpm
 ```
 
 这里可能会提示
@@ -42,7 +42,7 @@ useradd mockbuild
 然后继续安装
 
 ```
-rpm -i kernel-4.18.0-147.el8.src.rpm
+rpm -i kernel-4.18.0-240.1.1.el8_3.src.rpm
 ```
 
 这时会在根目录会得到一个rpmbuild目录。在`~/rpmbuild/SPECS`中进行`rpmbuild`
@@ -74,13 +74,19 @@ make menuconfig
 
 ```sh
 make -j 8
-# 使用8核进行编译
+# -j [jobs]
+# 指定同时能够运行的jobs(命令)的数量，如果-j选项没给出参数则不限制jobs数量
 ```
 
-最后编译安装，重启后就是新的内核了
+安装模块，linux的模块是动态加载的，故模块安装和内核安装相互独立
 
 ```sh
 make modules_install
+```
+
+安装内核，重启后就是新的内核了
+
+```
 make install
 ```
 
