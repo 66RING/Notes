@@ -20,23 +20,29 @@ TODO rebuild **注意** 现代版本的linux内核(4.18)中调度器的入口不
         - task重新描述一下
     * WHAT IS GENERIC SCHEDULER AND CORE SCHEDULER.
 
-
+- 触发调度的时间
+    * 1. 进程休眠或者因为某些原因让出CPU
+    * 2. 分时机制定期检查触发进程调度
 - 两个调度器，generic scheduler和core scheduler
-    * TODO 干什么的
+    * generic scheduler
+        + generic scheduler起调度员的作用，负责选取调度类和底层的上下文切换
+        + generic调度器只器分配作用，不会参与进程的调度，而是完全交给进程的调度类处理
+    * core scheduler
+        + 核心调度器用来管理运行队列中的活跃的任务，每个CPU都有一个自己的运行队列
+    * 调度器不会直接操作进程，而是控制**调度实体**
+        + 一个调度实体是`sched_entity`的一个实例
+        + 这样不单可以调度一个进程，还可以调度更大的抽象，如实现组调度(CPU时间先在组间分配，再在组内分配)
 - 6种调度策略
     * 用于对不同类型的进程进行调度
         + 比如`SCHED_NORMAL`和`SCHED_BATCH`调度普通的非实时进程, `SCHED_FIFO`和`SCHED_RR`和`SCHED_DEADLINE`则采用不同的调度策略调度实时进程, `SCHED_IDLE`则在系统空闲时调用idle进程
 - 5个调度器类
 
-- generic调度器只器分配作用，不会参与进程的调度，而是完全交给进程的调度类处理
-- 调度器不会直接操作进程，而是控制**调度实体**
-    * 一个调度实体是`sched_entity`的一个实例
-    * 这样不单可以调度一个进程，还可以调度更大的抽象，如实现组调度(CPU时间先在组间分配，再在组内分配)
-
 
 #### 运行队列
 
-每个CPU都会有单独的一个`run_queue`，核心调度器`core scheduler`用它来管理运行中的进程。
+每个CPU都会有单独的一个`run_queue`，核心调度器`core scheduler`用它来管理运行中的进程。`struct rq`有如下重要结构
+
+- `nr_running`，可运行进程的数量
 
 
 #### 调度类
@@ -44,15 +50,16 @@ TODO rebuild **注意** 现代版本的linux内核(4.18)中调度器的入口不
 - 调度类决定下一个task是什么
     * 内核提供了很多调度策略，而调度类就是以模块化的方式对这些调度策略的实现，调度类之间彼此互不打扰
     * 每个task都有自己的调度类，而调度类就负责管理它的
-- `sched_class`结构体中的主要内容
+- `sched_class`结构体中有许多函数指针，主要内容有
     * `enqueue_task`，新增一个进程到运行队列(这里所谓是队列是一种抽象，可以是更复杂的结构，如CFS的红黑树)
         + 时机：进程从`sleep`装态到`runnable`状态时
         + 当进程在运行队列中注册后，其调度实体中`on_rq`字段置1
     * `dequeue_task`，将一个进程出运行队列
         + 时机：进程从`runnable`装态到`un-runnable`状态时，或者由内核引起(如优先级改变时)
+    * `sched_yield`，主动触发调度
+    * `check_preempt_curr`，如果必要的话可以用新唤起的进程抢占当前进程
     * `pick_next_task`，让CPU执行一个任务(进程)
         + 时机：`put_prev_task`后，当前任务别切换前
-        + TODO
 
 
 #### 优先级
