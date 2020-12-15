@@ -43,6 +43,7 @@ TODO rebuild **注意** 现代版本的linux内核(4.18)中调度器的入口不
 每个CPU都会有单独的一个`run_queue`，核心调度器`core scheduler`用它来管理运行中的进程。`struct rq`有如下重要结构
 
 - `nr_running`，可运行进程的数量
+- TODO
 
 
 #### 调度类
@@ -60,6 +61,24 @@ TODO rebuild **注意** 现代版本的linux内核(4.18)中调度器的入口不
     * `check_preempt_curr`，如果必要的话可以用新唤起的进程抢占当前进程
     * `pick_next_task`，让CPU执行一个任务(进程)
         + 时机：`put_prev_task`后，当前任务别切换前
+
+
+#### 调度实体
+
+调度器通过调度实体来操作一个更大的抽象，而不局限于调度进程。有如下重要结构
+
+- `load`，定义每个调度实体的权值，每个调度实体的权值又会影响到运行队列的总权值
+- `run_node`，顾名思义，采用红黑树存储每个调度实体
+- `on_rq`，指明当前调度的实体是否在运行队列中
+- `sum_exec_runtime`，记录进程使用CPU的时间
+- `update_curr`，用于计算`sum_exec_runtime`
+    * 用当前时间减去`exec_start`后将时间间隔加到sum中，然后用当前时间替换`exec_start`，开始新的循环
+- `vruntime`，用于记录虚拟时间
+- `prev_exec_runtime`，当进程让出CPU后，当前的`sum_exec_runtime`会存到`prev_exec_runtime`中
+    * `prev_exec_runtime`，会在之后抢占中用到
+    * 当然`sum_exec_runtime`仍然保持，没有重置
+
+因为`task_struct`有`sched_entity`的实例，所以一个task是一个调度实体，这句话反过来就不成立。
 
 
 #### 优先级
