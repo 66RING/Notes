@@ -1,0 +1,45 @@
+---
+title: 什么是dll
+date: 2020-8-20
+tags: tech, dll
+mathjax: true
+---
+
+## 什么是DLL
+
+DLL(Dynamic Link Library)，动态链接库，linux下是`.so`文件，win下是`.dll`文件。
+
+之所以需要库，是因为可以进行代码解耦和代码重用，由库文件对外提供服务，如`exe`调用`dll`。还有一个作用就是在不希望别人看到源码但需要使用我们的功能时隐藏源码。
+
+- 静态库
+    * win下是`.lib`文件，linux下是`.a`文件
+    * 它作为程序的一个模块，在链接期间被合并到程序中
+- 动态链接库
+    * win下是`.dll`文件，linux下是`.so`文件
+    * 动态库在程序运行阶段被加载到内存。dll和exe是独立的两个文件，别人随时可以调用
+
+
+### 使用gcc生成动态链接库
+
+生成`.so`文件需要使用`-shared`选项生成动态链接库。此外还需要结合`-fPIC`选项，**编译阶段**告诉编译器生成与位置无关的代码，这样一来代码中使用的就是相对地址了，可以被加载到内存的任意位置。这正是共享库需要的。
+
+```sh
+# 从源文件生成dll
+gcc -fPIC -shared func.c libfunc.so
+# 从目标文件生成dll
+gcc -fPIC -c func.c -o func.o
+gcc -shared func.o -o libfunc.so
+```
+
+将动态链接库链接到可执行文件
+
+```sh
+gcc main.c libfunc.so -o app.out
+```
+
+
+### 使用gcc生成静态库
+
+linux下静态链接库是以`.a`文件结尾的二进制文件，它作为程序的一个模块，在链接期间被合并到程序中。
+
+
