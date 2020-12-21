@@ -78,7 +78,7 @@ TODO rebuild **注意** 现代版本的linux内核(4.18)中调度器的入口不
     * `prev_exec_runtime`，会在之后抢占中用到
     * 当然`sum_exec_runtime`仍然保持，没有重置
 
-因为`task_struct`有`sched_entity`的实例，所以一个task是一个调度实体，这句话反过来就不成立。
+因为`task_struct`中包含`sched_entity`的实例，所以一个task是一个调度实体，这句话反过来就不成立。
 
 
 #### 优先级
