@@ -1,8 +1,34 @@
 
+把学到的东西藏在心里不仅是可耻的，而且是有害是。凡是我们不去努力分享的也必将从我们这里失去
+
+- 哈希表建表
+- dijkstra, floyd
+- 判断有环
+    * 有向图有环问题：拓扑排序
+    * https://www.cnblogs.com/wangkundentisy/p/9320499.html
+- dll补完(静态库)
+    * http://c.biancheng.net/view/7168.html
+    * /home/ring/Documents/Note/universe/tech_tips/what_is_dll.md
+- Kruskal
+- 堆排序看书补完
+- XDOJ
+    * 实验TODO：
+        + 哈希表设计
+        + 内部排序算法比较
+- OS
+    * `useradd mockbuild`含义
+    * 动态库
+        + https://www.cnblogs.com/aaronLinux/p/6970590.html
+        + https://baike.baidu.com/item/.dll/2133451
+        + https://blog.csdn.net/eibo51/article/details/50479851
+    * scheduling
+        + https://zhuanlan.zhihu.com/p/112203100
 - 页表
     * https://www.bilibili.com/video/BV1jE411W7e8?p=5
+- https://labuladong.gitbook.io/algo/
 - KMP!!!!!!
     * **remake** /home/ring/Documents/Note/Major/algorithm/arithmetic.md
+    * next 和 nextval
     * 需要好好反思
         + https://www.luogu.com.cn/problem/P3375
 - 数据结构图好好耍耍
@@ -20,8 +46,8 @@
     * https://www.bilibili.com/video/BV12K411G7Fg
 - 深入浅出写代理
     * https://zhuanlan.zhihu.com/p/28645724
-- HTTPS
-    * https://www.bilibili.com/video/BV1w4411m7GL
+- C模块化开发实例(gcc编译)
+    * https://blog.csdn.net/u010476739/article/details/84338147
 - 看爆
     * https://space.bilibili.com/31273057/video?tid=0&page=2&keyword=&order=pubdate
     * https://space.bilibili.com/31273057/video?tid=0&page=3&keyword=&order=pubdate
