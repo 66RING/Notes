@@ -29,6 +29,18 @@ mathjax: true
 |----------------------|
 
 将待插元素R 插入有序列中
+有序列后移
+```
+
+```c
+// 从小到大序列
+for(i=2;i<=n;i++){
+    ar[0] = ar[i];   // 哨兵：保存待插入元素R
+    for(j=i-1;j>=0&&ar[0]<ar[j];j--){  // 有序列后移腾空间
+        ar[j+1] = ar[j];
+    }
+    ar[j+1] = ar[0];
+}
 ```
 
 **优化** ：用二分法查找待插入元素的位置
@@ -98,7 +110,7 @@ void HeapAdjust(HeapType &H, int s, int m){
 
 #### 初始化构建方法
 
-- 法一：利用上面的调整函数，有
+- 法一：利用上面的调整函数，有(大顶堆为例)
 
 ```c
 void HeapSort(HeapType &H){
@@ -106,13 +118,13 @@ void HeapSort(HeapType &H){
     for(i=H.length/2; i>0; --i){    // 从底(叶子节点的父节点)向上，把1到H.length范围构建成大顶堆
         HeapAdjust(H, i, H.length);
     }
-    TODO 看书
-    for(i=H.length; i>1; --i){
-        temp = H.r[i];
-        H.r[i] = H.r[1];
-        H.r[1] = temp;
-        HeapAdjust(H, 1, i-1);
-    }
+    // (UNUSED  TODO看书)
+    // for(i=H.length; i>1; --i){
+    //     temp = H.r[i];
+    //     H.r[i] = H.r[1];
+    //     H.r[1] = temp;
+    //     HeapAdjust(H, 1, i-1);
+    // }
 }
 ```
 
@@ -186,15 +198,11 @@ void quicksort(int *ar,int l,int r){
             while(l<r&&ar[r]>num){
                 r--;
             }
-            if(l<r){
-                ar[l] = ar[r];
-            }
+            ar[l] = ar[r];
             while(l<r&&ar[l]<=num){
                 l++;
             }
-            if(l<r){
-                ar[r] = ar[l];
-            }
+            ar[r] = ar[l];
         }
         ar[l] = num;
         quicksort(ar,left,l-1);
