@@ -183,6 +183,8 @@ Person one = {"Bob", 23};  //编译错误
     `one.show()`，这样是不行的因为不能保证show方法不会修改对象	
     - 除非show方法为：`void show() const;`，这就是声明const成员函数的方法	
     - 因此只要类方法不修改调用对象，就应该将其声明为const	
+    - 函数前const`const int func();`表示返回值为const
+    - 函数后const`int func() const;`表示不能修改class的成员
 
 
 ## 类和对象	

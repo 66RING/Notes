@@ -389,7 +389,40 @@ if(cnt!=|V|)
 
 ### KMP算法
 
-TODO: **next** 和 **nextVal** 数组
+**next**数组
+
+```c
+j = -1;
+i = 0;
+next[0] = -1;
+while(i<n-1){
+    if(j==-1||str[i]==str[j]){
+        i++;
+        j++;
+        next[i] = j;
+    }else{
+        j = next[j];
+    }
+}
+```
+
+**nextVal**数组
+
+```c
+j = -1;
+i = 0;
+next[0] = -1;
+while(i<n-1){
+    if(j==-1||str[i]==str[j]){
+        i++;
+        j++;
+        if(str[i]!=str[j]) next[i] = j;
+        else next[i] = next[j];
+    }else{
+        j = next[j];
+    }
+}
+```
 
 **要点：** 
 - 前缀表next(或者说match)函数的创建
@@ -444,6 +477,7 @@ a b a
 a b a b
 a b a b c
 
+// next_val构建
 for(j=1;j<len;j++){
     p = m[j-1];
     //尝试利用前缀表找到匹配的公共前后缀
