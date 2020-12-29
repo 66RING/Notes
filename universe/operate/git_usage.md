@@ -309,6 +309,59 @@ git checkout -b <local_branch> <origin>/<remote_branch>
 TODO
 
 
+### 子模块
+
+对于复杂的项目，主目录依赖子模块，但我们又不想把子模块合并到主项目中，想让他们相互独立。
+
+我们可以将子模块加入`.gitignore`文件中，这么做虽然独立了，但这么做的前提是主项目的人需要在当前目录下放置某以版本的子模块代码。
+
+Git提供了`submodule`功能，用于建立当前项目与子模块之间的依赖关系：子模块路径、子模块远程仓库、子模块版本号。即让你在一个git仓库中存在另一个git仓库。
+
+- 添加子模块
+    * `git submodule add <submodule_url> <local_path>`
+    * 会在父仓库根目录下增加`.gitmodule`文件
+        ```
+        $ cat .gitmodule
+        [submodule "XXX"]
+        path = XXX
+        url = XXX
+        ```
+    * 并在配置文件中加入submodule字段
+        ```
+        $ cat .git/config
+        [submodule "sub"]
+            url = ssh://git@10.2.237.56:23/dennis/sub.git
+        ```
+- checkout
+    * clone一个包含子仓库的仓库并不会clone子仓库的文件，而是clone`.gitmodule`的描述文件用于构建子仓库
+    * 使用
+        ```shell
+        // 初始化本地配置文件
+        $ git submodule init
+        // 检出父仓库列出的commit
+        $ git submodule update
+
+        或者
+
+        $ git submodule update --init --recursive
+        ```
+    * 此时子仓库会在某个git提交本版，即可在子仓库中git命令(pull)进行版本控制
+    * 主目录中会看到的子仓库的修改，是一个`commit id`
+* 删除子仓库
+    + `git submodule deinit <submodule>`
+    + 会自动删除`.git/config`中的内容，但是`.submodule`和`.git/modules`还会保留，可以通过`.submodule`恢复
+    + 使用`git rm <submodule_dir>`，移除子仓库文件夹，此时子模块信息基本移除(除了`.git/modules`)
+        ```
+        On branch main
+        Your branch is up to date with 'origin/main'.
+
+        Changes to be committed:
+          (use "git restore --staged <file>..." to unstage)
+                modified:   .gitmodules
+                deleted:    <submodule_dir>
+        ```
+
+
 ### 配置别名
 
 
