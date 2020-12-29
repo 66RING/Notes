@@ -1,7 +1,7 @@
 
 把学到的东西藏在心里不仅是可耻的，而且是有害是。凡是我们不去努力分享的也必将从我们这里失去
 
-- 哈希表建表
+- Kruskal
 - dijkstra, floyd
 - 判断有环
     * 有向图有环问题：拓扑排序
@@ -9,12 +9,6 @@
 - dll补完(静态库)
     * http://c.biancheng.net/view/7168.html
     * /home/ring/Documents/Note/universe/tech_tips/what_is_dll.md
-- Kruskal
-- 堆排序看书补完
-- XDOJ
-    * 实验TODO：
-        + 哈希表设计
-        + 内部排序算法比较
 - OS
     * `useradd mockbuild`含义
     * 动态库
@@ -63,14 +57,6 @@
     * 系统调用
     * 内存
     * 进程调度
-- 用费曼法做以下
-    * 狭义相对论
-    * 电磁学
-    * 功率
-    * 1.选个主题
-    * 2.以老师的视角解释
-    * 3.遇到问题回头看看
-    * 4.尽可能简单尽可能比喻
 - 熟练使用gdb
 - 防火墙
     * https://www.cnblogs.com/f-ck-need-u/p/7397146.html
