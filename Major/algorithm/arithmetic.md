@@ -389,41 +389,6 @@ if(cnt!=|V|)
 
 ### KMP算法
 
-**next**数组
-
-```c
-j = -1;
-i = 0;
-next[0] = -1;
-while(i<n-1){
-    if(j==-1||str[i]==str[j]){
-        i++;
-        j++;
-        next[i] = j;
-    }else{
-        j = next[j];
-    }
-}
-```
-
-**nextVal**数组
-
-```c
-j = -1;
-i = 0;
-next[0] = -1;
-while(i<n-1){
-    if(j==-1||str[i]==str[j]){
-        i++;
-        j++;
-        if(str[i]!=str[j]) next[i] = j;
-        else next[i] = next[j];
-    }else{
-        j = next[j];
-    }
-}
-```
-
 **要点：** 
 - 前缀表next(或者说match)函数的创建
 - 动态规划
@@ -438,7 +403,7 @@ a b a b
 a b a b c
 ```
 
-我们需要找出每种可能中最长的、非本身的公共前后缀，因为如果前后缀相同的话，当后缀失去匹配时，可从前缀结束的地方开始匹配，而不是从头开始。
+我们需要找出每种可能中最长的、**非本身的**公共前后缀，因为如果前后缀相同的话，当后缀失去匹配时，可从前缀结束的地方开始匹配，而不是从头开始。
 
 ```c
 a               null    0
@@ -476,20 +441,39 @@ a b a
 
 a b a b
 a b a b c
+```
 
-// next_val构建
-for(j=1;j<len;j++){
-    p = m[j-1];
-    //尝试利用前缀表找到匹配的公共前后缀
-    while(p>=0&&pattern[p+1]!=pattern[j]){
-        p = m[p];
+**next**数组
+
+```c
+j = -1;
+i = 0;
+next[0] = -1;
+while(i<n-1){
+    if(j==-1||str[i]==str[j]){
+        i++;
+        j++;
+        next[i] = j;
+    }else{
+        j = next[j];
     }
-    //如果下一位匹配，公共前后缀长的等于当前匹配的公共前后缀长度加1
-    //否则不匹配
-    if(pattern[p+1]==pattern[j]){
-        m[j] = p+1;
-    }else {
-        m[j] = -1;
+}
+```
+
+**nextVal**数组
+
+```c
+j = -1;
+i = 0;
+next[0] = -1;
+while(i<n-1){
+    if(j==-1||str[i]==str[j]){
+        i++;
+        j++;
+        if(str[i]!=str[j]) next[i] = j;
+        else next[i] = next[j];
+    }else{
+        j = next[j];
     }
 }
 ```
