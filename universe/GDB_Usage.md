@@ -28,7 +28,7 @@ tags: tools, gdb
         + use `p a` will show information of variable `a` 
 - Delete breakpoint
     - `d <BREAKPOINTNUM>` break point num from `i b`
-    - `i b` information will be like a order list. If delete a pointid in the previous, the next point will just add in the end of the idlist.
+    - `i b` info of breakpoint, information will be like a order list. If delete a pointid in the previous, the next point will just add in the end of the idlist.
 - Run debug
     - `r`
 - Gdb controler
@@ -40,3 +40,23 @@ tags: tools, gdb
     - `c` for continue until program exit or breakpoint
 - Quit gdb
     - `q`
+
+
+## Tips
+
+- You can write shell script in gdb
+    * `(gdb) shell <cmd>`
+- Set log
+    * `set logging on`, which will copy output to file `gdb.txt`
+- **Watchpoints**, Catchpoint... and so on
+    * You can use a watchpoint to stop execution whenever the value of an expression changes.
+    * `watch *<addr>` or `watch <value>`
+    * `info watchpoints` to print info of watchpoints
+- Debug a running program
+    * `gdb -p <pid>`
+- Debug a core file
+    * `gdb <binary file> <core file>`
+    * System will no generate a core file by default. Because typically core files are very big. You can use `ulimit` command to set unset the limit.
+
+
+
