@@ -95,6 +95,7 @@ TODO pass 还没详细进行
 - 改动(都用CASIO标注)
     * `/kernel/sched/sched.h`
 
+
 #### 配置文件
 
 在配置文件`.config`中把CASIO调度打开，因为很多地方，如调度器入口文件，需要根据宏`CONFIG_SCHED_CASIO_POLICY`进行条件编译。在`Kconfig`中加入CASIO调度器选项

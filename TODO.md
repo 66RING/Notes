@@ -1,16 +1,32 @@
 
 把学到的东西藏在心里不仅是可耻的，而且是有害是。凡是我们不去努力分享的也必将从我们这里失去
 
+系统化的学习让你成长，碎片化的学习让你焦虑
+
+- mutt
+    * https://www.bilibili.com/medialist/play/watchlater/BV1T7411L7gY
+- to note
+    * https://www.youtube.com/watch?v=ctgheOhe1vE&ab_channel=%E6%9D%8E%E6%B0%B8%E4%B9%90%E8%80%81%E5%B8%88
+- ffmpeg
+    * https://www.youtube.com/watch?v=HO6oU5oT6uU&ab_channel=MentalOutlaw
+- qemu
+    * https://www.youtube.com/watch?v=jLRmVNWOrgo&ab_channel=ChrisTitusTech
+- pacman
+    * https://www.youtube.com/watch?v=8vc7kDjEIhs&t=270s&ab_channel=MentalOutlaw
+- learn sed
+- to复习
+    * 电路：
+        + 零输入响应、零状态响应
+        + 等效电源
+            + 也常用于化简
+        + 谐振
+        + 变压器下的等效电源
 - Kruskal
 - dijkstra, floyd
-- 判断有环
-    * 有向图有环问题：拓扑排序
-    * https://www.cnblogs.com/wangkundentisy/p/9320499.html
 - dll补完(静态库)
     * http://c.biancheng.net/view/7168.html
     * /home/ring/Documents/Note/universe/tech_tips/what_is_dll.md
 - OS
-    * `useradd mockbuild`含义
     * 动态库
         + https://www.cnblogs.com/aaronLinux/p/6970590.html
         + https://baike.baidu.com/item/.dll/2133451
