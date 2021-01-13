@@ -133,7 +133,7 @@ enum
 
 ## goto
 
-向后跳转
+- 向后跳转
 
 ```c
 goto label;
@@ -143,7 +143,7 @@ label:  <
     statement;
 ```
 
-向前跳转
+- 向前跳转
 
 ```c
 label:         <-|
@@ -154,5 +154,72 @@ goto label;     -
     statement;
 ```
 
+
+## 系统调用
+
+### mmap
+
+```c
+void *mmap(void *start,size_t length,int prot,int flags,int fd,off_t offsize);
+```
+
+- 主要用途
+    * 将普通文件映射到内存，这样频繁读写时就可直接在内存读写，提高性能
+    * 为关联的进程提供共享内存空间
+    * 为无关联的进程提供共享内存空间
+- 参数说明
+    * start：指向内存起始地址，为NULL则让系统自动选定，映射成功返回该地址
+    * length：文件中多大的部分映射到内存
+    * prot：映射区域的保护方式，可以是以下几种方式的组合：
+        + `PROT_EXEC`，映射区域可被执行
+        + `PROT_READ`，映射区域可被读取
+        + `PROT_WRITE`，射区域可被写入
+        + `PROT_NONE`，映射区域不能存取
+    * flags：会影响映射区域的各种特性
+        + 在调用mmap()时必须要指定`MAP_SHARED` 或`MAP_PRIVATE`
+        + `MAP_FIXED`，如果参数 start 所指的地址无法成功建立映射时，则放弃映射，不对地址做修正。通常不鼓励用此旗标。
+        + `MAP_SHARED`，对应射区域的写入数据会复制回文件内，而且允许其他映射该文件的进程共享。
+        + `MAP_PRIVATE`，对应射区域的写入操作会产生一个映射文件的复制，即私人的"写入时复制"对此区域作的任何修改都不会写回原来的文件内容。
+        + `MAP_ANONYMOUS`，建立匿名映射，此时会忽略参数fd，不涉及文件，而且映射区域无法和其他进程共享。
+        + `MAP_DENYWRITE`，只允许对应射区域的写入操作，其他对文件直接写入的操作将会被拒绝。
+        + `MAP_LOCKED`，将映射区域锁定住，这表示该区域不会被置换(swap)。
+    * fd：`open()`返回的文件描述符，代表欲映射到内存的文件
+    * offset：文件映射的偏移量，0表示从最前方开始，offset必须是分页大小的整数倍
+    * 返回值：若映射成功则返回映射区内存的起始地址，否则返回`MAP_FAILED`(-1)
+- 解除内存映射
+    * `int munmap(void *start, size_t length)`
+    * 取消从`start`起`length`大小的内存映射
+    * 关闭文件描述符不会自动解除映射
+- 错误代码
+    * `EBADF`，参数fd 不是有效的文件描述词
+    * `EACCES`，存取权限有误。如果是`MAP_PRIVATE`情况下文件必须可读，使用`MAP_SHARED`则要有`PROT_WRITE`以及该文件要能写入。
+    * `EINVAL`，参数start、length 或offset有一个不合法。
+    * `EAGAIN`，文件被锁住，或是有太多内存被锁住。
+    * `ENOMEM`，内存不足。
+
+
+### sleep
+
+```c
+unsigned int sleep(unsigned int seconds);
+```
+
+- linux下`sleep()`函数在`#include<unistd.h>`中
+- windows下`sleep()`函数在`#include<windows.h>`中
+- 跨平台
+    ```c
+    #ifdef _WIN32
+    #include <Windows.h>
+    #else
+    #include <unistd.h>
+    #endif
+    ```
+
+需要**注意**的是`printf()`是一个**行缓冲函数**，先写到缓冲区，满足一定条件后才，才刷新。刷新缓冲区的条件如下：
+
+- 缓冲区填满
+- 写入字符有`\n`，`\r`
+- 调用`fflush`手动刷新时
+- 调用`scanf`需要从缓冲区读取数据时
 
 
