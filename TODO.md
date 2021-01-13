@@ -3,6 +3,12 @@
 
 系统化的学习让你成长，碎片化的学习让你焦虑
 
+- good good
+    * https://zhuanlan.zhihu.com/p/143320517
+- expand
+    * https://blog.csdn.net/onlysingleboy/article/details/38562283?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-2&spm=1001.2101.3001.4242
+- to be continue
+    * https://sourceware.org/systemtap/SystemTap_Beginners_Guide/systemtapscript-handler.html
 - mutt
     * https://www.bilibili.com/medialist/play/watchlater/BV1T7411L7gY
 - to note
@@ -14,13 +20,6 @@
 - pacman
     * https://www.youtube.com/watch?v=8vc7kDjEIhs&t=270s&ab_channel=MentalOutlaw
 - learn sed
-- to复习
-    * 电路：
-        + 零输入响应、零状态响应
-        + 等效电源
-            + 也常用于化简
-        + 谐振
-        + 变压器下的等效电源
 - Kruskal
 - dijkstra, floyd
 - dll补完(静态库)
