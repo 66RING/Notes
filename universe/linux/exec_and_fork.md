@@ -34,6 +34,16 @@ tags: tools, linux, fork, exec
 
 `do_wp_page()`会对这块导致写入异常中断的物理页面进行取消共享操作，为写进程复制一新的物理页面，使父进程和子进程各自拥有一块内容相同的物理页面。最后，从异常处理函数中返回时，CPU就会重新执行刚才导致异常的写入操作指令，使进程继续执行下去。
 
+### fork函数的执行过程
+
+- 触发`sys_clone`系统调用
+- 执行`do_fork()`
+    * 执行`copy_process()`
+        + 执行`dup_task_struct()`，`copy_file()`，`copy_thread()`，`copy_mm`等
+    * `wake_up_new_task(task_struct p)`
+    * `put_pid(struct pid)`
+- 执行`ret_from_fork()`
+
 
 ## 实战
 
