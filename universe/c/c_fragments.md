@@ -223,3 +223,39 @@ unsigned int sleep(unsigned int seconds);
 - 调用`scanf`需要从缓冲区读取数据时
 
 
+### exec
+
+#### execv
+
+```c
+//#include <unistd.h>
+int execv(const char *filename, char *const argv[]);
+```
+
+以新进程(filename)替换当前进程，pid不变。如果正常执行，`execv`永远不会返回
+
+- filename：二进制可执行程序
+- arg：传入被执行程序的参数序列
+
+execve同理，可以携带环境变量参数序列
+
+```c
+//#include <unistd.h>
+int execve(const char *filename, char *const argv[], char *const envp[]);
+```
+
+- filename：二进制可执行程序
+- arg：传入被执行程序的参数序列
+- envp：环境变量序列
+
+```c
+#include<stdio.h>
+#include<unistd.h>
+
+int main(int arg, char **args)
+{
+    char *argv[]={"python","./test.py",NULL};
+    char *envp[]={0,NULL};
+    execve("/usr/bin/env",argv,envp);
+}
+```
