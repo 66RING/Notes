@@ -76,15 +76,18 @@ probe kernel.function("_do_fork@kernel/fork.c"){
 ### 小技巧
 
 - 扫描所有探测点可用`stap -L|l`，如
-    * `stap -L 'kernel.function(*fork*)'`，扫描所有包含fork的函数
+    * `stap -L 'kernel.function(*fork*)'`，扫描所有包含fork的函数，并列出可用的变量
 - 可以用`$`直接获取进程的全局变量，获取不到可以试试`@`
-    * 在`probe process(PATH).function(PATTERN){}`中使用
+    * 如果变量不是本地变量可以这么引用`@var("varname@src/file.c")`
+- 可以用`$1`，来接受命令行参数
+    * `probe $1{}`
 - systemtap中无论是指针还是结构体都使用`->`访问成员
 - 输出整个结构体:变量结尾加一个或两个`$`
-    * 如`$var$`和`$var$$`
+    * `$`后缀打印结构体
+    * `$$`后缀打印结构体，如果结构体中包含复杂结构则将其展开
 - 在return探测点可以用`&return`获取返回值，inline函数无法安装return探测点
 - 使用`@cast()`来实现指针类型转换
-    * `@cast($var, "new_type")`
+    * `@cast($var, "new_type"[, "file_that_type_define"])`
 - 同样使用`@cast`定义某个类型的变量，原理就是用`@cast`转换类型后赋值给一个变量
     * `c = &@cast($rev->data, "ngx_connection_t")`
 - 对于多级指针如`**p`可以使用`[0]`来解引用
@@ -104,7 +107,6 @@ probe kernel.function("_do_fork@kernel/fork.c"){
     * `pp()`，输出当前被激活的探测点，即包括函数名、路径、行号等
 - 关联数组
     * 关联数组必须是全局变量，用global声明。最多支持9项索引域
-
         ```stp
         global reads
         probe vfs.read {
@@ -117,9 +119,7 @@ probe kernel.function("_do_fork@kernel/fork.c"){
             delete reads
         }
         ```
-
     * 可以使用`+`、`-`进行排序
-
         ```stp
         global reads
         probe vfs.read {
@@ -132,6 +132,20 @@ probe kernel.function("_do_fork@kernel/fork.c"){
             delete reads
         }
         ```
+- `target()`，通过命令行`-x PID`传入id，作为target
+- 对于指向基础类型的指针，以下函数可以获取其内核态的数据
+    * `kernel_char(address)`
+        + 从内核内存地址中获取char
+    * `kernel_short(address)`
+    * `kernel_int(address)`
+    * `kernel_long(address)`
+    * `kernel_string(address)`
+    * `kernel_string_n(address)`
+        + 获取的string长度为n bytes
+- `$$var`获取探测点的所有变量
+    * `$$locals`，`$$vars`的子集，仅包含本地变量
+    * `$$parms`，`$$vars`的子集，仅包含函数参数变量
+    * `$$return`，仅在return probe中有效
 
 
 ## 追踪进程
