@@ -3,14 +3,25 @@
 
 系统化的学习让你成长，碎片化的学习让你焦虑
 
+477
+
+- hexo theme
+    * https://volantis.js.org/
+- **mm**:https://zhuanlan.zhihu.com/p/73468738
+    * buddy in flash: https://zhuanlan.zhihu.com/p/105589621
+    * 物理内存管理：https://zhuanlan.zhihu.com/p/68465952
+- task struct
+    * https://www.jianshu.com/p/691d02380312
+- fork and mm
+    * https://www.cnblogs.com/joey-hua/p/5597818.html
+    * mm:
+        + https://www.cnblogs.com/joey-hua/p/5598451.html
+        + https://blog.csdn.net/rikeyone/article/details/84778466
+        + https://blog.csdn.net/helloworlddm/article/details/76785356
 - good good
     * https://zhuanlan.zhihu.com/p/143320517
 - expand
     * https://blog.csdn.net/onlysingleboy/article/details/38562283?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-2&spm=1001.2101.3001.4242
-- to be continue
-    * https://sourceware.org/systemtap/SystemTap_Beginners_Guide/systemtapscript-handler.html
-- mutt
-    * https://www.bilibili.com/medialist/play/watchlater/BV1T7411L7gY
 - to note
     * https://www.youtube.com/watch?v=ctgheOhe1vE&ab_channel=%E6%9D%8E%E6%B0%B8%E4%B9%90%E8%80%81%E5%B8%88
 - ffmpeg
