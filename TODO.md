@@ -7,17 +7,27 @@
 
 - hexo theme
     * https://volantis.js.org/
+- execv 
+    * https://www.cnblogs.com/zengyiwen/p/fd8b8e02a985167154080f16df4792de.html
+    * [elf文件的加载过程](https://blog.csdn.net/gatieme/article/details/51628257)
+- page cache
+    * https://zhuanlan.zhihu.com/p/68071761
+    * [address space](https://zhuanlan.zhihu.com/p/68465952)
+- 虚地址转换
+    * https://zhuanlan.zhihu.com/p/65298260
 - **mm**:https://zhuanlan.zhihu.com/p/73468738
+    * **内存映射**
+        + https://zhuanlan.zhihu.com/p/67894878
+        + ! https://www.cnblogs.com/xelatex/p/3491305.html
+        + ! https://blog.csdn.net/weixin_44277699/article/details/105727534
+        + https://www.cnblogs.com/feng9exe/p/6379650.html
+        + https://blog.csdn.net/liuyuanqing2010/article/details/6673178
+        + https://blog.csdn.net/ludashei2/article/details/91126611
+        + https://zhuanlan.zhihu.com/p/116896185
     * buddy in flash: https://zhuanlan.zhihu.com/p/105589621
     * 物理内存管理：https://zhuanlan.zhihu.com/p/68465952
 - task struct
     * https://www.jianshu.com/p/691d02380312
-- fork and mm
-    * https://www.cnblogs.com/joey-hua/p/5597818.html
-    * mm:
-        + https://www.cnblogs.com/joey-hua/p/5598451.html
-        + https://blog.csdn.net/rikeyone/article/details/84778466
-        + https://blog.csdn.net/helloworlddm/article/details/76785356
 - good good
     * https://zhuanlan.zhihu.com/p/143320517
 - expand

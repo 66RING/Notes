@@ -73,6 +73,9 @@ sys_execve() > do_execve() > do_execveat_common > search_binary_handler() > load
 使用`search_binary_handler`函数对`linux_binfmt`结构体链表(链表头为`formats`)扫描，并尝试每个`load_binary`函数，如果成功加载则对`formats`的扫描终止
 
 
+## Reference
+
+- [http://blog.chinaunix.net/uid-12127321-id-2957869.html](http://blog.chinaunix.net/uid-12127321-id-2957869.html)
 
 
 
