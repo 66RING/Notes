@@ -1,3 +1,10 @@
+---
+title: execv中的缓存管理分析
+date: 2021-01-19
+tags: linux, kernel, project
+mathjax: true
+---
+
 # page cache与缓存管理
 
 直接从磁盘访问文件会很慢，可以利用空闲的内存来缓存一些磁盘文件的内容，这部分用作缓存磁盘文件的内存就叫做page cache。
