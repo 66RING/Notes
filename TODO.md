@@ -7,6 +7,8 @@
 
 - hexo theme
     * https://volantis.js.org/
+- how file compression work
+    * https://www.youtube.com/watch?v=HNPqWaSEMJI&ab_channel=MentalOutlaw
 - execv 
     * https://www.cnblogs.com/zengyiwen/p/fd8b8e02a985167154080f16df4792de.html
     * [elf文件的加载过程](https://blog.csdn.net/gatieme/article/details/51628257)
