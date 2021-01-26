@@ -1,7 +1,10 @@
 ---
 title: 有趣的算法问题
 date: 2020-7-20
-tags: algorithm, gui, tools
+tags: 
+- algorithm
+- gui
+- tools
 ---
 
 ## 随机模拟问题

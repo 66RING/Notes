@@ -1,7 +1,7 @@
 ---
 title: 操作系统
 date: 2020-6-12
-tags: 计算机,操作系统
+tags: system
 ---
 
 

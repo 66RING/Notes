@@ -1,7 +1,9 @@
 ---
 title: markdown utils
 date: 2019-4-5
-tags: markdown, tools
+tags: 
+- markdown
+- tools
 mathjax: true
 ---
 

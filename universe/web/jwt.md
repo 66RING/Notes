@@ -1,7 +1,9 @@
 ---
 title: jwt原理
 date: 2020-8-8
-tags: web, jwt
+tags: 
+- web
+- jwt
 ---
 
 ## 传统的基于token的用户验证

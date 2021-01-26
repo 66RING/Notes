@@ -1,7 +1,9 @@
 ---
 title: curl基本使用
 date: 2020-11-15
-tags: linux, tools
+tags: 
+- linux
+- tools
 ---
 
 等读完curl(如果有时间)，就改成curl all in one

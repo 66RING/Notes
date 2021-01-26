@@ -1,7 +1,8 @@
 ---
 title: Computer Organization
 date: 2019-12-10
-tags: 计算机组成
+tags: 
+- 计算机组成
 mathjax: true
 ---
 

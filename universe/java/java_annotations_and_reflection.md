@@ -1,7 +1,10 @@
 ---
 title: java注解与反射
 date: 2020-7-17
-tags: java, annotations, reflection
+tags: 
+- java
+- annotations
+- reflection
 ---
 
 

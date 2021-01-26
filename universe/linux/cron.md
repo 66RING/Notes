@@ -1,7 +1,9 @@
 ---
 title: cron程序
 date: 2020-11-15
-tags: linux, tools
+tags: 
+- linux
+- tools
 ---
 
 ## cron表达式

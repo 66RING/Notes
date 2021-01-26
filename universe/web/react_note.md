@@ -1,7 +1,9 @@
 ---
 title: React学习笔记
 date: 2020-7-24
-tags: web, react
+tags: 
+- web
+- react
 ---
 
 

@@ -1,7 +1,9 @@
 ---
 title: TypeScript
 date: 2020-3-2
-tags: typescript, javascript
+tags: 
+- typescript
+- javascript
 ---
 
 # TypeScript

@@ -1,7 +1,9 @@
 ---
 title: SQL基本语句
 date: 2020-10-05
-tags: SQL, database
+tags: 
+- SQL
+- database
 ---
 
 

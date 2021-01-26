@@ -1,7 +1,9 @@
 ---
 title: Advanced Vim Programming
 date: 2020-9-16
-tags: vim, advanced
+tags: 
+- vim
+- advanced
 ---
 
 ## \<SID\>

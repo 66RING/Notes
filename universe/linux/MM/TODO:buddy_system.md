@@ -1,7 +1,10 @@
 ---
 title: Buddy系统的原理及实现
 date: 2021-01-19
-tags: linux, kernel, mm
+tags: 
+- linux
+- kernel
+- mm
 mathjax: true
 ---
 

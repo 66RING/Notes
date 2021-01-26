@@ -1,7 +1,7 @@
 ---
 title: Golang基础
 date: 2019-08-05
-tags: go, golang
+tags: go
 ---
 
 非零基础笔记，掌握c的基础上记录

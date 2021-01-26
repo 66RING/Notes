@@ -1,7 +1,10 @@
 ---
 title: 进程退出和销毁过程分析
 date: 2021-01-15
-tags: linux, kernel, project
+tags: 
+- linux
+- kernel
+- project
 mathjax: true
 ---
 

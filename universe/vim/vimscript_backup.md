@@ -1,7 +1,10 @@
 ---
 title: learn vimscript the hard way
 date: 2020-5-1
-tags: backup, vim, vimscript
+tags: 
+- backup
+- vim
+- vimscript
 ---
 
 Remenber to use `:h <arg>` for help

@@ -1,7 +1,8 @@
 ---
 title: AT&T与Intel汇编语言的比较
 date: 2020-6-10
-tags: AT&T, Intel, 汇编语言
+tags: 
+- 汇编语言
 ---
 
 

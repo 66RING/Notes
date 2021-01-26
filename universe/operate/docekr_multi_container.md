@@ -1,7 +1,9 @@
 ---
 title: docker多容器项目
 date: 2020-11-22
-tags: operate, docker
+tags: 
+- operate
+- docker
 ---
 
 ## docker容器交互

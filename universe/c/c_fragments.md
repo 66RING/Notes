@@ -1,7 +1,7 @@
 ---
 title: C语言碎片知识
 date: 2019-12-04
-tags: c, c++
+tags: c/c++
 mathjax: true
 ---
 

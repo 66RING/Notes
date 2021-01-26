@@ -1,7 +1,9 @@
 ---
 title: golang操作 mgov2篇
 date: 2019-8-27
-tags: go, tools
+tags: 
+- go
+- tools
 ---
 
 ### 打开mongo

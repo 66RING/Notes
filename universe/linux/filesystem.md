@@ -1,7 +1,9 @@
 ---
 title: linux文件系统
 date: 2020-12-05
-tags: linux, filesystem
+tags: 
+- linux
+- filesystem
 mathjax: true
 ---
 

@@ -1,7 +1,9 @@
 ---
 title: 如何配置linux内核
 date: 2020-11-29
-tags: linux, kernel
+tags: 
+- linux
+- kernel
 ---
 
 ## 如何配置linux内核

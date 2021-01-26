@@ -1,7 +1,10 @@
 ---
 title: slab分配器
 date: 2021-01-18
-tags: linux, kernel, memory management
+tags: 
+- linux
+- kernel
+- memory management
 mathjax: true
 ---
 

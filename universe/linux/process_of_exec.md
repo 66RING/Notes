@@ -1,7 +1,10 @@
 ---
 title: execv的执行过程
 date: 2021-01-14
-tags: linux, kernel, exec
+tags: 
+- linux
+- kernel
+- exec
 mathjax: true
 ---
 

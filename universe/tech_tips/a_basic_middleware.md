@@ -1,7 +1,10 @@
 ---
 title: 制作一个简易的中间件架构
 date: 2020-11-11
-tags: middleware, tech, go
+tags: 
+- middleware
+- tech
+- go
 ---
 
 ## 为何需要中间件

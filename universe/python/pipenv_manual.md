@@ -1,7 +1,10 @@
 ---
 title: pip venv tools usage
 date: 2019-1-3
-tags: python, pipenv, tools
+tags: 
+- python
+- pipenv
+- tools
 ---
 
 # Virtualenvwrapper

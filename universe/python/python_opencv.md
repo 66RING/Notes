@@ -1,7 +1,9 @@
 ---
 title: openCV学习笔记
 date: 2020-7-19
-tags: python, opencv
+tags: 
+- python
+- opencv
 ---
 
 在openCV中图像的xy轴是这样的

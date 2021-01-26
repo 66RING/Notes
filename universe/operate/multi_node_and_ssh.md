@@ -1,7 +1,9 @@
 ---
 title: 配置虚拟机集群及ssh
 date: 2020-3-27
-tags: operate, linux
+tags: 
+- operate
+- linux
 ---
 
 ## 配置虚拟机集群

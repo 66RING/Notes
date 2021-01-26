@@ -1,7 +1,9 @@
 ---
 title: RPC intro
 date: 2020-9-3
-tags: RPC, tech
+tags: 
+- RPC
+- tech
 ---
 
 ## RPC (Remote Procedure Call)

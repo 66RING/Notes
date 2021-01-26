@@ -1,7 +1,9 @@
 ---
 title: SQL注入
 date: 2020-4-12
-tags: SQL, database
+tags: 
+- SQL
+- database
 ---
 
 ## 原理

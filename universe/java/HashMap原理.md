@@ -1,7 +1,9 @@
 ---
 title: HashMap原理
 date: 2019-6-27
-tags: java, hashmap
+tags: 
+- java
+- hashmap
 ---
 
 ## 基本

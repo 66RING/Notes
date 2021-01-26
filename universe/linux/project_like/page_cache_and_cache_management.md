@@ -1,7 +1,10 @@
 ---
 title: execv中的缓存管理分析
 date: 2021-01-19
-tags: linux, kernel, project
+tags: 
+- linux
+- kernel
+- project
 mathjax: true
 ---
 

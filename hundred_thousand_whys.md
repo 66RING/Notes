@@ -1,7 +1,9 @@
 ---
 title: Hundred Thousand Whys
 date: 2020-9-17
-tags: tips, tools
+tags: 
+- tips
+- tools
 ---
 
 ## Why rust say it want to replace c++

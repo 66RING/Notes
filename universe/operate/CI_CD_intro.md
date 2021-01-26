@@ -1,7 +1,9 @@
 ---
 title: CI/CD简介
 date: 2020-11-22
-tags: operate, CI/CD
+tags: 
+- operate
+- CI/CD
 ---
 
 ## 什么是CI/CD

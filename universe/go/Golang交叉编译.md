@@ -1,7 +1,9 @@
 ---
 title: Golang交叉编译
 date: 2019-08-08 17:52:45
-tags: go, tools
+tags: 
+- go
+- tools
 ---
 
 

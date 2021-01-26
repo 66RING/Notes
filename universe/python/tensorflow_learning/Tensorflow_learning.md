@@ -1,7 +1,10 @@
 ---
 title: Tensorflow   
 date: 2019-9-19   
-tags: python, tensorflow, machine learning
+tags: 
+- python
+- tensorflow
+- machine learning
 mathjax: true
 ---
 

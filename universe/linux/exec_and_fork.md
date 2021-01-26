@@ -1,7 +1,11 @@
 ---
 title: Fork & Exec 简介
 date: 2020-7-18
-tags: tools, linux, fork, exec
+tags: 
+- tools
+- linux
+- fork
+- exec
 ---
 
 ## fork和exec简介

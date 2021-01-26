@@ -1,7 +1,9 @@
 ---
 title: cpp常用stl 
 date: 2020-10-26
-tags: c, cpp, stl
+tags: 
+- c/c++
+- stl
 mathjax: true
 ---
 

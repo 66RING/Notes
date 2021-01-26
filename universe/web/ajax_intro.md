@@ -1,7 +1,9 @@
 ---
 title: JQuery, fetch, axios
 date: 2020-11-21
-tags: web, ajax
+tags: 
+- web
+- ajax
 ---
 
 ## Ajax简介

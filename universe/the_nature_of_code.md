@@ -1,7 +1,9 @@
 ---
 title: 用processing模拟自然系统
 date: 2020-4-14
-tags: processing, nature of code
+tags: 
+- processing
+- nature of code
 ---
 
 ## 随机游走

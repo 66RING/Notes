@@ -1,7 +1,10 @@
 ---
 title: How to makefile
 date: 2020-2-26
-tags: makefile, tools, operate
+tags: 
+- makefile
+- tools
+- operate
 ---
 
 # How to makefile

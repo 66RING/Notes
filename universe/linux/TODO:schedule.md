@@ -1,7 +1,9 @@
 ---
 title: linux进程调度机制
 date: 2020-11-21
-tags: linux, kernel
+tags: 
+- linux
+- kernel
 ---
 
 > 看爆！https://zorrozou.github.io/

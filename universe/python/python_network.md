@@ -1,7 +1,9 @@
 ---
 title: python 网络编程
 date: 2020-6-25
-tags: python, network
+tags: 
+- python
+- network
 ---
 
 ## Socket基本使用

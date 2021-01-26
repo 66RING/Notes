@@ -1,7 +1,9 @@
 ---
 title: Golang gui 编程笔记
 date: 2020-8-11
-tags: golang, gui
+tags: 
+- go
+- gui
 ---
 
 

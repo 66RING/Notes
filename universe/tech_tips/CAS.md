@@ -1,7 +1,9 @@
 ---
 title: CAS简记
 date: 2020-8-9
-tags: tech, algorithm
+tags: 
+- tech
+- algorithm
 ---
 
 ## CAS(Compare And Swap)

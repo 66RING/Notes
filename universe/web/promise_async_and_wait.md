@@ -1,7 +1,10 @@
 ---
 title: Promise, async和wait的简单记录
 date: 2020-10-03
-tags: web, promise, javascript
+tags: 
+- web
+- promise
+- javascript
 ---
 
 ## 为什么需要promise

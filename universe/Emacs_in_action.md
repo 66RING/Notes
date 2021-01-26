@@ -1,7 +1,9 @@
 ---
 title: emacs快速入门
 date: 2020-5-29
-tags: emacs, linux, editor
+tags: 
+- emacs
+- linux
 ---
 
 ## Emacs细节

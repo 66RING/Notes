@@ -1,7 +1,7 @@
 ---
 title: Golang内存对齐
 date: 2020-8-17
-tags: golang, go
+tags: go
 ---
 
 

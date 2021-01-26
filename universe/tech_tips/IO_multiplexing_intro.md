@@ -1,7 +1,10 @@
 ---
 title: IO多路复用select、poll、epoll介绍
 date: 2020-12-05
-tags: tech, IO, OS
+tags: 
+- tech
+- IO
+- OS
 mathjax: true
 ---
 

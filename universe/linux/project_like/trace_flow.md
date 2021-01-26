@@ -1,7 +1,11 @@
 ---
 title: 使用systemtap实现进程的跟踪
 date: 2021-01-13
-tags: linux, systemtap, tool, kernel
+tags: 
+- linux
+- systemtap
+- tool
+- kernel
 mathjax: true
 ---
 

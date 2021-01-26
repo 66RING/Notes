@@ -1,7 +1,9 @@
 ---
 title: 深入理解linux内核
 date: 2020-7-13
-tags: linux, kernel
+tags: 
+- linux
+- kernel
 ---
 
 # 庖丁解牛linux内核

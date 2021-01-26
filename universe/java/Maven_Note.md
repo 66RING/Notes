@@ -1,7 +1,9 @@
 ---
 title: Maven 基本操作
 date: 2019-9-15
-tags: maven, java
+tags: 
+- maven
+- java
 ---
 
 ### 基本操作

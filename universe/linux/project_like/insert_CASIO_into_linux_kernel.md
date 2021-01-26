@@ -1,7 +1,9 @@
 ---
 title: 如何向linux内核插入新的调度器
 date: 2020-12-07
-tags: linux, kernel
+tags: 
+- linux
+- kernel
 mathjax: true
 ---
 

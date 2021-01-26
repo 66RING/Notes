@@ -1,7 +1,9 @@
 ---
 title: iptables使用
 date: 2020-11-23
-tags: linux, network
+tags:
+- linux
+- network
 ---
 
 > 对网络上一些数据包通过表的形式进行限定或修改

@@ -1,7 +1,9 @@
 ---
 title: Yaml Basic
 date: 2020-8-6
-tags: yaml, tool
+tags: 
+- yaml
+- tool
 ---
 
 [Offical Tutorial](https://yaml.org/spec/1.2/spec.html)

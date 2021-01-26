@@ -1,7 +1,9 @@
 ---
 title: This和箭头函数
 date: 2020-8-20
-tags: javascript, typescript
+tags: 
+- javascript
+- typescript
 ---
 
 
