@@ -3,7 +3,8 @@
 
 系统化的学习让你成长，碎片化的学习让你焦虑
 
-477
+- lspsaga
+    * https://github.com/glepnir/lspsaga.nvim
 
 - hexo theme
     * https://volantis.js.org/
