@@ -1,15 +1,25 @@
-
 把学到的东西藏在心里不仅是可耻的，而且是有害是。凡是我们不去努力分享的也必将从我们这里失去
 
 系统化的学习让你成长，碎片化的学习让你焦虑
 
-- lspsaga
-    * https://github.com/glepnir/lspsaga.nvim
+
+- fs
+    * https://www.cnblogs.com/xiaojiang1025/p/6500557.html
+    * BOOK
+- linux tracing tech
+    * https://www.kernel.org/doc/html/latest/trace/index.html
+- 进程id管理
+    * https://www.cnblogs.com/hazir/archive/2013/10/03/linux_kernel_pid.html
+- 程进切换
+    * http://www.wowotech.net/process_management/context-switch-arch.html
+- !!!
+    * https://www.cnblogs.com/LoyenWang/p/12116570.html
+- ftrace原理
+- filesystem
+    * https://zhuanlan.zhihu.com/p/106459445
 
 - hexo theme
     * https://volantis.js.org/
-- how file compression work
-    * https://www.youtube.com/watch?v=HNPqWaSEMJI&ab_channel=MentalOutlaw
 - execv 
     * https://www.cnblogs.com/zengyiwen/p/fd8b8e02a985167154080f16df4792de.html
     * [elf文件的加载过程](https://blog.csdn.net/gatieme/article/details/51628257)
@@ -31,10 +41,6 @@
     * 物理内存管理：https://zhuanlan.zhihu.com/p/68465952
 - task struct
     * https://www.jianshu.com/p/691d02380312
-- good good
-    * https://zhuanlan.zhihu.com/p/143320517
-- expand
-    * https://blog.csdn.net/onlysingleboy/article/details/38562283?utm_medium=distribute.pc_relevant.none-task-blog-baidujs_title-2&spm=1001.2101.3001.4242
 - to note
     * https://www.youtube.com/watch?v=ctgheOhe1vE&ab_channel=%E6%9D%8E%E6%B0%B8%E4%B9%90%E8%80%81%E5%B8%88
 - ffmpeg
@@ -106,7 +112,6 @@
 - blog to travel 
     * https://gohalo.me/categories.html#Linux
 - mutt
-- IPsec
 - 树同构
     * https://pintia.cn/problem-sets/15/problems/711
 - 陈海波操作系统
@@ -123,12 +128,9 @@
 - learn QEMU (kvm)
     * https://zhuanlan.zhihu.com/p/48664113
     * https://wiki.archlinux.org/index.php/QEMU
-- GO http 获取表单
-- 找家实习
 - vim API
     * https://neovim.io/doc/user/
     * https://neovim.io/doc/user/remote_plugin.html
-- `mysql.Prepare()`预编译防注入的原理
 - 算法
     * 插入区间
         + https://leetcode-cn.com/problems/insert-interval/submissions/
@@ -150,15 +152,7 @@
         + https://leetcode-cn.com/problems/n-queens/submissions/
     * 监控二叉树
        + https://leetcode-cn.com/problems/binary-tree-cameras/
-- 转用另一个补全框架
-    * https://github.com/nvim-lua/completion-nvim
-    * https://github.com/hrsh7th/vim-vsnip
-    * vim-closer
 - vimspector
     * https://github.com/puremourning/vimspector
 - linux from scratch
     * http://linuxfromscratch.org/lfs/view/stable/chapter04/settingenvironment.html
-- react advance
-    * https://reactjs.org/docs/accessibility.html
-- 算法实战
-    * go -> ui
