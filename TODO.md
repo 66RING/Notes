@@ -47,8 +47,6 @@
     * https://www.youtube.com/watch?v=HO6oU5oT6uU&ab_channel=MentalOutlaw
 - qemu
     * https://www.youtube.com/watch?v=jLRmVNWOrgo&ab_channel=ChrisTitusTech
-- pacman
-    * https://www.youtube.com/watch?v=8vc7kDjEIhs&t=270s&ab_channel=MentalOutlaw
 - learn sed
 - Kruskal
 - dijkstra, floyd
