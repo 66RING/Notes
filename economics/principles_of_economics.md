@@ -83,6 +83,11 @@ mathjax: true
 
 Economics as science. 观察，理论，进一步观察。
 
+- 科学的研究方法：
+    * 理论分析，解释现实经济的运作
+    * 经验(或实证)分析(Empirical analysis)，用数据检验理论
+
+
 
 
 
