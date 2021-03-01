@@ -9,6 +9,27 @@ tags:
 
 # Git 操作
 
+git工作流程如下：
+
+```
+dir
+  |
+  | init
+  v
+working directory 工作目录
+  |
+  | add
+  V
+staging area 暂存区
+  |
+  | commit 提交仓库
+  v
+repository
+```
+
+一个目录初始化后(init)将称为工作目录，工作目录中通过`git add`添加要跟踪的文件，并将这些文件添加到 **暂存区** 。暂存区是一个索引文件，它记录下一次要提交的文件列表。最后通过`git commit`提交到**git仓库**。git仓库里保存了项目元数据和对象数据库，并且它是以快照的方式保存的。
+
+
 ## 基本操作
 ### 初始化
 
