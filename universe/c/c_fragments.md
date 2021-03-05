@@ -261,3 +261,51 @@ int main(int arg, char **args)
     execve("/usr/bin/env",argv,envp);
 }
 ```
+
+
+## 结构体初始化
+
+机构体初始化有4种方法，观察如下结构体：
+
+```c
+struct Person{
+    int age;
+    char* name;
+    int weight;
+}
+```
+
+法一：定义时顺序赋值
+
+```c
+struct Person p = {18, "ring", 110};
+```
+
+法二：定义后赋值
+
+```c
+struct Person p;
+p.age = 18;
+p.weight = 110;
+p.name = "ring"
+```
+
+法三：定义时乱序赋值(C风格)
+
+```c
+struct Person p = {
+    .age = 18;
+    .weight = 110;
+    .name = "ring"
+}
+```
+
+法四：定义时乱序赋值(C++风格)
+
+```c
+struct Person p = {
+    age : 18;
+    weight : 110;
+    name : "ring"
+}
+```
