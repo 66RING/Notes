@@ -1,3 +1,5 @@
+学科导论
+程序设计
 
 - try
     * https://stackoverflow.com/questions/61537403/how-to-host-image-at-https-user-images-githubusercontent-com-path-filename
@@ -16,6 +18,7 @@
     * 未麻的部屋
     * 尽善尽美
 
+to看 https://blog.csdn.net/u011364612
 
 
 - pandoc

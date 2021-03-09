@@ -1,9 +1,11 @@
 ---
-title: C语言碎片知识
+title: c/cpp语言碎片知识
 date: 2019-12-04
 tags: c/c++
 mathjax: true
 ---
+
+# c
 
 ## 读取字符串
 
@@ -309,3 +311,40 @@ struct Person p = {
     name : "ring"
 }
 ```
+
+# cpp
+
+## cpp类初始化
+
+### 初始化列表
+
+写法:
+
+```cpp
+class A{
+private:
+    int Age;
+    string Name;
+public:
+    A(int age, string name):
+        Age(age),
+        Name(name)
+    {}
+};
+```
+
+推荐类初始化使用初始化列表，如果构造函数写出这样：
+
+```cpp
+A(int age, string name){
+    Age = age;
+    Name = name;
+}
+```
+
+这种做法不是最佳的，是赋值操作（伪初始化）。因为初始化发生在构造函数本体之前，default构造函数(即调用类型的拷贝函数)为成员设初值，然后再立即赋值，这样显然default构造函数的操作就浪费了。因此使用初始化列表只调用一次设值，比较高效。
+
+
+
+
+
