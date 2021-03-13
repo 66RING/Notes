@@ -7,7 +7,9 @@ mathjax: true
 
 # c
 
-## 读取字符串
+## 读写
+
+### 读取字符串
 
 - 读取单个字符
     * `getchar()`是`scanf("%c", c)`的简化版本，除了更简介无其他优势
@@ -17,6 +19,93 @@ mathjax: true
     * `scanf("%s", str)`遇到空格后停止接收后面的字符串
     * `gets()`有缓冲区，可以读取空格，直到回车才会结束
     * `scanf("%[^\n]",str)`，可以读取带空格的字符串，直到回车才结束
+
+
+### 文件读写
+
+#### 打开/关闭文件
+
+打开或新建一个文件
+
+```c
+FILE *fopen( const char * filename, const char * mode );
+```
+
+- mode:
+    * r, **只读**方式打开，文件必须存在
+    * w, **只写**方式打开，文件存在则清空文件内容从头写，否则新建并打开
+    * a, **只写追加**
+    * r+, **可读写**方式打开，不同w会清空文件内容，文件必须存在
+    * w+, **可读写**方式打开，其他同w
+    * a+, **可读写**方式打开，其他同a
+    * 如果打开二进制文件需要加个`b`，如`rb`
+
+
+关闭文件
+
+```c
+int fclose(FILE *fp);
+```
+
+如果关闭发生错误返回EOF
+
+
+#### 写入文件
+
+写入一个字符，成功返回写入的字符，错误返回EOF
+
+```c
+int fputc( int c, FILE *fp );
+```
+
+写入字符串，成功返回非负，错误返回EOF
+
+```c
+int fputs( const char *s, FILE *fp );
+// or 格式化写入
+int fprintf(FILE *fp,const char *format, ...)
+```
+
+
+#### 文件读取
+
+读取一个字符，成功返回该字符，错误返回EOF
+
+```c
+int fgetc( FILE * fp );
+```
+
+从流中读取n-1个字符并拷贝到buff，并追加一个null终止字符串。如果读到`\n`或EOF则会提前返回
+
+```c
+char *fgets( char *buf, int n, FILE *fp );
+// or
+int fscanf(FILE *fp, const char *format, ...)
+// 函数来从文件中读取字符串，但是在遇到第一个空格和换行符时，它会停止读取。
+```
+
+
+#### 重定向文件流
+
+TODO
+
+```c
+#include<stdio.h>
+FILE *freopen(char *filename, char *mode, FILE *stream);
+```
+
+- filename，欲打开的文件路径
+- mode
+- stream，已经打开的文件指针，如stdin，stdout等
+
+tips:
+
+```c
+// 把in.txt内容作为标准出入
+freopen("in.txt","r",stdin);
+// 把标准输出重定向到out.txt
+freopen("out.txt","w",stdout);
+```
 
 
 ## 函数指针
