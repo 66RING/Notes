@@ -1,5 +1,4 @@
-学科导论
-程序设计
+一阶微分方程
 
 - try
     * https://stackoverflow.com/questions/61537403/how-to-host-image-at-https-user-images-githubusercontent-com-path-filename
