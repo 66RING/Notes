@@ -20,11 +20,16 @@ tags:
     - `gdb` -> `file path/to/main`
 - Show list
     - use `l` command to show source code with line number
-- Add breakpoint
+- breakpoint
     - use `b <LINENUM>` to add breakpoint, such as `b 1` add breakpoint at line 1
     - or use `b <FUNCTIONNAME>` to add breakpoint, such as `b main` add breakpoint at main function
+    - `b <[file:]linenum|[file:]funciont>`
+    - `tb[reak]` for a temporary breakpoint
 - Show breakpoint information
     - `i b` i for information, b for breakpoint
+    - `clear [[file:]function|[file:]lennum]` to clean all breakpoint
+    - `rb[reak] REGEXP` set breakpoint for all function matching REGEXP
+    - `ignore N COUNT` ignore bp 1 for COUNT times 
 - **Inspect**
     * use `print, inspect or p [OPTION...] [EXP]` to print value of expression EXP
         + use `p a` will show information of variable `a` 
@@ -51,7 +56,7 @@ tags:
 - Set log
     * `set logging on`, which will copy output to file `gdb.txt`
 - **Watchpoints**, Catchpoint... and so on
-    * You can use a watchpoint to stop execution whenever the value of an expression changes.
+    * You can use a watchpoint to stop execution whenever the value of an expression **changes**.
     * `watch *<addr>` or `watch <value>`
     * `info watchpoints` to print info of watchpoints
 - Debug a running program
