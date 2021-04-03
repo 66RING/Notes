@@ -1,4 +1,41 @@
-一阶微分方程
+- 计网
+    * https://zhuanlan.zhihu.com/p/116436431
+    * redo计算题，第二第三次作业
+
+- 一阶微分方程
+    * https://www.bilibili.com/video/BV1Xh411Z7gp?from=search&seid=6063876634422318946
+
+模电
+
+- tty
+    * https://segmentfault.com/a/1190000009082089
+
+- qemu monitor使用
+    * https://hhb584520.github.io/kvm_blog/2017/02/17/qemu-monitor.html
+
+- `void*`
+
+config里也用上keymap
+
+
+- 做个backtrace工具
+    * 维护记录打开树
+    * 退回
+        + 仅历史退回
+    * 前进
+        + 对处理函数闭包，可以利用lsp
+        + 具体目标前进，如果是新开，加入维护树
+        + 历史前进，如果打开树只有1，且要开的和打开的一样，直接跳
+    * 打印记录树，并提供树中任意文件跳转
+
+
+- vmlinux
+    * https://blog.csdn.net/nameofcsdn/article/details/78772645
+
+- blog
+    * qemu 
+    * QOM 
+    * debug with gdb(advanced usage)
 
 - try
     * https://stackoverflow.com/questions/61537403/how-to-host-image-at-https-user-images-githubusercontent-com-path-filename
@@ -17,34 +54,21 @@
     * 未麻的部屋
     * 尽善尽美
 
-to看 https://blog.csdn.net/u011364612
-
 
 - pandoc
     * https://www.youtube.com/watch?v=HllCrrXui2g&t=191s&ab_channel=BrodieRobertson
 - fs
     * https://www.cnblogs.com/xiaojiang1025/p/6500557.html
     * BOOK
-- linux tracing tech
-    * https://www.kernel.org/doc/html/latest/trace/index.html
 - 进程id管理
     * https://www.cnblogs.com/hazir/archive/2013/10/03/linux_kernel_pid.html
 - 程进切换
     * http://www.wowotech.net/process_management/context-switch-arch.html
 - !!!
     * https://www.cnblogs.com/LoyenWang/p/12116570.html
-- ftrace原理
 - filesystem
     * https://zhuanlan.zhihu.com/p/106459445
 
-- hexo theme
-    * https://volantis.js.org/
-- execv 
-    * https://www.cnblogs.com/zengyiwen/p/fd8b8e02a985167154080f16df4792de.html
-    * [elf文件的加载过程](https://blog.csdn.net/gatieme/article/details/51628257)
-- page cache
-    * https://zhuanlan.zhihu.com/p/68071761
-    * [address space](https://zhuanlan.zhihu.com/p/68465952)
 - 虚地址转换
     * https://zhuanlan.zhihu.com/p/65298260
 - **mm**:https://zhuanlan.zhihu.com/p/73468738
@@ -69,9 +93,6 @@ to看 https://blog.csdn.net/u011364612
 - learn sed
 - Kruskal
 - dijkstra, floyd
-- dll补完(静态库)
-    * http://c.biancheng.net/view/7168.html
-    * /home/ring/Documents/Note/universe/tech_tips/what_is_dll.md
 - OS
     * 动态库
         + https://www.cnblogs.com/aaronLinux/p/6970590.html

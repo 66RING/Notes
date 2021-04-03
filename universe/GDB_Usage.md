@@ -33,15 +33,21 @@ tags:
 - **Inspect**
     * use `print, inspect or p [OPTION...] [EXP]` to print value of expression EXP
         + use `p a` will show information of variable `a` 
+        + `p [/FMT]` print with specified format
+        + `p ARRAY[@len]` print arrary with len element
+        + `p ['file'::]var` print var in specified file
 - Delete breakpoint
     - `d <BREAKPOINTNUM>` break point num from `i b`
     - `i b` info of breakpoint, information will be like a order list. If delete a pointid in the previous, the next point will just add in the end of the idlist.
 - Run debug
-    - `r`
+    - `r [args...]`
 - Gdb controler
-    - `n` **for next line**, one step debugging
+    - `n [N]` **for next line**, one step debugging
     - `s` **for step into**(one step)
+    - `u|until [LINENUM|FUNC|ADDR|if condition]`
     - `set args [parameter]` for command line args
+    - `return <value>` finish function and return `<value>`
+    - `call <function>` call specified function
 - Finish function and continue
     - `finish` for finish function
     - `c` for continue until program exit or breakpoint

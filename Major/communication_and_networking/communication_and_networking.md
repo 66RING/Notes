@@ -1,11 +1,12 @@
 ---
-title: communication andr networking笔记
+title: communication and networking笔记
 date: 2021-03-24
 tags: 
 - network
 mathjax: true
 ---
 
+# TODO第二章
 
 # 数据和信号
 
@@ -71,12 +72,13 @@ todo
     * **信噪比SNR**
     * $SNR = \frac{平均信号功率}{平均噪声功率}$ 是功率比
     * 用分贝描述：$SNR_{dB} = 10 \log_{10} SNR$
+    * 如果`SNR+1几乎与SNR相当`，则$log_2(1+SNR) \approx \frac{SNR_{dB}}{3}$
 
 
 ## 数据速率限制
 ### 无噪声通道：奈奎斯特比特率
 
-对于无噪声通过，理论上最大比特率：
+对于无噪声通过，**理论上最大比特率**：
 
 $$比特率 = 2 \times 带宽 \times \log_2 L$$
 
@@ -85,7 +87,7 @@ $$比特率 = 2 \times 带宽 \times \log_2 L$$
 
 ### 噪声通道：香农容量定理
 
-噪声通道理论上的最高数据传输速率：
+**噪声通道理论上的最高数据传输速率**：
 
 $$通道容量 = 带宽 \times \log_2 {(1+SNR)}$$
 
