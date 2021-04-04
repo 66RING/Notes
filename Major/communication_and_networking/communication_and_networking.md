@@ -211,7 +211,7 @@ RZ编码使用三个值：正、负、0，电平信号 **可以在位中变化**
 
 双相编码利用了RZ的思想和NRZ的思想
 
-<img src="./static/Bi-Phase_Space.jpg" width="50%" align="right"/>
+<img src="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/Bi-Phase_Space.jpg" width="50%" align="right"/>
 
 **位中间总是发生跳变**
 
@@ -230,7 +230,7 @@ RZ编码使用三个值：正、负、0，电平信号 **可以在位中变化**
 
 一个数据元素的电平是0，另一个元素的电平在正负值间**交替**
 
-<img src="./static/AMI.jpg" width="50%" align="right"/>
+<img src="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/AMI.jpg" width="50%" align="right"/>
 
 - **AMI(交替传号反转编码)** ：传号指的是1，表示交替的1的反应
     * 0是用电位0表示，下一个1的电位是最后一个1的电位的反，即交替。
@@ -261,14 +261,14 @@ todo
 
 ##### 2B1Q方案
 
-<div align=center><img src="./static/2B1Q.jpg" width="60%"/></div>
+<div align=center><img src="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/2B1Q.jpg" width="60%"/></div>
 
 
 ##### 8B6T方案
 ##### 4D-PAM5方案
 ##### 多线路传输：MLT-3
 
-<div align=center><img src="./static/summary_of_line_coding.jpg" width="100%"/></div>
+<div align=center><img src="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/summary_of_line_coding.jpg" width="100%"/></div>
 
 
 ### 块编码
@@ -290,7 +290,7 @@ todo
 
 4B/5B的解决方案：4B/5B的编码性质是前导0不会超过1个，后缀的0不超过两个，因此任意两组组合最多有3个连续的0。有$2^5 - 2^4 = 16$个的冗余可以用来检错和控制。再多余的，收到的话就说明传输出错。
 
-<img src="./static/map_of_4B5B.jpg" width="60%" align="right"/>
+<img src="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/map_of_4B5B.jpg" width="60%" align="right"/>
 
 - 方案分析
     * 增加了NRZ-I的信号速录：4 to 5，1.25倍，但优于两相方案
@@ -347,7 +347,7 @@ todo
     * 之前的(包括之前的置换后)非零脉冲数是奇数，则用000V，奇变偶
     * 之前的非零脉冲数是偶数，则用B00V，保持偶
 
-<img src="./static/HDB3.jpg" width="50%"/>
+<img src="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/HDB3.jpg" width="50%"/>
 
 
 ## 模拟信号到数字信号转换
@@ -389,7 +389,7 @@ todo
     * 标准化量化值：标准化PAM值所在区间区间的中间值
     * 量化码：对量化电平编码
 
-<div align=center><img src="./static/PCM.jpg" width="60%"/></div>
+<div align=center><img src="https://raw.githubusercontent.com/66RING/Notes/master/.github/images/communication_and_networking/PCM.jpg" width="60%"/></div>
 
 量化误差改变了信号的信噪比，根据香农理论，这减小了上限容量。**量化误差对信号$SNR_{dB}$的影响缺绝于量化级别L或每个样本的位数$n_b$** 
 

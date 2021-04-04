@@ -34,7 +34,6 @@ config里也用上keymap
 - blog
     * qemu 
     * QOM 
-    * debug with gdb(advanced usage)
 
 - try
     * https://stackoverflow.com/questions/61537403/how-to-host-image-at-https-user-images-githubusercontent-com-path-filename
