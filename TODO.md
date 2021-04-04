@@ -13,10 +13,9 @@
 - qemu monitor使用
     * https://hhb584520.github.io/kvm_blog/2017/02/17/qemu-monitor.html
 
-- `void*`
-
 config里也用上keymap
 
+- cpp面向对象的实现
 
 - 做个backtrace工具
     * 维护记录打开树
@@ -135,21 +134,12 @@ config里也用上keymap
 - 计算机网络
     * https://www.bilibili.com/video/BV124411k7uV
 - zephyr-nvim nvim-telescope/telescope.nvim
-- 从零开始学微分
-- 博文
-    * 系统调用
-    * 内存
-    * 进程调度
-- 熟练使用gdb
 - 防火墙
     * https://www.cnblogs.com/f-ck-need-u/p/7397146.html
 - 骏马金龙！！看爆!!
     * https://www.junmajinlong.com/linux/index/
-- Linux资源限制
-    * https://gohalo.me/post/linux-resource-limit-introduce.html
 - blog to travel 
     * https://gohalo.me/categories.html#Linux
-- mutt
 - 树同构
     * https://pintia.cn/problem-sets/15/problems/711
 - 陈海波操作系统
@@ -160,15 +150,11 @@ config里也用上keymap
 - linux内核代码情景分析
 - git多人协作笔记
     * rebase
-- eggo
 
 
 - learn QEMU (kvm)
     * https://zhuanlan.zhihu.com/p/48664113
     * https://wiki.archlinux.org/index.php/QEMU
-- vim API
-    * https://neovim.io/doc/user/
-    * https://neovim.io/doc/user/remote_plugin.html
 - 算法
     * 插入区间
         + https://leetcode-cn.com/problems/insert-interval/submissions/

@@ -400,12 +400,12 @@ p.weight = 110;
 p.name = "ring"
 ```
 
-法三：定义时乱序赋值(C风格)
+法三：定义时乱序赋值(C风格)，**注意使用的是逗号隔开** 
 
 ```c
 struct Person p = {
-    .age = 18;
-    .weight = 110;
+    .age = 18,
+    .weight = 110,
     .name = "ring"
 }
 ```
@@ -414,9 +414,9 @@ struct Person p = {
 
 ```c
 struct Person p = {
-    age : 18;
-    weight : 110;
-    name : "ring"
+    age : 18,
+    weight : 110,
+    name : "ring",
 }
 ```
 
