@@ -7,15 +7,17 @@
 
 模电
 
+- cpp面向对象的实现
+
+- 文件描述符
+    * https://zhuanlan.zhihu.com/p/109053744
+
 - tty
     * https://segmentfault.com/a/1190000009082089
 
 - qemu monitor使用
     * https://hhb584520.github.io/kvm_blog/2017/02/17/qemu-monitor.html
 
-config里也用上keymap
-
-- cpp面向对象的实现
 
 - 做个backtrace工具
     * 维护记录打开树
