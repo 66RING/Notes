@@ -1,9 +1,29 @@
+首先我要承认你说的低头拉车的问题，
+
+怪在哪：你要我写报告，搞清楚流程是吧。我虽然看到它是这么调的，但是我不能确定它就是靠这个实现交互的。因此我就不能抽象出来，万一它看似是用了这个，但其实它真正的实现在某个隐晦的角落呢，那我做的抽象不就是错的了么。所以我要仔细看看，验证它，也就陷入了细节，低头拉车。然后你跟我说，它可能就是这么这么根据地址找到的，诶，我也觉得，但是我不能确定。也就是刚才说的那个状态，所有感觉怪怪的。
+
+
+- 计网选课
+- 计网笔记
+- os笔记
+- 计组笔记
+
 - 计网
     * https://zhuanlan.zhihu.com/p/116436431
     * redo计算题，第二第三次作业
 
 - 一阶微分方程
     * https://www.bilibili.com/video/BV1Xh411Z7gp?from=search&seid=6063876634422318946
+
+- 三次多项式
+- 欧拉公式!!!
+
+- qemu
+    * 初始化：https://blog.csdn.net/u011364612/article/details/53581501
+    * 体系架构：https://blog.csdn.net/sungeshilaoda/article/details/97890633
+    * https://blog.csdn.net/huang987246510/article/details/90738137
+    * https://blog.csdn.net/bemind1/article/details/99674617?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control&dist_request_id=&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control
+    * https://binhack.readthedocs.io/zh/latest/virtual/qemu/event.html
 
 模电
 
@@ -29,6 +49,7 @@
         + 历史前进，如果打开树只有1，且要开的和打开的一样，直接跳
     * 打印记录树，并提供树中任意文件跳转
 
+- lua coroutine
 
 - vmlinux
     * https://blog.csdn.net/nameofcsdn/article/details/78772645
