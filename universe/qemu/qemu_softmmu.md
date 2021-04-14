@@ -32,7 +32,7 @@ Host          V
 ```
 
 
-### MemoryRegion
+## MemoryRegion
 
 - MemoryRegion表示虚拟机的一段内存区域，即GVA。用于管理虚拟机的内存，是GPA与RAMBlock(即HVA)联系的桥梁
 - 树状结构维护，**每个MemoryRegion树代表一类作用的内存**，如qemu中的两个全局MemoryRegion：系统内存空间(`system_memory`)或IO内存空间(`system_io`)
@@ -85,7 +85,7 @@ struct MemoryRegion {
 虚拟机申请ram时一次性申请完成，然后再在该ram的基础上按照size划分出若干subregion。每个subregion又可以通过`alias`找到原始的mr，`alias_offset`记录其在原始mr中的偏移。
 
 
-### RAMBlock
+## RAMBlock
 
 RAMBlock结构体用来记录实际分配的内存地址信息，表示一段虚拟内存，`host`域指向申请的ram的虚拟地址，即HVA。
 
@@ -155,14 +155,14 @@ new_block->host = phys_mem_alloc(new_block->max_length,
 qemu-system-x86_64 --enable-kvm -m 1G -hda Resery.img -vnv :0 -smp4
 ```
 
-[ram list](https://github.com/66RING/Notes/.github/images/qemu/qemu_softmmu/ram_list.png)
+![ram list](https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_softmmu/ram_list.png)
 
 总结一下大概关系：根级mr可找到所有别名mr，别名mr通过其`alias`域找到实体MemoryRegion。实体mr对应一个RAMBlock，可以找到其对应的HVA
 
-[几种结构的关系](https://github.com/66RING/Notes/.github/images/qemu/qemu_softmmu/mr_ramblock_subregion.png)
+![几种结构的关系](https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_softmmu/mr_ramblock_subregion.png)
 
 
-### AddressSpace
+## AddressSpace
 
 如果说RAMBlock关联了GPA和HVA，那么AddressSpace就关联起了地址空间视角内的GPA
 
@@ -192,12 +192,12 @@ AddressSpace用来表示Guest侧CPU/设备视角的地址空间，不同设备�
 ??todo 重新描述：还有个作用，是把MemoryRegion和FlatView联系起来，当mr发生变化时，对应的FlatView也应发生变化。`dispatch_listener`就是mr发生变化时要做的一系列回调函数。
 
 
-### MemoryListener
+## MemoryListener
 
 当AddressSpace中的MemoryRegion发生变化，则触发注册的listener，处理region变更的事件
 
 
-### FlatView
+## FlatView
 
 FlatView是MemoryRegion的平坦化表示，将树状的MemoryRegion展开成线性的FlatView以快速查找MemoryRegionSection。
 
@@ -239,7 +239,7 @@ todo
 `offset_in_region`
 todo
 
-### MemoryRegionSection
+## MemoryRegionSection
 
 表示MemoryRegion中的片段。将MemoryRegion平坦化后，由于可能重叠，本来完整的mr可能就被分成了数片MemoryRegionSection。
 
@@ -266,6 +266,7 @@ todo
 ```
 
 todo  复述
+
 其中偏移`offset_within_region`描述的是该section在其所属的MR中的偏移，一个`address_space`可能有多个MR构成，因此该offset是局部的。而`offset_within_address_space`是在整个地址空间中的偏移，是全局的offset，如果AddressSpace为系统内存，则该偏移则为GPA的起始地址
 
 通过MemoryRegionSection，根据其在AddressSpace中的偏移`offset_within_address_space`，加上修正就得到了GPA
@@ -275,6 +276,7 @@ todo  复述
 该region section所属MR的起始HVA通过函数`memory_region_get_ram_ptr()`得到，该函数内容如下：
 
 **看爆**
+
 todo
 
 
