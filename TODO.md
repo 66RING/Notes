@@ -1,6 +1,26 @@
-首先我要承认你说的低头拉车的问题，
+---
+**费曼费曼费曼**  
+- 笔记法：
+    * 看一小段，复述，即费曼  
 
-怪在哪：你要我写报告，搞清楚流程是吧。我虽然看到它是这么调的，但是我不能确定它就是靠这个实现交互的。因此我就不能抽象出来，万一它看似是用了这个，但其实它真正的实现在某个隐晦的角落呢，那我做的抽象不就是错的了么。所以我要仔细看看，验证它，也就陷入了细节，低头拉车。然后你跟我说，它可能就是这么这么根据地址找到的，诶，我也觉得，但是我不能确定。也就是刚才说的那个状态，所有感觉怪怪的。
+**费曼费曼费曼**
+---
+
+
+- qemu其他子系统可以注册地址空间变更事件，address space中的listeners把所有组测信息连接起来
+- 平坦化过程，树-> 线性(如数组，也就是实际内存布局)
+    * 核心`render_memory_region`
+    * 平坦化过程针对叶子节点。region结构(节点表示啥等 p151)
+- 内存分派：给定addressspace和地址，快速找到其所在section
+- start: p172
+- !! https://abelsu7.top/2019/07/07/kvm-memory-virtualization/
+
+- 影子页
+
+
+- 模电
+    * 看课本，为何约等于
+    * 看课本的对特性的总结
 
 
 - 计网选课
@@ -24,8 +44,6 @@
     * https://blog.csdn.net/huang987246510/article/details/90738137
     * https://blog.csdn.net/bemind1/article/details/99674617?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control&dist_request_id=&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control
     * https://binhack.readthedocs.io/zh/latest/virtual/qemu/event.html
-
-模电
 
 - cpp面向对象的实现
 
