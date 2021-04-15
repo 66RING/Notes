@@ -7,7 +7,7 @@ tags:
 mathjax: true
 ---
 
-# Introductory
+# QEMU softmmu
 
 虚拟机(Guest)内存模拟的首要任务是将虚拟机虚拟地址(GVA)转换成实际存储的宿主机(Host)的物理地址(HPA)。
 
@@ -34,7 +34,7 @@ Host          V
 
 ## MemoryRegion
 
-- MemoryRegion表示虚拟机的一段内存区域，即GVA。用于管理虚拟机的内存，是GPA与RAMBlock(即HVA)联系的桥梁
+- MemoryRegion表示虚拟机的一段内存区域，即GVA。用于管理虚拟机的内存，是GPA与RAMBlock(管理HVA的结构)联系的桥梁
 - 树状结构维护，**每个MemoryRegion树代表一类作用的内存**，如qemu中的两个全局MemoryRegion：系统内存空间(`system_memory`)或IO内存空间(`system_io`)
 - 叶子节点表示实际分配给虚拟机的物理内存或者MMIO(即实体MemoryRegion)，中间节点表示内存总线，内存控制器是其他MemoryRegion的别名
 
@@ -187,7 +187,7 @@ struct AddressSpace {
 };
 ```
 
-AddressSpace用来表示Guest侧CPU/设备视角的地址空间，不同设备使用的地址空间不同，如x86就两种`address_spaces_memory`和`address_spaces_io`两个全局变量。其`root`域指向根级MemoryRegion，从而可以找到一系列subregion
+AddressSpace用来表示Guest侧CPU/设备视角的地址空间，不同设备使用的地址空间不同，如x86的两种`address_spaces_memory`和`address_spaces_io`两个全局变量。其`root`域指向根级MemoryRegion，从而可以找到一系列subregion
 
 ??todo 重新描述：还有个作用，是把MemoryRegion和FlatView联系起来，当mr发生变化时，对应的FlatView也应发生变化。`dispatch_listener`就是mr发生变化时要做的一系列回调函数。
 
@@ -233,11 +233,52 @@ struct FlatView {
 };
 ```
 
-FlatView的`range`域是一个FlatRange数组，每个FlatRange对应一段虚拟机物理地址区间，即GPA。可以通过FlatRange中的AddrRange的start域拿到GPA的首地址。
+FlatView的`range`域是一个FlatRange数组，每个FlatRange对应一段虚拟机物理地址区间，即一段GPA。可以通过FlatRange中的AddrRange的??start域拿到GPA的首地址??。
 
 todo
+
+### 平坦化方法
+
+通过调用`static FlatView *generate_memory_topology(MemoryRegion *mr)`生成一个根mr的FlatView，其中的核心函数是`render_memory_region()`用于填充FlatRange。
+
+```c
+static FlatView *generate_memory_topology(MemoryRegion *mr)
+{
+    FlatView *view;
+
+    view = g_new(FlatView, 1);
+    flatview_init(view);
+
+    if (mr) {
+        render_memory_region(view, mr, int128_zero(),
+                             addrrange_make(int128_zero(), int128_2_64()), false);
+        // 从根级region开始，递归将region映射到线性地址空间中，产生一个个FlatRange，构成 FlatView. addrrange_make创建起始地址为0，结束地址为 2^64 的地址空间，作为 guest 的线性地址空间
+    }
+    flatview_simplify(view);//将 FlatView 中连续的 FlatRange 进行合并为一个
+
+    return view;
+}
+```
+
+
+```c
+render_memory_region(view, mr, int128_zero(),
+                     addrrange_make(int128_zero(), int128_2_64()), false);
+// 从根级 region 开始，递归将 region 映射到线性地址空间中，产生一个个 FlatRange，构成 FlatView. addrrange_make创建起始地址为 0，结束地址为 2^64 的地址空间，作为 guest 的线性地址空间
+```
+
 `offset_in_region`
+
+- `clip`表示映射区间的范围
+- `base`当前映射的小区间
+- `now`
+- `remain`表示clip还没映射的大小
+- `offset_in_region`需要映射的部分在其所属mr中的偏移
+- `int128_sub()`128位减法
+
+
 todo
+
 
 ## MemoryRegionSection
 
@@ -258,9 +299,9 @@ todo
     struct MemoryRegionSection {
     MemoryRegion *mr;                           // 指向所属 MemoryRegion
     AddressSpace *address_space;                // 所属 AddressSpace
-    hwaddr offset_within_region;                // 起始地址 (HVA) 在 MemoryRegion 内的偏移量
+    hwaddr offset_within_region;                // 该section的其实地址，相当ms's start来说
     Int128 size;
-    hwaddr offset_within_address_space;         // 在 AddressSpace 内的偏移量，如果该 AddressSpace 为系统内存，则为 GPA 起始地址
+    hwaddr offset_within_address_space;         // 在AddressSpace内的偏移量，如果该AddressSpace为系统内存，则为GPA起始地址
     bool readonly;
 };
 ```
@@ -274,6 +315,12 @@ todo  复述
 通过该section所属mr的RAMBlock得到HVA，再加上section在所属的mr中的偏移`offset_in_region`，再加上对齐修正，就得到了HVA
 
 该region section所属MR的起始HVA通过函数`memory_region_get_ram_ptr()`得到，该函数内容如下：
+
+```c
+ram = memory_region_get_ram_ptr(mr) + section->offset_within_region +
+      (start_addr - section->offset_within_address_space);
+
+```
 
 **看爆**
 
