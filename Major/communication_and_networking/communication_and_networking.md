@@ -1,6 +1,6 @@
 ---
 title: communication and networking笔记
-date: 2021-03-24
+date: 2000-01-01
 tags: 
 - network
 mathjax: true
@@ -484,7 +484,7 @@ PCM复杂，为了减小复杂性，所有需要DM
     * 速度慢，由于时间间隙存在。一般用于键盘输入等
     * 一帧短，需要保证同步是只有一小段(一字节)
 
-<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/async_trans.jpg"/>
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/async_trans.jpg" width="50%" align="right"/>
 
 
 #### 同步传输
@@ -495,7 +495,7 @@ PCM复杂，为了减小复杂性，所有需要DM
     * 速度快
     * 一帧更长
 
-<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/sync_trans.jpg"/>
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/Major/communication_and_networking/sync_trans.jpg" width="50%" align="right"/>
 
 
 #### 等时传输
