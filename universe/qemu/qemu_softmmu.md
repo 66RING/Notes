@@ -34,11 +34,13 @@ Host          V
 
 ## MemoryRegion
 
-- MemoryRegion表示虚拟机的一段内存区域，即GVA。用于管理虚拟机的内存，是GPA与RAMBlock(管理HVA的结构)联系的桥梁
+MemoryRegion基本信息及含义：
+
+- MemoryRegion表示虚拟机的一段内存区域，即GPA。用于管理虚拟机的内存，是GPA与RAMBlock(管理HVA的结构)联系的桥梁
 - 树状结构维护，**每个MemoryRegion树代表一类作用的内存**，如qemu中的两个全局MemoryRegion：系统内存空间(`system_memory`)或IO内存空间(`system_io`)
 - 叶子节点表示实际分配给虚拟机的物理内存或者MMIO(即实体MemoryRegion)，中间节点表示内存总线，内存控制器是其他MemoryRegion的别名
 
-todo
+MemoryRegion可以分为如下几类
 
 - 根级MemoryRegion
     * 没有自己的内存，用于管理subregion，如`system_memory`
@@ -189,12 +191,31 @@ struct AddressSpace {
 
 AddressSpace用来表示Guest侧CPU/设备视角的地址空间，不同设备使用的地址空间不同，如x86的两种`address_spaces_memory`和`address_spaces_io`两个全局变量。其`root`域指向根级MemoryRegion，从而可以找到一系列subregion
 
-??todo 重新描述：还有个作用，是把MemoryRegion和FlatView联系起来，当mr发生变化时，对应的FlatView也应发生变化。`dispatch_listener`就是mr发生变化时要做的一系列回调函数。
+AddressSpace还有个作用，就是是把MemoryRegion和FlatView联系起来，当mr发生变化时，对应的FlatView也应发生变化。可以通过`dispatch_listener`在mr发生变化时做的一系列更新。
 
 
 ## MemoryListener
 
 当AddressSpace中的MemoryRegion发生变化，则触发注册的listener，处理region变更的事件
+
+
+通过`listener_add_address_space()`将listener注册到其对应的AddressSpace上
+
+```c
+FOR_EACH_FLAT_RANGE(fr, view) {
+    MemoryRegionSection section = section_from_flat_range(fr, view);
+
+    if (listener->region_add) {
+        listener->region_add(listener, &section);
+    }
+    if (fr->dirty_log_mask && listener->log_start) {
+        listener->log_start(listener, &section, 0, fr->dirty_log_mask);
+    }
+}
+if (listener->commit) {
+    listener->commit(listener);
+}
+```
 
 
 ## FlatView
@@ -256,16 +277,27 @@ static FlatView *generate_memory_topology(MemoryRegion *mr)
     }
     flatview_simplify(view);//将 FlatView 中连续的 FlatRange 进行合并为一个
 
+    view->dispatch = address_space_dispatch_new(view);
+    for (i = 0; i < view->nr; i++) {
+        MemoryRegionSection mrs =
+            section_from_flat_range(&view->ranges[i], view);
+        flatview_add_to_dispatch(view, &mrs);
+    }
+
+    ...
     return view;
 }
 ```
 
+#### `render_memory_region()`
 
 ```c
 render_memory_region(view, mr, int128_zero(),
                      addrrange_make(int128_zero(), int128_2_64()), false);
 // 从根级 region 开始，递归将 region 映射到线性地址空间中，产生一个个 FlatRange，构成 FlatView. addrrange_make创建起始地址为 0，结束地址为 2^64 的地址空间，作为 guest 的线性地址空间
 ```
+
+todo
 
 `offset_in_region`
 
@@ -276,11 +308,19 @@ render_memory_region(view, mr, int128_zero(),
 - `offset_in_region`需要映射的部分在其所属mr中的偏移
 - `int128_sub()`128位减法
 
+todo
+
+
+#### `flatview_add_to_dispatch()`
 
 todo
 
 
 ## MemoryRegionSection
+
+??FlatRange偏向于描述Host侧，即AddressSpace中的内存分布??
+
+??MemoryRegionSection则表示Guest侧的内存分布??
 
 表示MemoryRegion中的片段。将MemoryRegion平坦化后，由于可能重叠，本来完整的mr可能就被分成了数片MemoryRegionSection。
 
@@ -322,31 +362,102 @@ ram = memory_region_get_ram_ptr(mr) + section->offset_within_region +
 
 ```
 
-**看爆**
-
 todo
 
 
-# 具体实现
+# 实例说明
 
-QEMU内存申请流程可以分为：回调函数注册、AddressSpace初始化、实际内存分配
+**大部份为猜测**
 
-## 回调函数注册
+- 初始化全局视角
+    * 全局的根级mr(大部份情况): `system_memory`和`system_io`，作为全局内存(GPA)，通过其`subregions_link`就可以找到旗下所有mr
+    * 对应的全局as关联其所有其他as
+- 初始化ram，用于关联GPA和HVA
+- FlatView，平坦化rm。做GPA??
+    * key: `render_memory_region()`
+    * key: `flatview_add_to_dispatch()`
 
-## AddressSpace初始化
+当实际一个读写事件时：如`serial_mm_write()`，其调用栈：
 
-## 实际内存分配
+```
+io_writex() -> memory_region_dispatch_write() -> ... -> serial_mm_write()
+```
+
+然我们看看发生了什么：即qemu内存分派过程
+
+```c
+static void io_writex(){
+    ...
+    section = iotlb_to_section(cpu, iotlbentry->addr, iotlbentry->attrs);
+    mr = section->mr;
+    mr_offset = (iotlbentry->addr & TARGET_PAGE_MASK) + addr;
+    ...
+    // r表示返回码
+    r = memory_region_dispatch_write(mr, mr_offset, val, op, iotlbentry->attrs);
+    ...
+}
+```
+
+??FlatView打平了所有mr，section就可以线性串联起所有内存了??，通过`dispatch_listener()`初始化AddressSpaceDispatch
+
+- 验证可能要看`flatview_add_to_dispatch`和`register_subpage`
+
+```
+register_subpage()
+    MemoryRegionSection *existing = phys_page_find(d, base);
+    phys_page_set(d, base >> TARGET_PAGE_BITS, 1,
+              phys_section_add(&d->map, &subsection));
+
+```
+
+
+先认识几个结构
+
+```c
+struct AddressSpaceDispatch {
+    MemoryRegionSection *mru_section;
+    /* This is a multi-level map on the physical address space.
+     * The bottom level has pointers to MemoryRegionSections.
+     */
+    PhysPageEntry phys_map;  // 类似??CR3??，指向一级页表
+    PhysPageMap map;
+};
+
+typedef struct PhysPageMap {
+    struct rcu_head rcu;
+
+    unsigned sections_nb;          // sections数组的长度，表示最大长度扩容用？
+    unsigned sections_nb_alloc;    // sections总共分配的个数?? p175
+    unsigned nodes_nb;
+    unsigned nodes_nb_alloc;
+    Node *nodes;        // Node数组，多级页表
+    MemoryRegionSection *sections;   // 指向所有MemoryRegionSection，用于寻找GPA
+} PhysPageMap;
+
+struct PhysPageEntry {
+    /* How many bits skip to next level (in units of L2_SIZE). 0 for a leaf. */
+    uint32_t skip : 6;
+     /* index into phys_sections (!skip) or phys_map_nodes (skip) */
+    uint32_t ptr : 26;
+};
+```
+
+- Node类型就是一个大小为512的PhysPageEntry数组
+- 最后一级页表的index就是sections数组的索引，于是找到了MemoryRegionSection
+
+通过`iotlb_to_section()`可以在AddressSpace中根据addr找到对应section
+
+
+
 
 
 # Reference
 
-[【系列分享】QEMU内存虚拟化源码分析](https://www.anquanke.com/post/id/86412)
+- [[cnblog] qemu对虚拟机的内存管理（一）](https://www.cnblogs.com/ccxikka/p/9477530.html)
+- [[cnblog] qemu对虚拟机的内存管理（二）](https://www.cnblogs.com/ccxikka/p/9488357.html)
+- [【系列分享】QEMU内存虚拟化源码分析](https://www.anquanke.com/post/id/86412)
+- [QEMU 内存虚拟化源码分析](https://abelsu7.top/2019/07/07/kvm-memory-virtualization/)
 
-[QEMU 内存虚拟化源码分析](https://abelsu7.top/2019/07/07/kvm-memory-virtualization/)
-
-[[cnblog] qemu对虚拟机的内存管理（一）](https://www.cnblogs.com/ccxikka/p/9477530.html)
-
-[[cnblog] qemu对虚拟机的内存管理（二）](https://www.cnblogs.com/ccxikka/p/9488357.html)
 
 
 

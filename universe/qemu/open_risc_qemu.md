@@ -415,7 +415,6 @@ object_property_add
 # 参考
 
 - [安装参考](https://wiki.qemu.org/Documentation/Platforms/OpenRISC)
-
 - [使用入门](https://www.jianshu.com/p/e1a4b5b808e0)**
 
 

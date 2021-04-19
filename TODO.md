@@ -1,3 +1,12 @@
+- 有了fv可以通过`section_from_flat_range`快速得到section
+
+
+自己给自己出题
+
+计算机网络自顶向下思考，顺过程。举个实例：如给陈禾嘉发微信
+
+
+
 ---
 **费曼费曼费曼**  
 - 笔记法：
@@ -7,25 +16,17 @@
 ---
 
 
+- 重写！！！
+    * /home/ring/Documents/Notes/universe/linux/MM/memory_management.md
+- qemu softmmu
+- qemu qom_usage
+
 <十四五规划和2035年远景目标纲要>
-
-- qemu其他子系统可以注册地址空间变更事件，address space中的listeners把所有组测信息连接起来
-- 平坦化过程，树-> 线性(如数组，也就是实际内存布局)
-    * 核心`render_memory_region`
-    * 平坦化过程针对叶子节点。region结构(节点表示啥等 p151)
-- 内存分派：给定addressspace和地址，快速找到其所在section
-- start: p172
-- !! https://abelsu7.top/2019/07/07/kvm-memory-virtualization/
-
-- 影子页
-
 
 - 模电
     * 看课本，为何约等于
     * 看课本的对特性的总结
 
-
-- 计网选课
 - 计网笔记
 - os笔记
 - 计组笔记
@@ -40,12 +41,6 @@
 - 三次多项式
 - 欧拉公式!!!
 
-- qemu
-    * 初始化：https://blog.csdn.net/u011364612/article/details/53581501
-    * 体系架构：https://blog.csdn.net/sungeshilaoda/article/details/97890633
-    * https://blog.csdn.net/huang987246510/article/details/90738137
-    * https://blog.csdn.net/bemind1/article/details/99674617?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control&dist_request_id=&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control
-    * https://binhack.readthedocs.io/zh/latest/virtual/qemu/event.html
 
 - cpp面向对象的实现
 
@@ -54,10 +49,6 @@
 
 - tty
     * https://segmentfault.com/a/1190000009082089
-
-- qemu monitor使用
-    * https://hhb584520.github.io/kvm_blog/2017/02/17/qemu-monitor.html
-
 
 - 做个backtrace工具
     * 维护记录打开树
@@ -74,14 +65,6 @@
 - vmlinux
     * https://blog.csdn.net/nameofcsdn/article/details/78772645
 
-- blog
-    * qemu 
-    * QOM 
-
-- try
-    * https://stackoverflow.com/questions/61537403/how-to-host-image-at-https-user-images-githubusercontent-com-path-filename
-
-
 - economics
     * https://www.bilibili.com/video/BV1bK4y1576z?p=5
 
@@ -96,8 +79,6 @@
     * 尽善尽美
 
 
-- pandoc
-    * https://www.youtube.com/watch?v=HllCrrXui2g&t=191s&ab_channel=BrodieRobertson
 - fs
     * https://www.cnblogs.com/xiaojiang1025/p/6500557.html
     * BOOK
@@ -125,12 +106,8 @@
     * 物理内存管理：https://zhuanlan.zhihu.com/p/68465952
 - task struct
     * https://www.jianshu.com/p/691d02380312
-- to note
-    * https://www.youtube.com/watch?v=ctgheOhe1vE&ab_channel=%E6%9D%8E%E6%B0%B8%E4%B9%90%E8%80%81%E5%B8%88
 - ffmpeg
     * https://www.youtube.com/watch?v=HO6oU5oT6uU&ab_channel=MentalOutlaw
-- qemu
-    * https://www.youtube.com/watch?v=jLRmVNWOrgo&ab_channel=ChrisTitusTech
 - learn sed
 - Kruskal
 - dijkstra, floyd
@@ -141,8 +118,6 @@
         + https://blog.csdn.net/eibo51/article/details/50479851
     * scheduling
         + https://zhuanlan.zhihu.com/p/112203100
-- 页表
-    * https://www.bilibili.com/video/BV1jE411W7e8?p=5
 - https://labuladong.gitbook.io/algo/
 - KMP!!!!!!
     * **remake** /home/ring/Documents/Note/Major/algorithm/arithmetic.md

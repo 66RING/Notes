@@ -370,7 +370,7 @@ void memory_region_init(MemoryRegion *mr,
 struct ObjectProperty
 {
     char *name;     // 属性名
-    char *type;     // 属性类型bool、link或更复杂的类型
+    char *type;     // 属性类型名，bool、link或更复杂的类型
     char *description;  // 表述
     ObjectPropertyAccessor *get;  // 操作属性的一系列回调函数
     ObjectPropertyAccessor *set;
@@ -384,7 +384,7 @@ struct ObjectProperty
 
 每种具体的属性都有一个结构体描述它。如`LinkProperty`结构体表示link类型的属性，`StringProperty`表示字符串类型的属性，`BoolProperty`表示bool类型的属性。
 
-`LinkProperty`属性有个`Object **child`成员，用于连接两个对象
+`LinkProperty`属性有个`Object **targetp`成员，用于连接两个对象
 
 
 ### 设备间通过属性交互
@@ -393,8 +393,32 @@ struct ObjectProperty
     * link属性表示一种连接关系，表示一种设备引用另一种设备
     * child属性表示对象之间的从属关系。对象的child属性执行子对象
 
+below todo
+
+### object_property_add_link
+
+```c
+ObjectProperty *
+object_property_add_link(Object *obj, const char *name,
+                         const char *type, Object **targetp,
+                         void (*check)(const Object *, const char *,
+                                       Object *, Error **),
+                         ObjectPropertyLinkFlags flags)
+
+```
+
+- 设置属性名为`link<name>`
+- 将参数`targetp`存放到LinkProperty的target域
+
+
+###  object_property_add_child
+
+- 设置属性名为`child<name>`
+- 子对象添加到父对象的属性链表，在`ObjectProperty`的`opaque`域
 
 todo 添加属性怎么添加的，怎么实现的，`object_property_add`
+
+属性的设置通过`object_property_set`完成，其调用`ObjectProperty`的`set`函数。
 
 
 
