@@ -19,7 +19,6 @@
 - 重写！！！
     * /home/ring/Documents/Notes/universe/linux/MM/memory_management.md
 - qemu softmmu
-- qemu qom_usage
 
 <十四五规划和2035年远景目标纲要>
 

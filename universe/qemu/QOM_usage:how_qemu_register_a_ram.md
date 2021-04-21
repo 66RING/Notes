@@ -26,7 +26,7 @@ QOM机制有如下三个部分：
 
 MemoryRegion也是一个QOM对象，在`./softmmu/memory.c`进行了类型注册：
 
-```
+```c
 static const TypeInfo memory_region_info = {
     .parent             = TYPE_OBJECT,
     .name               = TYPE_MEMORY_REGION,
@@ -58,7 +58,7 @@ ram作为根级MemoryRegion，也是MemoryRegion类的一个实例，通过`memo
 
 openrisc中对其ram的构造方法如下：
 
-```
+```c
 // 函数原型
 void memory_region_init_ram(MemoryRegion *mr, struct Object *owner, const char *name, uint64_t size, Error **errp)
 
@@ -219,9 +219,7 @@ openrisc.ram的初始化过程传入的owner为NULL，这样就会分配一个�
 
 然后通过qemu monitor查看qom信息:`info qom-tree`。就会发现openrisc.ram对象是`unattached`对象的一个child属性
 
-![openrisc_qom_tree](https://raw.githubusercontent.com/66RING/66RING/master/.github/Notes/universe/qemu/openrisc_qom_tree.png)
-
-todo 对象之间怎么联系的？
+![openrisc_qom_tree](https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/QOM_usage:how_qemu_register_a_ram/openrisc_qom_tree.png)
 
 
 # 抽象
@@ -240,7 +238,7 @@ todo 对象之间怎么联系的？
 - `instance_init`，该类的实例的实例化函数
 - `instance_finalize`，该类实例的销毁函数
 
-```
+```c
 struct TypeInfo
 {
     const char *name;
@@ -377,7 +375,7 @@ struct ObjectProperty
     ObjectPropertyResolve *resolve;
     ObjectPropertyRelease *release;
     ObjectPropertyInit *init;
-    void *opaque;       // 指向一个具体的属性，如LinkProperty、BoolProperty等
+    void *opaque;       // 指向一个具体的属性，如ObjectProperty、LinkProperty、BoolProperty等
     QObject *defval;
 };
 ```
@@ -386,39 +384,39 @@ struct ObjectProperty
 
 `LinkProperty`属性有个`Object **targetp`成员，用于连接两个对象
 
+属性添加通过`object_property_add`实现，其是对`object_property_try_add`的封装，`object_property_try_add`多一个参数`errp`用于保存错误代码
+
+```c
+ObjectProperty *
+object_property_try_add(Object *obj, const char *name, const char *type,
+                        ObjectPropertyAccessor *get,
+                        ObjectPropertyAccessor *set,
+                        ObjectPropertyRelease *release,
+                        void *opaque, Error **errp)
+```
+
+其作用就是给下面些个域赋值。
+
+- `obj`表示要添加属性的对象
+- `name`表示要属性名
+- `type`表示属性类型名
+    * 通常格式为`namespace<sub-namespace>`，推荐用`-`连接词
+- `get`表示读属性用到方法
+- `set`表示写属性用到的方法
+- `release`表示将属性从对象中移除时调用的方法
+- `opaque`表示属性一个具体的属性对象
+
+
+`object_property_add_link`和`object_property_add_child`仅是对`object_property_add`封装以实现具体细节。
+
+如`object_property_add_link`会创建一个`LinkProperty`对象传入`object_property_add`，然后让属性的`opaque`域指向该`LinkProperty`对象。而`object_property_add_child`则直接将qom对象传入。
+
 
 ### 设备间通过属性交互
 
 - link/child属性
     * link属性表示一种连接关系，表示一种设备引用另一种设备
     * child属性表示对象之间的从属关系。对象的child属性执行子对象
-
-below todo
-
-### object_property_add_link
-
-```c
-ObjectProperty *
-object_property_add_link(Object *obj, const char *name,
-                         const char *type, Object **targetp,
-                         void (*check)(const Object *, const char *,
-                                       Object *, Error **),
-                         ObjectPropertyLinkFlags flags)
-
-```
-
-- 设置属性名为`link<name>`
-- 将参数`targetp`存放到LinkProperty的target域
-
-
-###  object_property_add_child
-
-- 设置属性名为`child<name>`
-- 子对象添加到父对象的属性链表，在`ObjectProperty`的`opaque`域
-
-todo 添加属性怎么添加的，怎么实现的，`object_property_add`
-
-属性的设置通过`object_property_set`完成，其调用`ObjectProperty`的`set`函数。
 
 
 
