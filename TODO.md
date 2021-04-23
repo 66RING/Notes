@@ -5,6 +5,11 @@
 
 计算机网络自顶向下思考，顺过程。举个实例：如给陈禾嘉发微信
 
+- 图解卷积
+- 和差化积
+
+
+
 
 
 ---
@@ -196,3 +201,6 @@
     * https://github.com/puremourning/vimspector
 - linux from scratch
     * http://linuxfromscratch.org/lfs/view/stable/chapter04/settingenvironment.html
+
+- kernel configurring
+    * https://www.youtube.com/watch?v=NVWVHiLx1sU&ab_channel=MentalOutlaw
