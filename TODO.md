@@ -9,6 +9,10 @@
 - 和差化积
 
 
+- kvm-macos
+    * https://github.com/foxlet/macOS-Simple-KVM
+    * https://www.youtube.com/watch?v=Fz07YhB2v60&ab_channel=Abstractprogrammer
+    * https://www.youtube.com/watch?v=H_eku1zxgqw&ab_channel=Abstractprogrammer
 
 
 
