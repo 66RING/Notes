@@ -1,4 +1,15 @@
-- 有了fv可以通过`section_from_flat_range`快速得到section
+- 有了fv可以通过`section_from_flat_range`快速得到section???  xxx
+- **!!!** 
+    * https://www.binss.me/blog/qemu-note-of-memory/
+- 打平只是为了给kvm注册？
+- 热插拔
+    * https://huazq.github.io/2020/03/23/Qemu%E5%86%85%E5%AD%98%E7%83%AD%E6%8F%92%E6%8B%94/
+- QEMU doc
+    * https://qemu.readthedocs.io/en/latest/index.html
+
+- 地址连续的n个自动识别并拼接？
+    * 不能隔任何东西
+- guest OS看到的内存由`machine->ram_size`决定，但实际能用和由申请的ram决定
 
 
 自己给自己出题
@@ -47,8 +58,11 @@
     * https://www.bilibili.com/video/BV1Xh411Z7gp?from=search&seid=6063876634422318946
 
 - 三次多项式
-- 欧拉公式!!!
 
+- 金融
+    * https://www.youtube.com/watch?v=Oa623mTuB-s&ab_channel=%E9%94%A6%E5%A0%82%E7%94%9F%E6%B4%BB%E7%A9%BA%E9%97%B4
+    * 方法从12:40开始
+    * 实战：https://www.youtube.com/watch?v=gpcgIQ3DhWY&list=RDCMUC8_o9aFpknEMck7D43E5Zww&index=3&ab_channel=%E9%94%A6%E5%A0%82%E7%94%9F%E6%B4%BB%E7%A9%BA%E9%97%B4
 
 - cpp面向对象的实现
 

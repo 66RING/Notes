@@ -30,7 +30,7 @@ git clone https://github.com/qemu/qemu
 
 - `xxx-softmmu`，内存管理单元模拟
 - `xxx-user`，用户空间模拟
-- 为何没有内核空间模拟?
+- 还可以有其他参数如`--enable-debug`、`--enable-debug-info`等
 
 编译安装qemu
 
