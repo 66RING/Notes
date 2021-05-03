@@ -1,8 +1,8 @@
 ---
-title: 操作系统笔记
+title: 操作系统课程笔记
 date: 2000-01-01
 tags: 
-- OS
+- os
 mathjax: true
 ---
 

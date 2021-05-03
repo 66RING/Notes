@@ -1,7 +1,7 @@
 ---
 title: 深入理解计算机系统脑图
 date: 2020-10-20
-tags: system
+tags: os
 ---
 
 ## PART1: 计算机系统漫游

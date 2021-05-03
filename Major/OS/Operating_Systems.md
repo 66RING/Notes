@@ -1,7 +1,7 @@
 ---
 title: 操作系统
 date: 2020-6-12
-tags: system
+tags: os
 ---
 
 
