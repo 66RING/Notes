@@ -420,6 +420,38 @@ struct Person p = {
 }
 ```
 
+
+## union共用体
+
+共用体定义方法类似结构体：
+
+```c
+union union_name {
+	type1 member1;
+	type1 member2;
+	type2 member3;
+} value;
+```
+
+其中共用体名`union_name`和变量名`value`都是可省的。省略共用体名`union_name`则声明变量只能在定义共用体时，即之后都不用这个共用体声明变量了。省略变量名`value`，则相当于定义了一种类型，之后可以类似结构体一样通过`union union_name value`声明变量。
+
+共用体是一种多个变量共用同一块内存空间的类型，**一次只能有一个成员有效** ，而共用体的大小就等于最大成员的大小。
+
+应用：当几个个结构中大部份都相同而只有少数不同时，可以不重新写一个差不多一样的结构体，而是在结构体中使用共用体。如：
+
+```c
+union teacher_or_student{
+	char name[20];
+	union {
+		int score;
+		char course[20];
+	};
+	// 如果是学生则使用成绩，score成员
+	// 如果是教师则使用课程，course成员
+}
+```
+
+
 # cpp
 
 ## cpp类初始化
