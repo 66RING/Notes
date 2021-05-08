@@ -4,12 +4,28 @@
 - 打平只是为了给kvm注册？
 - 热插拔
     * https://huazq.github.io/2020/03/23/Qemu%E5%86%85%E5%AD%98%E7%83%AD%E6%8F%92%E6%8B%94/
-- QEMU doc
-    * https://qemu.readthedocs.io/en/latest/index.html
-
-- 地址连续的n个自动识别并拼接？
+- 地址连续的n个自动识别并拼接？大概率了
     * 不能隔任何东西
-- guest OS看到的内存由`machine->ram_size`决定，但实际能用和由申请的ram决定
+- xxxxx错错错：还没搞清在哪注册的，但不是重点xxxxguest OS看到的内存由`machine->ram_size`决定，但实际能用和由申请的ram决定
+    * openrisc是简单，但是找不到在哪设的内存
+    * riscv是找到了在哪设内存，但态复杂，具体也找不到
+- 物理内存有点分段是思想
+- !! https://airbus-seclab.github.io/qemu_blog/tcg_p3.html
+- !!! https://github.com/airbus-seclab/qemu_blog
+
+- !!**JOB**!!
+	* https://oenhan.com/job
+	* 看爆https://oenhan.com/
+
+
+- **learn with uCore**
+	* https://objectkuan.gitbooks.io/ucore-docs/content/
+    * https://www.xuetangx.com/course/THU08091000267/5883104
+    * https://github.com/kiukotsu/ucore
+- learn Makefile
+	* https://www.ruanyifeng.com/blog/2015/02/make.html
+- linux C programing
+    * https://book.itheima.net/course/223
 
 
 自己给自己出题
@@ -19,13 +35,10 @@
 - 图解卷积
 - 和差化积
 
-
 - kvm-macos
     * https://github.com/foxlet/macOS-Simple-KVM
     * https://www.youtube.com/watch?v=Fz07YhB2v60&ab_channel=Abstractprogrammer
     * https://www.youtube.com/watch?v=H_eku1zxgqw&ab_channel=Abstractprogrammer
-
-
 
 ---
 **费曼费曼费曼**  
@@ -36,41 +49,26 @@
 ---
 
 
-- 重写！！！
-    * /home/ring/Documents/Notes/universe/linux/MM/memory_management.md
-- qemu softmmu
-
 <十四五规划和2035年远景目标纲要>
 
-- 模电
-    * 看课本，为何约等于
-    * 看课本的对特性的总结
 
 - 计网笔记
-- os笔记
-- 计组笔记
 
 - 计网
     * https://zhuanlan.zhihu.com/p/116436431
     * redo计算题，第二第三次作业
-
-- 一阶微分方程
-    * https://www.bilibili.com/video/BV1Xh411Z7gp?from=search&seid=6063876634422318946
-
-- 三次多项式
 
 - 金融
     * https://www.youtube.com/watch?v=Oa623mTuB-s&ab_channel=%E9%94%A6%E5%A0%82%E7%94%9F%E6%B4%BB%E7%A9%BA%E9%97%B4
     * 方法从12:40开始
     * 实战：https://www.youtube.com/watch?v=gpcgIQ3DhWY&list=RDCMUC8_o9aFpknEMck7D43E5Zww&index=3&ab_channel=%E9%94%A6%E5%A0%82%E7%94%9F%E6%B4%BB%E7%A9%BA%E9%97%B4
 
-- cpp面向对象的实现
-
 - 文件描述符
     * https://zhuanlan.zhihu.com/p/109053744
-
 - tty
     * https://segmentfault.com/a/1190000009082089
+- lua coroutine
+- wayland, gentoo
 
 - 做个backtrace工具
     * 维护记录打开树
@@ -82,8 +80,6 @@
         + 历史前进，如果打开树只有1，且要开的和打开的一样，直接跳
     * 打印记录树，并提供树中任意文件跳转
 
-- lua coroutine
-
 - vmlinux
     * https://blog.csdn.net/nameofcsdn/article/details/78772645
 
@@ -94,62 +90,11 @@
     * anything you want
     * atomic habbit
     * make time
-- movie
-    * 怦然心动
-    * 雨人
-    * 未麻的部屋
-    * 尽善尽美
 
-
-- fs
-    * https://www.cnblogs.com/xiaojiang1025/p/6500557.html
-    * BOOK
-- 进程id管理
-    * https://www.cnblogs.com/hazir/archive/2013/10/03/linux_kernel_pid.html
-- 程进切换
-    * http://www.wowotech.net/process_management/context-switch-arch.html
-- !!!
-    * https://www.cnblogs.com/LoyenWang/p/12116570.html
 - filesystem
     * https://zhuanlan.zhihu.com/p/106459445
 
-- 虚地址转换
-    * https://zhuanlan.zhihu.com/p/65298260
-- **mm**:https://zhuanlan.zhihu.com/p/73468738
-    * **内存映射**
-        + https://zhuanlan.zhihu.com/p/67894878
-        + ! https://www.cnblogs.com/xelatex/p/3491305.html
-        + ! https://blog.csdn.net/weixin_44277699/article/details/105727534
-        + https://www.cnblogs.com/feng9exe/p/6379650.html
-        + https://blog.csdn.net/liuyuanqing2010/article/details/6673178
-        + https://blog.csdn.net/ludashei2/article/details/91126611
-        + https://zhuanlan.zhihu.com/p/116896185
-    * buddy in flash: https://zhuanlan.zhihu.com/p/105589621
-    * 物理内存管理：https://zhuanlan.zhihu.com/p/68465952
-- task struct
-    * https://www.jianshu.com/p/691d02380312
-- ffmpeg
-    * https://www.youtube.com/watch?v=HO6oU5oT6uU&ab_channel=MentalOutlaw
 - learn sed
-- Kruskal
-- dijkstra, floyd
-- OS
-    * 动态库
-        + https://www.cnblogs.com/aaronLinux/p/6970590.html
-        + https://baike.baidu.com/item/.dll/2133451
-        + https://blog.csdn.net/eibo51/article/details/50479851
-    * scheduling
-        + https://zhuanlan.zhihu.com/p/112203100
-- https://labuladong.gitbook.io/algo/
-- KMP!!!!!!
-    * **remake** /home/ring/Documents/Note/Major/algorithm/arithmetic.md
-    * next 和 nextval
-    * 需要好好反思
-        + https://www.luogu.com.cn/problem/P3375
-- 数据结构图好好耍耍
-    * https://www.luogu.com.cn/problem/P4779
-        + 小顶堆的创建以及动态调整
-    * try: Floyd
 - master four
     * https://www.bilibili.com/video/BV1qJ411w7du
     * https://www.bilibili.com/video/BV1u7411z7Sv
@@ -179,46 +124,15 @@
     * https://www.junmajinlong.com/linux/index/
 - blog to travel 
     * https://gohalo.me/categories.html#Linux
-- 树同构
-    * https://pintia.cn/problem-sets/15/problems/711
-- 陈海波操作系统
 - NOTE about linux创建虚拟硬盘
 - epoll和kqueue
     * https://www.cnblogs.com/FG123/p/5256553.html
     * https://www.zhihu.com/question/20122137
-- linux内核代码情景分析
 - git多人协作笔记
     * rebase
 
-
-- learn QEMU (kvm)
-    * https://zhuanlan.zhihu.com/p/48664113
-    * https://wiki.archlinux.org/index.php/QEMU
-- 算法
-    * 插入区间
-        + https://leetcode-cn.com/problems/insert-interval/submissions/
-    * 单词拆分 II
-        + https://leetcode-cn.com/problems/word-break-ii/
-    * O(1) 时间插入、删除和获取随机元素 - 允许重复
-        + https://leetcode-cn.com/problems/insert-delete-getrandom-o1-duplicates-allowed/solution/
-    * 求叶子到节点数字之和
-        + https://leetcode-cn.com/problems/sum-root-to-leaf-numbers/submissions/
-    * 树中距离之和
-        + https://leetcode-cn.com/problems/sum-of-distances-in-tree/
-    * 秋叶收藏集
-        * https://leetcode-cn.com/problems/UlBDOe/submissions/
-    * 冗余连接II
-        + https://leetcode-cn.com/problems/redundant-connection-ii/
-    * 解数独
-        + https://leetcode-cn.com/problems/sudoku-solver/
-    * 有效状态自动机
-        + https://leetcode-cn.com/problems/n-queens/submissions/
-    * 监控二叉树
-       + https://leetcode-cn.com/problems/binary-tree-cameras/
-- vimspector
-    * https://github.com/puremourning/vimspector
-- linux from scratch
-    * http://linuxfromscratch.org/lfs/view/stable/chapter04/settingenvironment.html
-
 - kernel configurring
     * https://www.youtube.com/watch?v=NVWVHiLx1sU&ab_channel=MentalOutlaw
+
+- The Unix philosophy
+	* http://www.catb.org/esr/writings/taoup/html/
