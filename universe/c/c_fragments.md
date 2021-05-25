@@ -451,6 +451,10 @@ union teacher_or_student{
 }
 ```
 
+## typedef的两种用法
+
+- 1. 定义类型别名`typedef TYPE alias_name`
+- 2. 定义函数指针别名，如`typedef int(*func)()`，则func类型就为一个返回int，无参数的函数指针类型
 
 # cpp
 
