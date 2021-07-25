@@ -25,7 +25,9 @@ grep -- -v <file>
 
 ## set
 
-- `set -- `
+- `set -- [args]`
+	* 如果无args，重置命位置参数
+	* 如果有args，置命位置参数为args
 - ...
 
 https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html
