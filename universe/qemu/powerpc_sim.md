@@ -25,7 +25,7 @@ static void my_machine_init(MachineState *machine){
 
 首先`create_cpu`和`create_mem`阶段为虚拟机创建基本的处理和储存单元，但此时缺少serial设备还不具备屏幕回显的能力，因此需要在`create_dev`阶段创建serial设备。`create_dev`阶段还会创建虚拟机需要的其他设备，但这里先从最小化开始，发现确实设备再进行设备补充。
 
-之后`load_kernel`主要负责将内核将或者bios的ELF文件载入虚拟机，这里可以使用qemu提供的`load_elf()`函数完成，之后让虚拟机CPU的pc寄存器指向程序入口。这样在虚拟机启动后cpu将会从pc寄存器指向的位置开始顺序执行。
+`load_kernel()`阶段负责处理内核加载过程，由于qemu不会同一的处理内核加载的方法，这里我们需要在源码中显式地编写内核、固件等的加载逻辑，方便的是qemu提供了ELF文件加载的接口函数`load_elf()`系列函数，我们可以专注于加载逻辑的处理。之后让虚拟机CPU的pc寄存器指向程序入口。这样在虚拟机启动后cpu将会从pc寄存器指向的位置开始顺序执行。
 
 最后在`create_device_tree`阶段为cpu准备设备树。设备树就相当于开发板上硬件的使用说明，告诉cpu设备都在什么位置，e500核心的cpu就使用`gpr[3]`寄存器存储设备树基地址。
 
@@ -53,7 +53,7 @@ int load_elf(const char *filename,
 
 ## 加载/创建设备树
 
-qemu可以通过`-dtb <dtb_file>`命令加载设备树，前提是源码中有对应的处理，因为`-dtb`参数的解析不属于qemu命令行解析的通用部分，具体实现由模拟板子的代码决定。
+qemu可以通过`-dtb <dtb_file>`命令加载设备树，前提是源码中有对应的处理。即如果我们需要通过`-dtb <file>`的方式加载dtb文件，需要在源码中显式添加处理逻辑，因为`-dtb`参数的解析不属于qemu命令行解析的通用部分，具体实现由模拟板子的代码决定。
 
 `-dtb`参数可以通过`qemu_opt_get(machine_opts, "dtb");`获取，之后通过`load_device_tree()`遍完成了将`.dtb`文件解析成设备树对象的过程。
 
@@ -68,7 +68,9 @@ if (dtb_file) {
 }
 ```
 
-当然也可以从无到有将设备树创建处理，`void* fdt = create_device_tree(&fdt_size);`创建空设备树对象。之后设备树的内容就可以根据具体情况自定义了。qemu提供如下常用API：
+而设备树文件从何而来呢？一种方法是通过编写dts文件，然后编译生成dtb文件。这里主要利用另一种方法：先利用qemu创建设备树的接口创建设备树，再利用qemu导出dtb文件的功能(详见后面dumpdtb处理部分内容)将设备树dtb文件从内存中导出。
+
+利用qemu提供的接口创建设备树的方法如下：首先通过`void* fdt = create_device_tree(&fdt_size);`创建空设备树对象。之后设备树的内容就可以根据具体情况自定义了。qemu提供如下常用API：
 
 - `qemu_fdt_add_subnode(fdt, "node_name")`，创建新节点
 	* 空设备树对象只存在根节点`/`，每个新设备的加入都得先创建新节点
@@ -113,6 +115,20 @@ qdev_realize_and_unref(DEVICE(cpu), NULL, &error_fatal);
 
 
 #### 注意事项1：为cpu注册reset事件
+
+分析qemu初始化的主流程，即`qemu_init()`部分的代码，并通过gdb调试函数触发状况发现：
+
+```
+qemu_init(){
+	…
+	machine_run_board_init()
+	…
+	qemu_system_reset()
+	…
+}
+```
+
+qemu初始化会先在`machine_run_board_init()`中执行虚拟机基本的创建，之后会在`qemu_system_reset()`调用通过`qemu_register_reset()`注册的reset事件。
 
 cpu的reset事件会设置cpu初始状态下各个寄存器的值，如会设置表示程序入口的pc寄存器。如果不进行明确设置，而程序的入口会是一个无法确定的位置，这时我们不希望的。
 
@@ -292,7 +308,7 @@ PowerPC虚拟机的设备树需存在soc节点，即使节点为空。
 
 #### 注意事项2：设置设备树的兼容性
 
-设备树兼容性属性的设置是否重要，不同配置的内核不会识别兼容性不合要求的设备树。
+设备树兼容性属性的设置非常重要，不同配置的内核不会识别兼容性不合要求的设备树。因为控制compatible为单一变量测试发现，当根节点的compatible属性设置不当时，虚拟机启动失败。
 
 设备树的兼容主要主要通过设置根节点`/`的`model`和`compatible`属性完成，如：
 
@@ -317,7 +333,7 @@ qemu_fdt_setprop(fdt, "/", "compatible", compatible,
 
 #### 注意事项3：设备树节点的顺序
 
-设备树节点的顺序也是是否重要，因为内核经常将第一个设备作为一些操作的默认设备，如根据设备树的第一cpu作为主cpu、将第一个设备作为serial设备等。
+设备树节点的顺序也是非常重要，因为内核经常将第一个设备作为一些操作的默认设备，如根据设备树的第一cpu作为主cpu、将第一个设备作为serial设备等。
 
 需要主要的是，qemu中`qemu_fdt_add_subnode`创建设备节点的顺序和设备树生成后节点的顺序相反。如：有两个cpu，cpu0和cpu1，要使cpu0作为执行的主cpu，则代码书写是顺序应该是先加cpu1再加cpu0：
 
@@ -346,7 +362,7 @@ qemu_fdt_add_subnode(fdt, "/cpu0");
 
 #### 注意事项5：要让模拟的开发板至此dumpdtb需要额外处理
 
-这样过程可以通过调用`qemu_fdt_dumpdtb(fdt, fdt_size)`完成，这时当`-M <machien>[,dumpdtb=<file.dtb>]`，dumpdtb参数存在时qemu会将设备树信息保存到`file.dtb`
+要让虚拟中支持dumpdtb从而得到我需要的设备树dtb文件，我们也需要显式的对其进行处理，这样过程比较简单，可以通过调用`qemu_fdt_dumpdtb(fdt, fdt_size)`完成，这时当`-M <machien>[,dumpdtb=<file.dtb>]`，dumpdtb参数存在时qemu会将设备树信息保存到`file.dtb`
 
 
 ## 最小化补完
@@ -356,5 +372,6 @@ qemu_fdt_add_subnode(fdt, "/cpu0");
 - pic
 - pci
 
+所以需要在第一章整体流程中的create_dev()阶段补充相应的设备
 
 
