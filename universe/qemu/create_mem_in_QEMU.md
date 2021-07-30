@@ -1,6 +1,8 @@
 ---
 title: qemu架构中创建内存的方法
 date: 2021-05-24
+tags: 
+- qemu
 mathjax: true
 ---
 
