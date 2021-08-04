@@ -104,4 +104,42 @@ $$U(x) = lnx - lnA$$
 如6年前最贵最高配手机，与现在最贵最高配手机比较，价格翻了3倍。你的钱越来越没有价值，如果放银行，将会被通货膨胀吞噬，6年后缩小3倍。
 
 
+## linux系统常用目录
+
+- /bin
+	* binary, 所有用户都可使用的程序
+- /boot
+	* 启动相关
+- /dev
+	* device, linux下"一切皆文件"，可以以文件的形式读写设备
+- /etc
+	* etcetera(等等), 一般管理配置文件
+- /home
+	* 用户主目录，每个用户一个文件夹
+- /lib
+	* 保存系统基本的动态链接库
+- /lost+found
+	* 非法关机时里面会出现一些文件
+- /opt
+	* optional, 额外软件保存的目录
+- /proc
+	* process, 进程当成文件，可以通过文件管理进程
+- /root
+	* 超级管理员目录
+- /run
+- /sbin
+	* Super user Binary，超级管理员使用的程序
+- /srv
+	* 服务启动后需要提取的数据
+- /sys
+	* sysfs文件系统，系统信息以文件形式读写
+- /tmp
+	* 临时文件
+- /usr
+	* unix shared resource，共享资源
+	* /bin -> /usr/bin
+	* /sbin -> /usr/sbin
+	* /usr/src, linux源码
+- /var
+	* variable, 不断扩大的东西，如日志文件
 
