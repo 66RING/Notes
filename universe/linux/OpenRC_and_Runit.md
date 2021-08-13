@@ -29,25 +29,7 @@ OpenRC的配置文件位于`/etc/rc.conf`，详细阅读会发现很多有用功
 
 ## Runit使用逻辑
 
-
-```
-Add service 
-ln -s /etc/runit/sv/<service> /run/runit/service
-<start/stop/restart>
-sv <start/stop/restart> <service>
-```
-
-TODO
-
-```
-/etc/runit/runsvdir/* - Runlevels
-
-/etc/runit/runsvdir/current
-
-/run/runit/service -> /etc/runit/runsvdir/current
-```
-
-`/etc/runit/sv/*`文件夹中保存了所有可用service，每个service以文件夹的形式呈现，文件夹中不同名称的程序表示不同接口。
+类似OpenRC，Runit的模式也是"在一个文件夹为何service,链接到特定文件夹启动service"。`/etc/runit/sv/*`文件夹中保存了Runit所有可用service，每个service以文件夹的形式呈现，文件夹中不同名称的程序表示不同接口。
 
 启动一个service：创建一个软链接。一般使用runit的linux发行版将启动的服务链接到`/var/service`或`/service`，但在Artix Linux中需要链接到`/run/runit/service`
 
