@@ -14,7 +14,7 @@ mathjax: true
 
 ## 研究方法
 
-思路：qemu使用主机的一个文件作为虚拟机的磁盘(以下成该文件为磁盘文件)，则必须会使用打开文件的系统调用，而qemu会通过打开文件的fd进行读写操作。因此使用gdb的调试功能先追踪到文件的fd，在访问fd时触发断点，打印调用栈，再根据调用栈信息分析源码即可得知eventfd到fd的流程。
+思路：qemu使用主机的一个文件作为虚拟机的磁盘(以下称该文件为磁盘文件)，则必须会使用打开文件的系统调用，而qemu会通过打开文件的fd进行读写操作。因此使用gdb的调试功能先追踪到文件的fd，在访问fd时触发断点，打印调用栈，再根据调用栈信息分析源码即可得知eventfd到fd的流程。
 
 使用strace观察qemu打开磁盘文件使用的系统调用：
 
@@ -148,18 +148,4 @@ virtio_queue_notify_aio_vq(VirtQueue *vq) 调用--> vq->handle_aio_output(vdev, 
 再分析协程的调用栈，即可解读出设备(VirtIOBlock)到具体fd的过程：
 
 <img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/virtio_rw/bt_comp.png" alt="">
-
-
-## 磁盘文件打开过程
-
-```
--hda
-
--drive
-
-```
-
-TODO
-
-- 观察完整过程
 

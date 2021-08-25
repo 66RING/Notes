@@ -85,6 +85,19 @@ O1调度的Linux2.6开始引入的，到Linux 2.6.23之后替换成了CFS。
 
 ### CFS
 
+完全公平则每个进程占用cpu的时间应该是尽量相等的，linux中使用vruntime记录这个时间。因此CFS每次调度"vruntime最小"(为防止溢出带来的影响可能使用delta选取)的进程运行。一下是几种情况的总结：
+
+- 创建进程
+	* 每个进程都是父进程fork产生的，fork让**子进程继承父进程的vruntime**
+	* 而父进程在执行执行fork时vruntime持续增加，从而子进程vruntime总是小于父进程，总是先于父进程调度
+- 等待IO
+	* 部分进程等待IO/sleep，那当他们唤醒时vruntime将远远低于其他进程，所以保守的做法是进行**进程唤醒时其vruntime等于最小vruntime**
+- CFS中的优先级
+	* nice值越低，vruntime增长越慢，调度几率越高
+- vruntime溢出
+	* 如果64bit的无符号数(vruntime)溢出。则选择最小vruntime的规则将这个进程将一直运行很长时间
+	* 因此真正实现的选取"最小vruntime"应该是通过delta判断的`delta = (uint)(int t - int mt)`
+
 要做到完全公平，调度器要在一个较小的时间内把这n个进程调度执行一遍。这个较小的时间就是任意一个进程被调度的最大延迟时间，也叫做**调度周期`sched_latency_ns`**
 
 CPU只要对所有进程维护一个累积占用CPU时间数，就可以衡量出每个进程目前占用的CPU时间总量是多还是少，这个数字记录在 **vruntime** 中。进程以vruntime为key放到一个红黑数组成的队列中，每次调度都选择最左子树上的那个进程，即vruntime最少的进程，这样就能保证所有进程相对公平。

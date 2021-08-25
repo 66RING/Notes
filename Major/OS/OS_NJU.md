@@ -6,7 +6,9 @@ tags:
 mathjax: true
 ---
 
-# 实战trick
+# 奇技淫巧
+
+有趣的书：  [*Hacker's Delight*](https://www.hackersdelight.org/) 
 
 - gcc -E仅预编译，再脚本处理以下，格式化一些就能得到宏展开的代码
 - gdb -> r -> SIGSEGV
@@ -66,6 +68,7 @@ x-1: +++++011
 
 ### log2
 
+log2相当于找最高位(最左边)的1。可以采用分治的办法处理。
 
 
 # 并发控制
