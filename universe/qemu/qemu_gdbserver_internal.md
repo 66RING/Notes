@@ -122,44 +122,28 @@ TODO
 
 完整调试流程如下：
 
-TODO
-
 ```
 b gdb_vm_state_change
 // 当pc等于断点时触发
 b cpu_loop_exec_tb if tb->pc == 0xffffffff8304ce5f
 b cpu_breakpoint_insert
 b cpu_breakpoint_remove
+tb cpu_exec
+commands
+silent
+p /a &((CPUX86State *)&(X86_CPU(current_cpu)->env))->eip
+set $IP_ADDR=$
 // 当pc等于断点时触发
-b cpu_handle_interrupt if 0xffffffff8304ce5f == *&((CPUX86State *)&(X86_CPU(current_cpu)->env))->eip
+b cpu_handle_interrupt if 0xffffffff8304ce5f == *$IP_ADDR
 // 监听breakpoint列表使用情况
-rwatch &current_cpu->breakpoints->tqh_first if 0xffffffff8304ce5f == *&((CPUX86State *)&(X86_CPU(current_cpu)->env))->eip
+p &current_cpu->breakpoints->tqh_first
+set $BP=$
+rwatch *$BP if 0xffffffff8304ce5f == *$IP_ADDR
+p &current_cpu->exception_index
+set $EXCP=$
+awatch *$EXCP if *$==0x10002
+end
 ```
 
 <img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/qemu_gdbserver_internal/bp_demo.png" alt="" width="100%">
-
-
-
-# monitor和plugin的区别
-
-- plugin在cpu循环中，monitor在主循环中
-- 预设点的plugin可以由很多方法触发，monitor就一种
-
-一些位置预设有plugin，monitor可以控制状态改变从而达到控制plugin的效果
-
-```
-qemu_wait_io_event  	->   qemu_plugin_vcpu_resume_cb      // 如resume触发
-~/var/QEMU_project/Qemu_p2020/qemu-5.2.0/softmmu/cpus.c
-
-do_tb_flush 		-> 	 qemu_plugin_flush_cb
-~/var/QEMU_project/Qemu_p2020/qemu-5.2.0/accel/tcg/translate-all.c
-
-// plugin.h 中{}，但./plugins/core.c中有具体实现，一般跳到plugin.h的空，而不是具体实现
-```
-
-`~/var/QEMU_project/Qemu_p2020/qemu-5.2.0/include/qemu/plugin.h`中似乎存着所有接口
-
-
-# monitor还能干嘛
-
 
