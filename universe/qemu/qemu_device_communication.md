@@ -138,15 +138,23 @@ void pci_data_write(PCIBus *s, uint32_t addr, uint32_t val, unsigned len)
 根据`addr`找到目标PCI设备后在调用目标设备回调函数：
 
 ```
-pci_host_config_write_common(pci_dev, ...) -> pci_dev->config_write()
+pci_host_config_write_common(pci_dev, ...) -> pci_dev->config_write() -> i440fx_write_config
 ```
 
 
 ## 实例3：使用property建立连接
 
-使用QOM除了使用继承和维护结构体成员的方式在设备间建立联系外，还可以通过`property`建立设备间的联系。这种方式主要应用在设备初始化时为结构体成员赋值，因为简单地说property是每个设备维护的哈希表，运行时再查表显然会极大影响效率。
+上面两例子说明了QOM可以使用继承和维护结构体成员的方式联系其他设备。
 
-以`openpic`中断控制器与`PowerPC e500`cpu连接的建立为例(对应现实中的sysbus互联)。
+而设备连接关系的建立可以借助QOM的`property`机制完成。如中断控制器要向cpu传递中断就要调用对应cpu的`irq_handler`，那pic结构体中的中断线成员就是pic与cpu连接的关键。通过下面步骤就能将cpu的`irq_handler`记录到pic的结构体中，从而完成连接的建立：
+
+- pic初始化，将结构体中代表中断线的成员添加到`property`表
+	* 简单地说property是每个设备都有的一个哈希表，用于记录设备的属性和连接关系等，方便需要时获取
+- cpu初始化后通过`property`表找到中断控制器设备的中断线，将该cpu的handler赋值给它
+
+这样一来pic需要向cpu传递中断时，通过自身结构的中断线成员就能调用到cpu的`irq_handler`从而实现中断传递的效果。
+
+下面以`openpic`中断控制器与`PowerPC e500`cpu连接的建立为例说明这一点：
 
 首先`qdev_new(TYPE_OPENPIC)`创建一个openpic设备，在其实例化函数`openpic_realize`中使用`sysbus_init_irq -> qdev_init_gpio_out_named -> object_property_add_link`创建了"sysbus-irq"属性，相当于对外暴露了中断线：
 
@@ -230,7 +238,7 @@ Dev1.irq.opaque -> Dev2 -> Dev2.irq.opaque -> Dev3 -> Dev3.irq.handler();
 
 这里serial设备的传递过程大体如下：
 
-- 1. serial设备根据它的`irq`成员传递到`GSI`设备。
+- 1. serial设备根据它的`irq`成员传递到`GSI`设备(Global System Interrupts)。
 - 2. `irq->handler`进入`GSI`设备后继续调用`qemu_set_irq`传递，这次是传递`GSI`设备的`irq`
 - 3. 从`GSI`的irq进入到`pic_set_irq()`
 - 4. pic继续同样的方法传递，知道传递到cpu，修改标记位，cpu循环退出，从而模拟一次中断
