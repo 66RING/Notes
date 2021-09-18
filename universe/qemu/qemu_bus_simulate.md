@@ -33,7 +33,7 @@ PCI设备有如下三种不同内存：
 
 会发现`pci_host_config_write`传递指令信息保存到`config_reg`，`pci_host_data_write`根据`config_reg`修改config空间，之后会调用`pci_update_mappings`。`pci_update_mappings`会根据修改的config空间的信息更新内存映射。
 
-<img src="./config_and_update_mapping.png" alt="" width="100%">
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_and_update_mapping.png" alt="" width="100%">
 
 下文将对其进行详细说明
 
@@ -75,7 +75,7 @@ static void i440fx_pcihost_realize(DeviceState *dev, Error **errp)
 
 当对CH8h端口写时，pcihost会将数据用锁存器(latch)保存起来。当对CH8h端口读时，pcihost就会返回*CONFIG_ADDRESS*中的数据。pci规范文档中说明如下(约在32页, *3.2.2.3.2. Software Generation of Configuration Transactions*)：
 
-<img src="./config_address.png" alt="" width="100%">
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_address.png" alt="" width="100%">
 
 qemu中的模拟如下，qemu中用`s->config_reg`做锁存器，向对`CONFIG_ADDRESS`写入的数据。读时就直接返回`s->config_reg`
 
@@ -137,7 +137,7 @@ pcihost首先会根据总线号来判断目标设备的挂载在当前总线上(
 
 找到总线后pcihost会解析出设备号找到pci设备然后执行**configuration transaction**(后文会说明configuration transaction)。(约在pci规范文档的33页, *3.2.2.3.2. Software Generation of Configuration Transactions*)
 
-<img src="./config_data.png" alt="" width="100%">
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_data.png" alt="" width="100%">
 
 对应到qemu中代码如下：`pci_dev_find_by_addr`先根据总线号找到设备，`pci_host_config_write_common`发起configuration transactin。
 
@@ -275,7 +275,7 @@ void pci_host_config_write_common(PCIDevice *pci_dev, uint32_t addr,
 
 ```
 
-<img src="./config_and_update_mapping.png" alt="" width="100%">
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_and_update_mapping.png" alt="" width="100%">
 
 ## pcibus
 
@@ -383,7 +383,7 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
 }
 ```
 
-<img src="./pci_config_space.png" alt="" width="100%">
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/pci_config_space.png" alt="" width="100%">
 
 之后对config空间的操作，包括pcihost与pci设备通信和读写设备状态都会通过`uint8_t *config`完成。如：
 
@@ -437,7 +437,7 @@ QEMU中的总线模拟将有pcibus模拟和pci设备模拟共同完成：pcibus�
 
 gdb调试的表现为：总是会先调用`pci_host_config_write`为`s->config_reg`赋值，然后会调用data read/write解析刚才传入的`s->config_reg`
 
-<img src="./config_reg.png" alt="" width="100%">
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/config_reg.png" alt="" width="100%">
 
 
 ### 指令传输
@@ -538,13 +538,13 @@ pci_host_config_write_common(pci_dev, config_addr, PCI_CONFIG_SPACE_SIZE,
 
 为了能够寻址到pci设备，会在设备config空间中记录该设备内存映射相关的信息。这就是config空间中的BAR(Base Address Register)的功能。
 
-<img src="./pci_config_space.png" alt="" width="100%">
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/pci_config_space.png" alt="" width="100%">
 
 如图所示，BAR(Base Address Register)是PCIconfig空间中从0x10到0x24的6个register，用来定义PCI需要的配置空间大小以及**配置PCI设备占用的地址空间**。
 
 BAR根据mmio和pio有两种不同的布局，其中bit0用于指示是内存是mmio还是pio，详见下图：
 
-<img src="./bar_layout.png" alt="" width="100%">
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/bar_layout.png" alt="" width="100%">
 
 每个PCI设备在BAR中描述自己需要占用多少地址空间，bios会通过pci枚举探测pci设备，然后读取其BAR进行合理的地址空间分配。这个过程读应QEMU中虚拟机reset阶段执行的`pci_update_mappings`，后文将会说明这点。
 
@@ -654,7 +654,7 @@ struct PCIDevice {
 }
 ```
 
-<img src="./pci_config_space.png" alt="" width="100%">
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/pci_config_space.png" alt="" width="100%">
 
 pci协议规范规定了config空间中各个bit的含义，在`hw/pci/pci.c`中提供了许多API、`pci_regs.h`中定义了许多config空间相关的宏，方便我们对config空间进行操作。如`pci_config_set_vendor_id`API可以完成config空间vendor id段的填写：
 
@@ -732,7 +732,7 @@ e1000_mmio_setup(E1000State *d)
 
 其mmio和io对应的MemoryRegion为：
 
-<img src="./mmio_io.png" alt="" width="100%">
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/mmio_io.png" alt="" width="100%">
 
 接下里在设备具现化的过程中调用`pci_register_bar`，会用这些MR配置BAR，为之后的内存映射提供依据：
 
@@ -753,7 +753,7 @@ void pci_register_bar(PCIDevice *pci_dev, int region_num,
 }
 ```
 
-<img src="./register_bar.png" alt="" width="1005">
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/register_bar.png" alt="" width="1005">
 
 最后，会有几种时机真正的为pci设备映射内存空间，这里列出两种(其他情况有待补充):
 
@@ -762,15 +762,15 @@ void pci_register_bar(PCIDevice *pci_dev, int region_num,
 
 这里e1000设备是第二种情况，在`e1000_write_config`修改config空间后才建立内存映射
 
-<img src="./map_mmio.png" alt="" width="100%">
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/map_mmio.png" alt="" width="100%">
 
-<img src="./map_io.png" alt="" width="100%">
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/map_io.png" alt="" width="100%">
 
 可以看到将`e1000_mmio_setup`中创建的`(MemoryRegion* 0x555557793250)d->mmio`(**xxxx3250**)和`d->io`(**xxxx3340**)映射到了内存空间，之后便能通过该MR进行mmio操作。
 
 最后直接就能直接通过mmio访问设备(内存翻译)：
 
-<img src="./IO.png" alt="" width="100%">
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/IO.png" alt="" width="100%">
 
 **值得注意的是**并不是所有设备都会通过`pci_update_mappings`完成内存映射，如VGA在初始化MemoryRegion的时候就直接`add_subregion`完成了映射(也许是因为VGA地址空间固定吧)。然后再调用`pci_register_bar`方便后续接收config空间的指令：
 
