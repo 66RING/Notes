@@ -37,19 +37,59 @@ And what if a thousand file to compile?
 ## Lets start
 ### Format
 ``` makefile
-target: dependencies
-    command
+<target>: [dependencies]
+<tab> [command]
 
-^ before command IS A TAB, and make sure a new line at the end
+^ before command IS A <TAB>, and make sure a new line at the end
 ```
 We should write "from rear to front". Which means write final target command first and then write dependencies commandS
 
-### Usage
+### [to remove] Usage
 ``` sh
 make target...
 ```
 
 If didn't specify target, run the first target as default. That is why should we wirte main object at first.
+
+
+#### Target
+
+
+#### Prerequisites
+#### Commands
+#### Define
+
+### Grammar
+
+#### Echoing
+
+make will print out every single command that will execute
+
+use `@` to turn it off
+
+#### Wildcard
+#### Pattern matching
+#### Variables
+
+- `$`, `$$`
+- `=`, `:=`, `?=`, `+=`
+
+#### Implicit Variables
+
+[handbook](https://www.gnu.org/software/make/manual/html_node/Implicit-Variables.html)
+
+#### Automatic Variables
+
+- `$@`
+- `$<`
+- `$?`
+- `$^`
+- `$*`
+
+[handbook](https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html)
+
+#### Conditional
+#### Functions
 
 
 # CMake
@@ -110,8 +150,8 @@ TARGET_LINKLIBRARYS(executalbe_name SubLib)  # link sub lib
 📁/Project  
 ---📁/build  
 ---📁/src  
----📁/lib
----📝/CMakeLists.txt
+---📁/lib  
+---📝/CMakeLists.txt  
 
 - `./src/CMakeLists.txt`
     ``` 
