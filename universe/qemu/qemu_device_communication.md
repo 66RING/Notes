@@ -1,5 +1,5 @@
 ---
-title: QEMU总线模拟与设备通信
+title: QEMU设备通信
 date: 2021-08-31
 tags: 
 - qemu

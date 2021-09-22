@@ -143,3 +143,61 @@ $$U(x) = lnx - lnA$$
 - /var
 	* variable, 不断扩大的东西，如日志文件
 
+
+## Markdown syntax that beautiful enough
+
+Headings
+
+```
+标题紧跟
+任意数量的'='表示H1
+任意数量的'-'表示H2
+
+H1
+==============================
+
+H2
+------------------
+```
+
+Ordered Lists
+
+```
+数字加句点表示有序列表，必须数字1开始，但后续不必再有序
+
+1. first
+2. second
+3. third
+4. fourth
+```
+
+显示\`
+
+```
+转意`` ` ``，两个\`包裹的内容将会被保留
+```
+
+直接显示url或邮箱
+
+```
+<https://www.markdownguide.org>
+<fake@example.com>
+```
+
+**格式化引用**
+
+```
+Reference-style links包含两部分
+
+1. 句子中的引入，可以简写成[link]
+[label][link]
+
+2. 可以写在文中任意位置，可以有如下格式
+[link]: https://en.wikipedia.org/wiki/Hobbit#Lifestyle
+[link]: https://en.wikipedia.org/wiki/Hobbit#Lifestyle "Hobbit lifestyles"
+[link]: https://en.wikipedia.org/wiki/Hobbit#Lifestyle 'Hobbit lifestyles'
+[link]: https://en.wikipedia.org/wiki/Hobbit#Lifestyle (Hobbit lifestyles)
+[link]: <https://en.wikipedia.org/wiki/Hobbit#Lifestyle> "Hobbit lifestyles"
+[link]: <https://en.wikipedia.org/wiki/Hobbit#Lifestyle> 'Hobbit lifestyles'
+[link]: <https://en.wikipedia.org/wiki/Hobbit#Lifestyle> (Hobbit lifestyles)
+```
