@@ -46,14 +46,79 @@ pcibus模拟的主要功能是：维护pci设备信息，为pcihost索引目标�
 
 pci设备模拟的主要功能是：维护自己的config空间和操作对应的回调函数，设备的内存空间映射将会根据config空间的内容完成
 
+要了解pci总线模拟应该搞清楚以下问题：
+
+- 如何给设备编号：初始化程序扫描总线上每个插槽并编号
+	* 对应规范文档: 
+		+ 设备编号：pci-pci-bridge specifiation: 13.2. Device Number and Slot Number Assignment Rules，约138页
+	* 对应qemu: `qemu/hw/pci/pci.c:do_pci_register_device`，当指定`devfn=-1`时自动扫描可用设备号
+- cpu如何知道设备编号：初始化时初始化程序从`IRQ Routing Table`获取设备号信息
+	* 对应规范文档: 
+		+ 设备号信息初始化：pci-pci-bridge specifiation: 13.6. Run-Time Algorithm for Determining Chassis and Slot Number。约145页
+	* 对应qemu: TODO，没有找到，可能是操作系统中完成的？
+- pcihost如何找到pci设备
+	* 对应规范文档: 
+		+ 3.2.2.3.2. Software Generation of Configuration Transactions。约33页
+	* 对应本文章节: 
+		+ [pcibus](#pcibus)
+	* 对应qemu: 
+		+ `qemu/hw/pci/pci_host.c:pci_dev_find_by_addr()`
+- pci总线规范中几个比较重要的协议内容
+	* 对应规范文档:
+		+ config space的编码规范：Figure 6-1，约191页
+		+ 设备控制：6.2.2. Device Control，约193页
+		+ 设备状态控制：6.2.3. Device Status，约196页
+		+ BAR寄存器：6.2.5. Base Addresses，约201页
+	* 对应本文章节:
+		+ 设备控制(对应Figure 6-1的command register)和状态控制(对应Figure 6-1的status register)等：[bus transaction](#bus-transaction)中举例的接口根据addr参数读写各个寄存器
+		+ BAR寄存器功能：[设备IO空间](#设备IO空间)
+	* 对应qemu:
+		+ 设备控制和状态控制等：`qemu/pci/pci.c:pci_default_write_config`，根据addr参数修改对应寄存器内容
+- 如何给设备分配IO空间
+	* 对应规范文档:
+		+ BAR寄存器：6.2.5. Base Addresses，约201页
+	* 对应本文章节:
+		+ [设备IO空间](#设备IO空间)
+	* 对应qemu:
+		+ 设备BAR：`qemu/pci/pci.c:pci_register_bar`
+		+ 根据BAR进程内存空间映射：`qemu/pci/pci.c:pci_update_mappings`
+- cpu与pci设备通信的流程：中途经过什么设备，做了什么操作，如何读写设备等
+	* 对应规范文档:
+		+ 整体流程概述：3.2.2.3.2. Software Generation of Configuration Transactions。约33页
+	* 对应本文章节:
+		+ 中途做了什么操作：[控制流程](#控制流程)
+		+ 如何读写设备：[bus transaction](#bus-transaction)
+	* 对应qemu: 
+		+ 修改config空间的接口：`qemu/pci/pci.c:pci_default_write_config`
+		+ `CONFIG_ADDRESS`阶段：`qemu/pci/pci_host.c:pci_host_config_read`，`qemu/pci/pci_host.c:pci_host_config_write`
+		+ `CONFIG_DATA`阶段：`qemu/pci/pci_host.c:pci_host_data_read`，`qemu/pci/pci_host.c:pci_host_data_write`
+
 
 ## pcihost
 
 ### 控制流程
 
+pcihost对pci设备控制流程可以分为两阶段
+
+- `CONFIG_ADDRESS`
+	* cpu访问`CONFIG_ADDRESS`对应的端口时触发，将命令保存到pcihost的config寄存器中
+- `CONFIG_DATA`
+	* cpu访问`CONFIG_DATA`对应的端口时触发，根据config寄存器中内容进行相应的操作
+
+
 #### CONFIG_ADDRESS
 
 以i440fx北桥芯片这个pcihost为例，他使用两个pio来接收，cpu的指令信息。CF8h处的地址空间称为*CONFIG_ADDRESS*，CFCh处的地址空间称为*CONFIG_DATA*。
+
+参考[i440fx规范文档](https://wiki.qemu.org/images/b/bb/29054901.pdf)，其pci相关的核心内容如下：
+
+- i440fx设备的IO端口：3.1. I/O Mapped Registers，约17页
+	* 主要内容：`CONFIG_ADDRESS`寄存器在CF8h端口，`CONFIG_DATA`寄存器在CFCh端口
+	* 对应qemu的模拟：`qemu/hw/pci-host/i440fx.c:i440fx_pcihost_realize`
+- pci config空间与各寄存器的功能：3.2. PCI Configuration Space Mapped Registers
+	* 主要内容：说明了config空格各个字段的内容，访问config空间的格式(TYPE0和TYPE1)
+	* 对应qemu的模拟：`qemu/hw/pci-host/i440fx.c:pci_host_conf_le_ops`和`qemu/hw/pci-host/i440fx.c:pci_host_data_le_ops`
+
 
 ```c
 static void i440fx_pcihost_realize(DeviceState *dev, Error **errp)
@@ -432,8 +497,8 @@ QEMU中的总线模拟将有pcibus模拟和pci设备模拟共同完成：pcibus�
 
 读写config空间可以分为两个阶段:
 
-- 指令传输
-- 指令执行
+- `CONFIG_ADDRESS`，指令传输
+- `CONFIG_DATA`，指令执行
 
 gdb调试的表现为：总是会先调用`pci_host_config_write`为`s->config_reg`赋值，然后会调用data read/write解析刚才传入的`s->config_reg`
 
@@ -534,9 +599,9 @@ pci_host_config_write_common(pci_dev, config_addr, PCI_CONFIG_SPACE_SIZE,
 ```
 
 
-## 读写设备内存空间
+## 设备IO空间
 
-为了能够寻址到pci设备，会在设备config空间中记录该设备内存映射相关的信息。这就是config空间中的BAR(Base Address Register)的功能。
+为了能为pci设备分配IO空间，会在设备config空间中记录该设备内存映射相关的信息。这就是config空间中的BAR(Base Address Register)的功能。
 
 <img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/Notes/universe/qemu/qemu_bus_simulate/pci_config_space.png" alt="" width="100%">
 
