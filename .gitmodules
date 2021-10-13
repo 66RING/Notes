@@ -1,0 +1,3 @@
+[submodule "tips/english-note"]
+	path = tips/english-note
+	url = https://github.com/66RING/english-note
