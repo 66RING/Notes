@@ -1,5 +1,6 @@
 
 - two part
+	* base OS, lib OS
 - not need to full feature and portable
 - application "take over", make their own decision
 	* unnecssray of vm
