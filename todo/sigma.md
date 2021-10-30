@@ -14,6 +14,24 @@ mathjax: true
 
 # Preface
 
+Sigma求和有些常用的技巧：常量可以提出，如：
+
+$$\sum_{i=1}^m \sum_{j=1}^n ij$$
+
+对于内层循环$\sum_j ij$，i相对内存循环是"常量"，因此可以写成：
+
+$$
+\sum_{i=1}^m i \sum_{j=1}^n j \\
+\sum_{i=1}^m i \cdot \frac{n(n+1)}{2}\\
+$$
+
+$\frac{n(n+1)}{2}$相对于i循环又是"常量"，所以：
+
+$$
+\frac{n(n+1)}{2} \sum_{i=1}^m i \\
+\frac{n(n+1)}{2} \frac{m(m+1)}{2} \\
+$$
+
 
 # Overview
 
@@ -47,9 +65,22 @@ Sigma -> 求和 -> 循环 -> 变换 -> 优化循环!
 
 ## eg2 $\sum_{1 \le k \le n} k \cdot 2^k$
 
-1. 换元$p(k) = k+1$
-2. TODO整理一下
+1. **技巧:**换元$p(k) = k+1$
+2. 整理一下
 3. 得Sn和Sn-1的关系!!
+
+换元后，原式等价于：
+
+
+
+$$
+\begin{aligned}
+S_n &= \sum_{0 \le k \le n-1} (k+1) \cdot 2^{k+1} \\
+	&= \sum_{0 \le k \le n-1} 2k \cdot 2^k + \sum_{0 \le k \le n-1} 2^{k+1} \\
+	&= 2 \sum_{1 \le k \le n-1} k \cdot 2^k + \sum_{0 \le k \le n-1} 2^{k+1} \\
+	&= S_{n-1} + \sum_{0 \le k \le n-1} 2^{k+1} \\
+\end{aligned}
+$$
 
 
 # 多重求和

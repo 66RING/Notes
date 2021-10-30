@@ -18,9 +18,15 @@
 - 笔记 == 文档
 	* 笔记 零碎的抄
 	* 文档 逻辑组织
+
+- 预留锚点引诱老师
 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
+- da1.2
+	* 劳动教育
+
 - remove
+	* `java doc: https://algs4.cs.princeton.edu/code/javadoc/`
 	* algo
 		+ jdtsl
 		+ maven
@@ -30,8 +36,8 @@
 		+ /usr/local/bin/findbugs-{algs4,cos226,coursera}
 		+ /usr/local/bin/pmd-{algs4,cos226,coursera}
 
-- work item queue
 - 都有什么方向，让我看看眼界
+- 每个人都是生活的哲学家
 - 我发现我数学有很大问题
 - =========NO NO NO===============================
 - 2. **小心上流水线**
@@ -39,34 +45,49 @@
 		+ 是不是有点"控制"那种感觉了
 	* ii. 过于隔离 => 容易挖墙脚
 	* i和ii想打太极，把握有度
-- 混沌流水线
+- 混沌流水线 -> 类似管程这种形式的抽象
 
 stride scheduling
+
+- 听见天堂
+- 点球成金
+- mit6.824
+	* http://nil.csail.mit.edu/6.824/2020/schedule.html
+
+- x86 irq
+	* https://cloud.tencent.com/developer/article/1517862
 
 - hanota: 
 	* `/home/ring/Documents/code/c/leetcode_train/08.08.tower_of_hanoi.cpp`
 	* `/home/ring/Documents/Notes/todo/tower_of_hanoi_and_fractal.md`
 - https://edu.huaweicloud.com/roadmap/colleges.html
 
-- https://events.static.linuxfound.org/slides/2010/linuxcon_japan/linuxcon_jp2010_yamahata.pdf
+- MR
+	* /home/ring/Documents/Notes/todo/map_reduce.md
+- compiler
+	* https://pandolia.net/tinyc/
 
-- todo
-	* ucore trapframe usage
 
 - 作业
 	* work
 		+ [] report for circuit
-		+ [] mp
-		+ [x] algo
-		+ [] 工程概论
-		+ [x] db
-		+ [x] dsp
-		+ [x] oop
-	* note
-		+ [] db
 		+ [] dsp
+		+ [] emb 06
+		+ [x] mp 31
+		+ [x] algo
+			+ lab
+			+ 作业
+		+ [x] 工程概论 29
+		+ [x] oop
+		+ [x] arm
+		+ [x] db
+	* note
+		+ [] dsp
+		+ [] bd
+			+ 错题
+		+ [x] emb
+		+ [x] db
 		+ [x] mp
-		+ [x] bd
 	* misc
 		+ [x] 复习信号系统IZF
 		+ [x] 数学归纳法
@@ -75,7 +96,6 @@ stride scheduling
 - 王云岗
 - db OJ
 	* http://39.105.54.204/student/scantitle.php
-- mit6.824
 - `<超标量处理器设计>`
 - <a href="https://objectkuan.gitbooks.io/ucore-docs/content/lab7/lab7_3_4_monitors.html">管程与条件变量</a>
 
@@ -93,7 +113,6 @@ stride scheduling
 	* pci
 
 - 👀👀👀👀👀👀👀
-	* look at: `qemu-ifup/ifdown`
 	* qemu
 		+ property: http://terenceli.github.io/%E6%8A%80%E6%9C%AF/2018/09/05/qom-property
 		+ int: https://terenceli.github.io/%E6%8A%80%E6%9C%AF/2018/09/06/qemu-interrupt-emulation
@@ -111,8 +130,6 @@ stride scheduling
 		+ https://nju-projectn.github.io/ics-pa-gitbook/ics2020/1.4.html
 		+ /home/ring/Documents/Notes/Major/OS/OS_NJU.md
 	* https://luohao-brian.gitbooks.io/interrupt-virtualization/content/
-	* papers
-		+ GFS: google file system
 - 👀👀👀👀👀👀👀👀
 
 

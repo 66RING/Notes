@@ -1,15 +1,6 @@
 ## business
 
-### unikernel -> cloud provider?
-
-go bring in gorotine to boot up development of distributed system. It provide go gorotine as base tool.
-
-what if 
-
-- a unikernel, provide the base tools for single purpose OS
-- we can be developer of that basic tool
-- and we can be the cloud provider
-- even in the internet of things
+### Fault-tolerant QEMU
 
 ### Dshub
 
@@ -32,6 +23,10 @@ what if
 - 外网访问
 - ssh
 
+
+### 捧臭脚业务
+
+- 演员捧臭脚，满足他人优越感和比较的心理
 
 ### 无情的玩梗机
 
@@ -57,6 +52,16 @@ what if
 	* 一天减去睡觉 `(24-7)*60 / 10 = 102`
 - 常用模型
 
+### ~~unikernel -> cloud provider?~~
+
+go bring in gorotine to boot up development of distributed system. It provide go gorotine as base tool.
+
+what if 
+
+- a unikernel, provide the base tools for single purpose OS
+- we can be developer of that basic tool
+- and we can be the cloud provider
+- even in the internet of things
 
 ## BOOK
 
