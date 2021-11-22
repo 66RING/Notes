@@ -18,8 +18,9 @@
 - 笔记 == 文档
 	* 笔记 零碎的抄
 	* 文档 逻辑组织
+	* 得其意忘其形
 
-- 预留锚点引诱老师
+- CR：预留锚点引诱老师
 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
 - da1.2
@@ -35,17 +36,9 @@
 		+ /usr/local/bin/drjava
 		+ /usr/local/bin/findbugs-{algs4,cos226,coursera}
 		+ /usr/local/bin/pmd-{algs4,cos226,coursera}
+	* sql workbench
+		+ gnome-keyring
 
-- 都有什么方向，让我看看眼界
-- 每个人都是生活的哲学家
-- 我发现我数学有很大问题
-- =========NO NO NO===============================
-- 2. **小心上流水线**
-	* i. 每个人仅仅完成自己的工作就够了 => (重复劳动
-		+ 是不是有点"控制"那种感觉了
-	* ii. 过于隔离 => 容易挖墙脚
-	* i和ii想打太极，把握有度
-- 混沌流水线 -> 类似管程这种形式的抽象
 
 stride scheduling
 
@@ -54,33 +47,41 @@ stride scheduling
 - mit6.824
 	* http://nil.csail.mit.edu/6.824/2020/schedule.html
 
-- x86 irq
-	* https://cloud.tencent.com/developer/article/1517862
-
 - hanota: 
 	* `/home/ring/Documents/code/c/leetcode_train/08.08.tower_of_hanoi.cpp`
 	* `/home/ring/Documents/Notes/todo/tower_of_hanoi_and_fractal.md`
 - https://edu.huaweicloud.com/roadmap/colleges.html
 
 - MR
+	* 实例
 	* /home/ring/Documents/Notes/todo/map_reduce.md
-- compiler
-	* https://pandolia.net/tinyc/
+- **TIDB**
+	* https://github.com/tidb-incubator/tinykv
+	* https://hustport.com/
+- etcd & raft
+	* https://draveness.me/etcd-introduction/
+
+- 6.824
+	* https://github.com/LebronAl/MIT6.824-2021
 
 
 - 作业
 	* work
-		+ [] report for circuit
-		+ [] dsp
-		+ [] emb 06
-		+ [x] mp 31
-		+ [x] algo
-			+ lab
+		+ [] mp
+		+ [] 3x dsp
+		+ [] oslab
+		+ [] algo
 			+ 作业
-		+ [x] 工程概论 29
-		+ [x] oop
-		+ [x] arm
+			+ 上课
+			+ lab
+		+ [] 形势政治
+		+ [] 汇编实验报告
+		+ [x] 劳动教育
 		+ [x] db
+		+ [x] arm
+		+ [x] oop
+		+ [x] emb
+		+ [x] mp 31
 	* note
 		+ [] dsp
 		+ [] bd
@@ -91,6 +92,18 @@ stride scheduling
 	* misc
 		+ [x] 复习信号系统IZF
 		+ [x] 数学归纳法
+
+
+- **DB Q?**
+	* 在分权限的情况下，特别是这种管理系统，一般是在一个表内做一些权限的标志还是?
+	* 如果每个表里都带权限属性，是不是有点破坏表的语意?
+	* 那是不是在客户端里判断，而不是用dbms判断？
+	* 是不是没有显式的 n to n 类似的关系?
+- 优化方案
+	* 笛卡尔积临时表缓存
+		+ 一致性性问题
+		+ LRU
+	* 小临时表直接存储在内存
 
 
 - 王云岗
