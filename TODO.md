@@ -52,7 +52,7 @@ stride scheduling
 	* `/home/ring/Documents/Notes/todo/tower_of_hanoi_and_fractal.md`
 - https://edu.huaweicloud.com/roadmap/colleges.html
 
-- MR
+- MapReduce
 	* 实例
 	* /home/ring/Documents/Notes/todo/map_reduce.md
 - **TIDB**
@@ -63,22 +63,29 @@ stride scheduling
 
 - 6.824
 	* https://github.com/LebronAl/MIT6.824-2021
+- Qemu
+	* https://biscuitos.github.io/blog/QEMU-Memory-Manager-VM/
+	* Why MRS
+		+ https://lore.kernel.org/qemu-devel/20210222171102.GP6669@xz-x1/T/
 
 
 - 作业
 	* work
-		+ [] mp
-		+ [] 3x dsp
-		+ [] oslab
+		+ [] cpp ch7 输入输出流笔记
 		+ [] algo
 			+ 作业
 			+ 上课
 			+ lab
+		+ [] 嵌入式
+			+ 笔记
+
 		+ [] 形势政治
-		+ [] 汇编实验报告
+		+ [] mp 28
+		+ [] 4x dsp
+		+ [] oslab
+		+ [] 汇编实验报告 12.6
+		+ [] db上机
 		+ [x] 劳动教育
-		+ [x] db
-		+ [x] arm
 		+ [x] oop
 		+ [x] emb
 		+ [x] mp 31
