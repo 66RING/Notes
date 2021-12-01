@@ -222,6 +222,18 @@ qemu中树状结构的mr并不是说地址空间可以嵌套，qemu树状结构m
 
 下面是官方提供的一个内存映射的例子，可以大概看一下，注意就是为了体现上述内容。 用黑体标出了个人认为的关键点，并在其后面括号中加了说明：
 
+**格式说明**：形如
+
+```
+ +---- vga-window: alias@0xa0000-0xbffff ---> #pci (0xa0000-0xbffff)
+        (prio 1)
+```
+
+1. `vga-window`是该MemoryRegion的名称
+2. `alias`是该MemoryRegion的类型，这里是`alias`就是说该MR是另一个MR的别名，别名MR是TODO
+3. `@0xa0000-0xbffff`表示它在虚拟机视野(即GPA，即虚拟机物理地址)中的范围
+4. `---> #pci (0xa0000-0xbffff)`，在2中说过，这个MR是一个别名MR，所以这里`--->`表示该MR的本体在pci这个container中，是表示pci中`0xa0000-0xbffff`这块区域的MR
+
 
 > Example memory map
 > ------------------
@@ -262,7 +274,7 @@ qemu中树状结构的mr并不是说地址空间可以嵌套，qemu树状结构m
 > The memory controller diverts addresses in the range 640K-768K to the PCI
 > address space.  **This is modelled using the "vga-window" alias, mapped at a
 > higher priority so it obscures the RAM at the same addresses.  The vga window
-> can be removed by programming the memory controller(体现作用3：mr叠加时的可见控制)**; **this is modelled by
+> can be removed by programming the memory controller(体现作用3：mr叠加时的可见性控制)**; **this is modelled by
 > removing the alias and exposing the RAM underneath.(体现作用2：空隙时向上找到container的handler)**
 > 
 > The pci address space is not a direct child of the system address space, since
