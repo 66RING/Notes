@@ -23,19 +23,11 @@
 - CR：预留锚点引诱老师
 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
-- da1.2
-	* 劳动教育
+
+- **8259**
 
 - remove
 	* `java doc: https://algs4.cs.princeton.edu/code/javadoc/`
-	* algo
-		+ jdtsl
-		+ maven
-		+ ~/.drjava
-		+ /usr/local/algs4
-		+ /usr/local/bin/drjava
-		+ /usr/local/bin/findbugs-{algs4,cos226,coursera}
-		+ /usr/local/bin/pmd-{algs4,cos226,coursera}
 	* sql workbench
 		+ gnome-keyring
 
@@ -46,6 +38,7 @@ stride scheduling
 - 点球成金
 - mit6.824
 	* http://nil.csail.mit.edu/6.824/2020/schedule.html
+
 
 - hanota: 
 	* `/home/ring/Documents/code/c/leetcode_train/08.08.tower_of_hanoi.cpp`
@@ -68,23 +61,41 @@ stride scheduling
 	* Why MRS
 		+ https://lore.kernel.org/qemu-devel/20210222171102.GP6669@xz-x1/T/
 
+- 问ah是不是在什么情况下不能用?
+
+
+| 次序 | 科目 | 日期  | 时间 |
+|------|------|-------|------|
+| 1    | arm  | 12.30 | 13   |
+| 2    | oop  | 12.31 | 13   |
+| 3    | mp   | 1.4   | 9    |
+| 4    | dsp  | 1.5   | 9    |
+| 5    | db   | 1.10  | 13   |
+| 6    | algo | 1.12  | 13   |
+
+
+
+- TO READ
+	* https://knowledgehive.github.io/Game-Theory/
+- 6.828  NJU!!!!!!!!!!!!!!!!
+	* https://knowledgehive.github.io/6.828/
+	* https://pdos.csail.mit.edu/6.828/2018/schedule.html
+- learn rust with list
+	* https://weathfold.gitbooks.io/rust-too-many-lists-zhcn/content/first-layout.html
 
 - 作业
 	* work
-		+ [] cpp ch7 输入输出流笔记
-		+ [] algo
-			+ 作业
-			+ 上课
-			+ lab
-		+ [] 嵌入式
+		+ [x] dsp 各个滤波器做法，如何理解线性相位
+		+ [x] cpp ch7 输入输出流笔记
+		+ [x] dsp课后题
+		+ [x] 嵌入式
 			+ 笔记
-
-		+ [] 形势政治
-		+ [] mp 28
-		+ [] 4x dsp
-		+ [] oslab
-		+ [] 汇编实验报告 12.6
-		+ [] db上机
+			+ 实验报告
+		+ [x] oslab
+		+ [x] algo上课
+		+ [x] 嵌入式
+		+ [x] db上机
+		+ [x] 形势政治
 		+ [x] 劳动教育
 		+ [x] oop
 		+ [x] emb
@@ -101,19 +112,6 @@ stride scheduling
 		+ [x] 数学归纳法
 
 
-- **DB Q?**
-	* 在分权限的情况下，特别是这种管理系统，一般是在一个表内做一些权限的标志还是?
-	* 如果每个表里都带权限属性，是不是有点破坏表的语意?
-	* 那是不是在客户端里判断，而不是用dbms判断？
-	* 是不是没有显式的 n to n 类似的关系?
-- 优化方案
-	* 笛卡尔积临时表缓存
-		+ 一致性性问题
-		+ LRU
-	* 小临时表直接存储在内存
-
-
-- 王云岗
 - db OJ
 	* http://39.105.54.204/student/scantitle.php
 - `<超标量处理器设计>`

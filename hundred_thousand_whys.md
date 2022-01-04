@@ -7,6 +7,11 @@ tags:
 mathjax: true
 ---
 
+## 目标三元组
+
+CPU 架构、CPU 厂商、操作系统和运行时库, eg: `riscv64gc-unknown-none-el`, CPU 架构是 riscv64gc，厂商是 unknown，操作系统是 none，elf 表示没有标准的运行时库（表明没有任何系统调用的封装支持），但可以生成 ELF 格式的执行程序。
+
+
 ## Why rust say it want to replace c++
 
 Rust has a specfial  *Memory Management* , which is an **COMPILE-TIME memnory management base on Ownership, Borrowing and Lifetime** .
