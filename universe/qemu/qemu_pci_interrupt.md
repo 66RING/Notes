@@ -1,5 +1,5 @@
 ---
-title: pci对中断的支持
+title: qemu中pci对中断的支持
 date: 2021-10-05
 tags: 
 - qemu
