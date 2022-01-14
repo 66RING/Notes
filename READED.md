@@ -5,10 +5,23 @@
 <details>
 <summary>2021</summary>
 
-- 1
-- 2
-- 3
-- 4
+- C和指针
+- How to develop Embeded Software Using the qemu Machine Emulator
+- COMPUTER SYSTEM A PROGRAMMER'S PERSPECTIVE
+- 身份的焦虑
+- c缺陷和陷阱
+- Linux Kernel Development
+- 小王子
+- 100个gdb小技巧
+- 房思琪的初恋乐园
+- GiantVM: A Type-II Hypervisor Implementing Many-to-one Virtualization
+- The Google File System
+- BTRFS: The linux B-tree filesystem
+- Unikernel: Library Operating System for the Cloud
+- Exokernel: an operating system architecture for application-level resource management
+- Bridging Theory and Pratice
+- MapReduce: Simplified Data Processing on Large Clusters
+- Free Lunch is Over
 
 </details>
 

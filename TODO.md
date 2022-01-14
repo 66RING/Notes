@@ -21,10 +21,30 @@
 	* 得其意忘其形
 
 - CR：预留锚点引诱老师
+
+- read 法
+	* pass1
+		1. title
+		2. abs
+		3. conclusion
+		4. 瞄一眼exp & method
+	* pass2
+		+ 过一遍，搞清楚图和表每个字
+		+ 圈相关文献(之前的工作可能简单点)
+	* pass3 精读
+		+ 脑补自己做，怎么做，有何可改进
 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
 
 - **8259**
+- 频率采样法
+- NJU: https://nju-projectn.github.io/ics-pa-gitbook/ics2020/
+- how a X window manager work
+	* https://jichu4n.com/posts/how-x-window-managers-work-and-how-to-write-one-part-i/
+	* https://jichu4n.com/posts/how-x-window-managers-work-and-how-to-write-one-part-ii/
+- checkout
+	* https://github.com/wyfcyx/osnotes
+
 
 - remove
 	* `java doc: https://algs4.cs.princeton.edu/code/javadoc/`
