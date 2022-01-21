@@ -35,6 +35,21 @@
 		+ 脑补自己做，怎么做，有何可改进
 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
+- remove
+	* nginx
+
+- 陈海波
+- 包云岗
+
+- 陈天 rust
+
+- To note
+	* /home/ring/Documents/Notes/universe/reading_notes/DDIA.md
+- 作业
+	* 分布式计算
+
+- learn:
+	* https://github.com/tidb-incubator/vldbss-2021
 
 - **8259**
 - 频率采样法
@@ -52,10 +67,6 @@
 		+ gnome-keyring
 
 
-stride scheduling
-
-- 听见天堂
-- 点球成金
 - mit6.824
 	* http://nil.csail.mit.edu/6.824/2020/schedule.html
 
