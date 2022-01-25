@@ -9,87 +9,62 @@ mathjax: true
 
 # 模拟方法概述
 
-先创建一个最小化的开发板，其应该具有基本的io、屏幕回显能力。之后根据镜像加载、启动过程中的报错信息，对这个最小化开发板进行修补：添加设备、修改设备树等。直至内核成功启动。
-
 创建虚拟机可以分为如下5个阶段，伪码描述如下：
 
 ```c
 static void my_machine_init(MachineState *machine){
-	create_cpu();
-	create_mem();
-	create_dev();
-	load_kernel();
-	create_device_tree();
+	create_cpu
+	create_mem
+	create_dev
+	load_kernel
+	create_device_tree
 }
 ```
 
-首先`create_cpu`和`create_mem`阶段为虚拟机创建基本的处理和储存单元，但此时缺少serial设备还不具备屏幕回显的能力，因此需要在`create_dev`阶段创建serial设备。`create_dev`阶段还会创建虚拟机需要的其他设备，但这里先从最小化开始，发现确实设备再进行设备补充。
+`create_cpu`阶段主要负责cpu创建的内容，包括cpu对象创建、cpu reset方法注册、cpu频率初始化等操作。
 
-`load_kernel()`阶段负责处理内核加载过程，由于qemu不会同一的处理内核加载的方法，这里我们需要在源码中显式地编写内核、固件等的加载逻辑，方便的是qemu提供了ELF文件加载的接口函数`load_elf()`系列函数，我们可以专注于加载逻辑的处理。之后让虚拟机CPU的pc寄存器指向程序入口。这样在虚拟机启动后cpu将会从pc寄存器指向的位置开始顺序执行。
+`create_mem`阶段主要负责内存创建方面的内容，如ram、rom等创建和初始化。
 
-最后在`create_device_tree`阶段为cpu准备设备树。设备树就相当于开发板上硬件的使用说明，告诉cpu设备都在什么位置，e500核心的cpu就使用`gpr[3]`寄存器存储设备树基地址。
+`create_dev`阶段主要负责虚拟机其他设备和各种控制器的创建工作，包括pci总线、中断控制器、网卡等。
+
+`load_kernel`阶段负责将内核镜像载入虚拟机内存，供虚拟机启动时使用。
+
+`create_device_tree`阶段为内核准备设备树。因为powerpc架构的机器启动是基于设备树的，所以设备树的构造十分关键，这关系到内核能否找到相应设备。
+
+为了让qemu能够识别到我们创建的虚拟机，我们还需要使用qemu提供的接口向qemu注册：
+
+```
+static void p2020_machine_class_init(MachineClass *mc)
+{
+    mc->desc = "GRB-P2020 board";
+    mc->init = p2020_machine_init;
+    mc->max_cpus = 2;
+    mc->default_cpu_type = POWERPC_CPU_TYPE_NAME("e500v2_v30");
+    mc->default_ram_id = "mpc8544ds.ram";
+}
+
+
+#define TYPE_P2020_MACHINE  MACHINE_TYPE_NAME("p2020")
+
+static const TypeInfo p2020_info = {
+    .name          = TYPE_P2020_MACHINE,
+    .parent        = TYPE_PPCE500_MACHINE,
+    .class_init    = p2020_machine_class_init,
+    .interfaces    = (InterfaceInfo[]) {
+         { TYPE_HOTPLUG_HANDLER },
+         { }
+    }
+};
+
+static void p2020_register_types(void)
+{
+    type_register_static(&p2020_info);
+}
+type_init(p2020_register_types)
+```
 
 
 # QEMU中的创建虚拟开发板的流程
-
-## 基础功能准备
-
-这个部分对应虚拟机创建的`create_cpu`、`create_mem`和`create_dev`阶段，主要功能是：创建cpu和memory提供图灵完备;创建serial设备，让启动信息能打印到屏幕，保证人机交互。
-
-
-## 内核加载启动流程
-
-在`load_kernel`阶段，通过`load_elf()`接口可以将elf文件加载到虚拟机内存中。同时通过其返回的`lowaddr`和`highaddr`可以计算出文件的入口地址，将pc寄存器指向之则程序准备就绪。
-
-```c
-int load_elf(const char *filename,
-             uint64_t (*elf_note_fn)(void *, void *, bool),
-             uint64_t (*translate_fn)(void *, uint64_t),
-             void *translate_opaque, uint64_t *pentry, uint64_t *lowaddr,
-             uint64_t *highaddr, uint32_t *pflags, int big_endian,
-             int elf_machine, int clear_lsb, int data_swab)
-```
-
-
-## 加载/创建设备树
-
-qemu可以通过`-dtb <dtb_file>`命令加载设备树，前提是源码中有对应的处理。即如果我们需要通过`-dtb <file>`的方式加载dtb文件，需要在源码中显式添加处理逻辑，因为`-dtb`参数的解析不属于qemu命令行解析的通用部分，具体实现由模拟板子的代码决定。
-
-`-dtb`参数可以通过`qemu_opt_get(machine_opts, "dtb");`获取，之后通过`load_device_tree()`遍完成了将`.dtb`文件解析成设备树对象的过程。
-
-```c
-QemuOpts *machine_opts = qemu_get_machine_opts();
-const char *dtb_file = qemu_opt_get(machine_opts, "dtb");
-
-if (dtb_file) {
-	char *filename;
-	filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, dtb_file);
-	fdt = load_device_tree(filename, &fdt_size);
-}
-```
-
-而设备树文件从何而来呢？一种方法是通过编写dts文件，然后编译生成dtb文件。这里主要利用另一种方法：先利用qemu创建设备树的接口创建设备树，再利用qemu导出dtb文件的功能(详见后面dumpdtb处理部分内容)将设备树dtb文件从内存中导出。
-
-利用qemu提供的接口创建设备树的方法如下：首先通过`void* fdt = create_device_tree(&fdt_size);`创建空设备树对象。之后设备树的内容就可以根据具体情况自定义了。qemu提供如下常用API：
-
-- `qemu_fdt_add_subnode(fdt, "node_name")`，创建新节点
-	* 空设备树对象只存在根节点`/`，每个新设备的加入都得先创建新节点
-- `qemu_fdt_setprop_string(fdt, "/path/to/node", "key", "value")`，为节点添加字符串类型的键值对
-- `qemu_fdt_setprop_cell(fdt, "/path/to/node", "key", number)`，为节点添加数字类型的键值对
-
-最后还有将创建好的设备树对象写入虚拟机的内存，供虚拟机使用，这个步骤可以通过`cpu_physical_memory_write(addr, fdt, fdt_size);`完成，其中addr就是加载elf阶段计算出的设备树地址。
-
-
-## 内核启动与设备支持
-
-假设你新购入了一台高科技设备，你完全不知道怎么使用，你就得查看这个设备提供的使用手册。你就相当于CPU，使用手册就相当于设备树。当你根据手册想要操作某个功能时，你发现这个机器上并不存在这样的设备，这时你一定会感到诧异。
-
-同理内核启动时根据设备树取得不到对应的设备支持，则启动无法进行。所以在QEMU中还需要将设备模拟出来。
-
-qemu提供了许多设备的QOM，我们可以通过QOM方便的将设备创建，而具体设备之间怎么连接、地址空间怎么划分就得根据具体手册决定了。
-
-
-# 模拟实例及容易掉入的坑
 
 我模拟开发板的思路如下：
 
@@ -194,7 +169,7 @@ memory_region_add_subregion(system_memory, 0, machine->ram);
 
 ## 最小化改进
 
-最小化的虚拟开发板创建完成后发现无法启动，经过与其他qemu现成开发板的比较，发现有如下原因：
+最小化的虚拟开发板创建完成后发现无法启动，经过与其他qemu虚拟机的比较，发现有如下原因：
 
 - 1 没有serial设备，无法将文字显示到屏幕
 	* 与`openrisc_sim`开发板比较，发起其创建的结构是：cpu, memory, serial, load kernel。所以猜测缺少serial设备屏幕无法回显
@@ -367,11 +342,368 @@ qemu_fdt_add_subnode(fdt, "/cpu0");
 
 ## 最小化补完
 
-内核启动阶段，通过报错信息发现缺少如下设备内核无法启动：
+至此第一章涉及的5个阶段基本完成。可以尝试启动虚拟机，然后进行下一步开发。
 
-- pic
-- pci
+```c
+static void my_machine_init(MachineState *machine){
+	create_cpu
+	create_mem
+	create_dev
+	load_kernel
+	create_device_tree
+}
+```
 
-所以需要在第一章整体流程中的create_dev()阶段补充相应的设备
+用如下命令启动，然后内核给我们提供了一些错误信息：
+
+```
+qemu-system-ppc  \
+  -M p2020, \
+  -m 512M \
+  -kernel ./vmlinux \
+```
+
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/os_proj/ppc_emulation/kernel_bug.png" ></img>
+
+似乎是在说：内核检测设备时检测不到中断控制器。所以这就引出了虚拟机创建的最后一步：**最小化补完，补充内核启动需要的其他设备** 。
+
+有了前面添加serial设备的经验，我在`create_dev`阶段向虚拟机添加pci总线和pic中断控制器，再将设备信息写入设备树：
+
+```
+ 	// 添加设备部分
+	...
+    mpicdev = ppce500_init_mpic_a(pms, ccsr_addr_space, irqs);
+	...
+	dev = qdev_new("e500-pcihost");
+    object_property_add_child(qdev_get_machine(), "pci-host", OBJECT(dev));
+    qdev_prop_set_uint32(dev, "first_slot", 0x1);
+    qdev_prop_set_uint32(dev, "first_pin_irq", pci_irq_nrs[0]);
+    s = SYS_BUS_DEVICE(dev);
+    sysbus_realize_and_unref(s, &error_fatal);
+    for (i = 0; i < PCI_NUM_PINS; i++) {
+        sysbus_connect_irq(s, i, qdev_get_gpio_in(mpicdev, pci_irq_nrs[i]));
+    }
+
+    memory_region_add_subregion(ccsr_addr_space, MPC8544_PCI_REGS_OFFSET,
+                                sysbus_mmio_get_region(s, 0));
+
+	// 填写设备树部分
+	char *mpic;
+    uint32_t mpic_ph;
+    mpic = g_strdup_printf("%s/pic@%llx", soc, MPC8544_MPIC_REGS_OFFSET);
+    qemu_fdt_add_subnode(fdt, mpic);
+    qemu_fdt_setprop_string(fdt, mpic, "device_type", "open-pic");
+    qemu_fdt_setprop_string(fdt, mpic, "compatible", "fsl,mpic");
+    qemu_fdt_setprop_cells(fdt, mpic, "reg", MPC8544_MPIC_REGS_OFFSET,
+                           0x40000);
+    qemu_fdt_setprop_cell(fdt, mpic, "#address-cells", 0);
+    qemu_fdt_setprop_cell(fdt, mpic, "#interrupt-cells", 2);
+    mpic_ph = qemu_fdt_alloc_phandle(fdt);
+    qemu_fdt_setprop_cell(fdt, mpic, "phandle", mpic_ph);
+    qemu_fdt_setprop_cell(fdt, mpic, "linux,phandle", mpic_ph);
+    qemu_fdt_setprop(fdt, mpic, "interrupt-controller", NULL, 0);
+```
+
+再次编译启动，成功进入内核启动阶段，虚拟机开发完成
+
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/os_proj/ppc_emulation/booting.png" ></img>
+
+虚拟机源码可在附录p2020文件的src文件夹中获取。放入`./qemu/hw/ppc`文件夹内，编译安装qemu即可。
+
+
+# 内核启动
+
+内核启动需要配置恰当的内核镜像和根文件系统。这里使用vmlinux + initrd的方式启动内核。
+
+## 环境安装
+
+内核镜像编译需要一些交叉编译的工具，我们这里使用eldk工具链来编译内核。
+
+首先去DENX官网下载对应工具：[The Embedded Linux Development Kit (ELDK)](https://ftp.denx.de/pub/eldk/)。这里eldk使用的版本是5.6，需要powerpc架构的工具链，所以下载[eldk-5.6-powerpc.iso](https://ftp.denx.de/pub/eldk/5.6/iso/eldk-5.6-powerpc.iso)的镜像。
+
+挂载`eldk-5.6-powerpc.iso`，这里挂载到`/mnt`目录
+
+```sh
+$ mount /path/to/eldk-5.6-powerpc.iso /mnt
+$ cd /mnt
+```
+
+执行安装
+
+```sh
+./install.sh -d /path/to/install_dir -s toolchain-xenomai-qte -r qte-xenomai-sdk powerpc
+```
+
+- `-d`指定工具链的安装目录。如果不指定，默认安装到`/opt/eldk`
+- `-s`表示SDK使用的镜像源
+- `-r`表示目标使用的RFS镜像源
+- 最后一个参数表示安装的目标指令集架构，这里是`powerpc`
+
+更多参数详情查看`./install -h`
+
+工具链就安装到了`/path/to/install_dir`目录了，使用时将需要的二进制文件添加到环境变量即可，如：
+
+```
+export PATH=$PATH:/path/to/install_dir/powerpc/sysroots/i686-eldk-linux/usr/bin:/path/to/install_dir/powerpc/sysroots/i686-eldk-linux/usr/bin/powerpc-linux:/path/to/install_dir/powerpc/sysroots/powerpc-linux/usr/bin/powerpc-linux
+```
+
+
+## 内核编译
+
+这里内核的版本是linux-denx-3.16D20180629，可以在p2020附件中获取：
+
+
+```
+tar xvf linux-denx-3.16D20180629.tar.bz2
+cd linux-denx-3.16
+make clean
+unset LDFLAGS
+export ARCH=powerpc
+exprot CROSS_COMPILE=powerpc-linux-
+make menuconfig //进入 linux 内核配置
+```
+
+ARCH表示编译的目标架构，CROSS\_COMPILE表示交叉编译工具的前缀
+
+a,选择以下配置
+
+```
+General setup --->
+	[*] Initial RAM filesystem and RAM disk (initramfs/initrd) support
+Device Drivers--->
+	[*] Memery Technology Device(MTD) support--->
+		RAM/ROM/Flash chip drivces--->
+			[*] support for intel/sharp chips
+		Mapping drivers for chip access ---> 
+			[*] CFI Flash device mapped on P2020GRB
+
+```
+
+b,同时将 File systems---> Miscellaneous filesystems--->中的 JFFS2 文件系统选中，保存退出
+
+执行编译
+
+```
+make
+```
+
+在源码根目录可以获得vmlinux镜像文件、在目录 linux-denx-3.16/arch/powerpc/boot中，可以获得其他格式的镜像文件。
+
+
+### ld: scripts/dtc/dtc-parser错误
+
+编译时可能会遇到`ld: scripts/dtc/dtc-parser`错误，这是设备树生成脚本导致的。修改`./linux-denx-3.16/scripts/dtc/dtc-lexer.lex.c`文件640行处，为`extern YYLTYPE yylloc;`，再次make即可
+
+```
+- YYLTYPE yylloc;
++ extern YYLTYPE yylloc;
+```
+
+
+## 根文件系统编译
+
+这里根文件系统使用busybox。编译busybox最好使用较高版本的工具链，不然可能遇到未知的错误，这时使用musl提供的工具链。
+
+musl.cc提供的工具链安装步骤：
+
+- 下载需要的[工具链](https://musl.cc/#binaries)
+- 解压缩
+- 添加环境变量
+
+busybox使用1.33版本，可在附录p2020文件中获得。
+
+```
+tar -xjvf busybox-1.33.0.tar.bz2
+cd busybox-1.33
+export ARCH=powerpc
+exprot CROSS_COMPILE=powerpc-linux-musl-
+```
+
+选择静态链接：
+
+```
+make menuconfig
+
+Busybox Settings --->
+	Build Options --->
+		[*] Build BusyBox as a static binary (no shared libs)
+```
+
+编译安装：
+
+```
+make
+make install
+```
+
+编译生成的文件在`_install`目录，检查以下是否是目标架构：
+
+```
+$ cd _install
+$ ls
+bin sbin user linuxrc
+
+$ file ./bin/busybox
+./bin/busybox: ELF 32-bit MSB executable, PowerPC or cisco 4500, version 1 (SYSV), statically linked, stripped
+
+```
+
+如果不是PowerPC，不是静态链接`statically linked`就需要检查过程哪里处理差错需要重新编译。
+
+
+## 制作initrd
+
+要让内核从initrd启动需要将根文件系统打包成cpio文档。
+
+这里介绍一种最小化的根文件系统，这个根文件系统仅负责进入命令行。完整的根文件系统创建方法可以查阅互联网。
+
+```
+$ cd _install
+$ ls
+bin sbin user linuxrc
+```
+
+创建一个`init`脚本作为内核启动的init程序，内容如下：
+
+```
+#!/bin/sh
+
+echo "###############################"
+echo "######### Hello World #########"
+echo "###############################"
+
+exec /bin/sh
+```
+
+之后使用如下命令创建cpio文档：
+
+```
+find . -print0 | cpio --null -ov --format=newc | gzip -9 > initrd.gz
+```
+
+这样就得到了initrd文件：initrd.gz
+
+
+## 虚拟机启动
+
+我们从0创建了内核镜像`vmlinux`和根文件系统initrd：`initrd.gz`，使用如下命令启动：
+
+```
+qemu-system-ppc  \
+  -M p2020, \
+  -m 512M \
+  -kernel ./vmlinux \
+  -initrd ./initrd.gz \
+  -append "rdinit=/init"
+```
+
+`-append`表示内核的启动参数，告诉内核使用initrd启动，init程序位置为`/init`
+
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/os_proj/ppc_emulation/bootup.png" ></img>
+
+镜像文件、根文件系统initrd和启动脚本start.sh可在p2020附录的image文件夹中获取。
+
+
+# 使用flash设备作为外存
+
+我们发现在qemu中pflash设备的创建和参数化方法比较简单，仅需如下代码即可实现。于是为了简单起见，我们打算用pflash设备来模拟其他外存设备。
+
+```c
+// 创建
+DeviceState *dev = qdev_new(TYPE_PFLASH_CFI01);
+qdev_prop_set_uint64(dev, "sector-length", VIRT_FLASH_SECTOR_SIZE);
+qdev_prop_set_uint32(dev, "num-blocks", memmap[P2020_FLASH].size / VIRT_FLASH_SECTOR_SIZE);
+qdev_prop_set_uint8(dev, "width", 2);
+qdev_prop_set_uint8(dev, "device-width", 2);
+qdev_prop_set_bit(dev, "big-endian", true);
+qdev_prop_set_string(dev, "name", "flash");
+PFlashCFI01 *flash = PFLASH_CFI01(dev);
+
+// 参数化
+pflash_cfi01_legacy_drive(flash, drive_get(IF_PFLASH, 0, 0));
+
+// 分配空间
+sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+memory_region_add_subregion(system_memory, memmap[P2020_FLASH].base,
+                            sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0));
+```
+
+不过qemu会检查磁盘文件大小和flash设备的大小，当flash设备大小与磁盘文件大小一直时才能启动虚拟机。
+
+这里提供了一个jffs2格式的磁盘文件：`rootfs.jffs2`，可以在附录p2020的image文件夹中获取。如果需要自行自作jffs2格式的文件系统，可以使用附录p2020的tools文件夹中的`mkfs.jffs2`工作制作。这里仅演示从jffs2磁盘文件启动的方法。
+
+前面说得磁盘文件要与flash设备大小一致，我们可以使用`fallocate`工具为文件扩容。这里我们的flash设备大小为16M，所以：
+
+```
+$ cp rootfs.jffs2 rootfs.jffs2.flash
+$ fallocate -l 16M rootfs.jffs2.flash
+```
+
+之后使用如下命令启动：
+
+```
+qemu-system-ppc  \
+  -M p2020, \
+  -m 512M \
+  -kernel ./vmlinux \
+  -drive file=./rootfs.jffs2.flash,if=pflash  \
+  -append "root=/dev/mtdblock0 rootfstype=jffs2 rw rdinit=/linuxrc" \
+```
+
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/os_proj/ppc_emulation/grb.png" ></img>
+
+原始`rootfs.jffs2`、重新分配大小的`rootfs.jffs2.flash`以及从flash启动的启动脚本`start_with_jffs2.sh`见附录p2020的image文件夹。
+
+
+## 让flash更加通用
+
+既然我们要用flash设备作为外存使用，那它应该还有支持其他文件系统，如ext2、ext3、ext4等。
+
+但当我们打算从ext3格式的磁盘文件启动时，内核报错:
+
+```
+qemu-system-ppc  \
+  -M p2020, \
+  -m 512M \
+  -kernel ./vmlinux \
+  -drive file=./rootfs.ext3,if=pflash  \
+  -append "root=/dev/mtdblock0 rw rdinit=/linuxrc" \
+
+
+EXT3-fs error (device mtdblock0): ext3_get_inode_loc: unable to read inode block - inode=2049, block=8260
+Starting init: /sbin/init exists but couldn't execute it (error -12)
+```
+
+这时由于我们创建的flash设备的block为8192，而ext3文件系统的block为16384导致的，我们可以使用`resize2fs`工具修改ext3的block大小：
+
+```
+cp rootfs.ext3 rootfs.ext3.flash
+resize2fs rootfs.ext3.flash 8192
+```
+
+再使用`fallocate`工具扩大磁盘文件：
+
+```
+fallocate -l 16M rootfs.ext3.flash
+```
+
+启动成功
+
+```
+qemu-system-ppc  \
+  -M p2020, \
+  -m 512M \
+  -kernel ./vmlinux \
+  -drive file=./rootfs.ext3.flash,if=pflash  \
+  -append "root=/dev/mtdblock0 rw rdinit=/linuxrc" \
+```
+
+<img src="https://raw.githubusercontent.com/66RING/66RING/master/.github/images/os_proj/ppc_emulation/ext_suc.png" ></img>
+
+原始磁盘文件`rootfs.ext3`、修改后的磁盘文件`rootfs.ext3.flash`以及启动脚本`start_with_ext3.sh`见附录p2020的image文件夹。
+
+ext2、ext4文件系统格式的处理方式同理。
+
+
 
 

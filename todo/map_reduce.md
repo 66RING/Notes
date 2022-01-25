@@ -104,7 +104,7 @@ master需要调度work，分发工作范围，因此需要记录分布在其他�
 map会生成M个Region，reduce生成R份output，master需要对这些内容和各个work进行组织。所以什么设计worker数量，切分的粒度就需要讲究。
 
 1. O(M + R)个worker可以调度，需要在内存中记录
-2. O(M x R)个状态需要记录
+2. O(M x R)个状态需要记录(中间结果集)
 
 google具体问题具体分析，O(M x R)实际占用内存是可以接受的，所以看看其他方面可以如何优化：
 
@@ -141,6 +141,9 @@ google具体问题具体分析，O(M x R)实际占用内存是可以接受的，
 - [Backup Tasks](#⭐backup-tasks⭐)
 	* 秒秒秒，体会
 	* TODO：抽象一下背后的道理?
+- 基于GFS这种global file system
+	* 屏蔽了数据文件"同步"的细节，多机用着像单机
+	* 充分利用底层服务
 
 
 # What's more

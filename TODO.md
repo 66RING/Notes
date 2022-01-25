@@ -38,15 +38,22 @@
 - remove
 	* nginx
 
+- learn ffmpeg
+
 - 陈海波
 - 包云岗
 
 - 陈天 rust
 
+- https://tanxinyu.work/tinykv/
+
 - To note
 	* /home/ring/Documents/Notes/universe/reading_notes/DDIA.md
 - 作业
 	* 分布式计算
+
+- nvim-dap !!!!!!!!!!
+	* https://www.youtube.com/watch?v=ga3Cas7vNCk&ab_channel=DevOnDuty
 
 - learn:
 	* https://github.com/tidb-incubator/vldbss-2021
