@@ -7,6 +7,21 @@ tags:
 mathjax: true
 ---
 
+## RISCV hart
+
+> HARdware Thread
+
+相当于独立的处理器，在软件看来hart是一种资源，一个hart就是一个执行执行流。类比x86超线程
+
+
+## RISCV命名规则
+
+`RV[xxx][abc-xyz]`
+
+- `[xxx]`多少位机
+- `[abc-xyx]`实现的模块集合
+- eg. `RV64IAM`
+
 ## 目标三元组
 
 CPU 架构、CPU 厂商、操作系统和运行时库, eg: `riscv64gc-unknown-none-el`, CPU 架构是 riscv64gc，厂商是 unknown，操作系统是 none，elf 表示没有标准的运行时库（表明没有任何系统调用的封装支持），但可以生成 ELF 格式的执行程序。

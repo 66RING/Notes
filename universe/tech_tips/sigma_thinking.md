@@ -1,5 +1,5 @@
 ---
-title: Sigma求和
+title: Sigma求和的思考
 date: 2021-10-22
 tags: 
 - tips
@@ -8,7 +8,7 @@ mathjax: true
 
 # Abstract
 
-> 改写求和，实际上是在改写程序
+> 改写求和，实际上是在改写程序。提出Sigma外 相当于 提出loop外
 
 数学作为抽象工具，替代不可靠的直觉
 
@@ -33,9 +33,7 @@ $$
 $$
 
 
-# Overview
-
-# eg
+# 例子
 
 ## eg1 求等差数列
 

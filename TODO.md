@@ -35,6 +35,36 @@
 		+ 脑补自己做，怎么做，有何可改进
 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
+https://www.bilibili.com/video/BV1144y167iZ?p=4
+
+- DSP
+	* https://www.bilibili.com/video/BV1WT4y1K7vz?from=search&seid=10186061784434529332&spm_id_from=333.337.0.0
+	* https://www.bilibili.com/video/BV1uq4y1r7xH?from=search&seid=17757862848878804045&spm_id_from=333.337.0.0
+
+
+- TO read
+	* https://mp.weixin.qq.com/s/jzqhLptmgcNix6xYWYL01Q
+- https://github.com/huihongxiao/MIT6.824
+- https://github.com/huihongxiao/MIT6.S081
+	* https://pdos.csail.mit.edu/6.S081/2020/schedule.html
+	* https://pdos.csail.mit.edu/6.S081/2020/labs/cow.html
+- https://github.com/rustcc/writing-an-os-in-rust
+- https://github.com/dreamhead/patterns-of-distributed-systems
+- https://github.com/qichengzx/gopher-reading-list-zh_CN
+- https://www.zhihu.com/question/278551592
+- https://eagain.net/articles/git-for-computer-scientists/
+- MIT6.828 Operating System Engineering
+	* https://pdos.csail.mit.edu/6.828/2018/schedule.html
+- cs110l
+	* https://reberhardt.com/cs110l/spring-2020/
+	* https://github.com/reberhardt7/cs110l-spr-2020-starter-code
+
+- database
+	* https://www.cs.cmu.edu/~bam/uicourse/830spring20/
+	* https://15445.courses.cs.cmu.edu/fall2021/
+
+- wow: https://github.com/rust-lang/rustlings
+
 - remove
 	* nginx
 

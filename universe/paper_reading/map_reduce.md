@@ -18,15 +18,26 @@ MapReduce的本质上也是一种分治(Divide and Conquer)思想。
 基本模型：
 
 ```
-Map 	--> 	intermediate 	-->	 Reduce
-预处理，拆分 		     			 处理，整合
+Inputfile1 -> Map -> a,1 b,1
+Inputfile2 -> Map ->     b,1
+Inputfile3 -> Map -> a,1     c,1
+                     |   |   |
+                     |   |   -> Reduce -> c,1
+                     |   -----> Reduce -> b,2
+                     ---------> Reduce -> a,2
 ```
 
 1. Map函数对输入数据生成一些列键值对(k/v)的中间数据(intermediate)
 2. MR库会将Map处理好的k/v进行分组，将key相同的归为一组`<key, itertor>`
 3. Reduce对intermediate进行处理，然后整合输出(可以直接做结果，也可以再作为MR的输入)
 
-TODO 用例
+EG: 单词统计
+
+1. 每个输入文件用map方法解析成许多键值对: 如解析成`word: 1`
+2. 用某种特定的规则将相同`Hash(键值)`的内容保存到R个中间文件，供R个reducer使用。`file-M-R`。同名单词必在一个文件中
+3. 每个reducer负责`reduce`自己部分的中间文件，如reducer1负责收集`file-1-1, file-2-1, ...`
+4. reduce阶段结束参数R个中间文件，最后再合并
+
 
 - 可以抽象成一下六个过程，这里进行一个类比
 	1. input
@@ -46,7 +57,19 @@ TODO 用例
 
 ## goolge的MR结构
 
-TODO: rebuild
+- Map: map to key values for each input file. Having nMap mapper
+- mapper结束向master发送信息，master要记录位置和大小，任何转发给reducer
+- Reduce: collect all the same key and some other work (like collect and count word)
+
+```
+Input1 -> Map -> a,1 b,1
+Input2 -> Map ->     b,1
+Input3 -> Map -> a,1     c,1
+                  |   |   |
+                  |   |   -> Reduce -> c,1
+                  |   -----> Reduce -> b,2
+                  ---------> Reduce -> a,2
+```
 
 大体流程如下：
 
@@ -56,7 +79,6 @@ TODO: rebuild
 3. map worker: 
 	a. 读取指定的一份split
 	b. 解析k/v，传递到用户定义的Map函数进行处理
-		- TODO: ?
 	c. Map函数生成intermediate在buffer中
 4. buffer中的数据会定期地写入本地磁盘
 	a. 由分区系统确定如何分区成R regions
@@ -121,7 +143,7 @@ google具体问题具体分析，O(M x R)实际占用内存是可以接受的，
 实验证明，这个操作使得完成时间大幅提高：不做backup tasks平均耗费44%更长的时间。
 
 
-## 细节优化(精炼)
+## 细节处理
 
 设计好一些基础设施，如：
 
@@ -131,6 +153,11 @@ google具体问题具体分析，O(M x R)实际占用内存是可以接受的，
 - 设计debug设施：允许单机顺序执行模拟分布式并发
 - 用户友好的状态信息显示等
 
+- 等待阶段，任务发完了还有worker
+- crash判断
+	* crash后发来两个complete
+	* crash后发来两个complete, 进入下一个阶段后第二个complete才来
+- 使用(buffer/unbuffer)channel做同步真的很容易阻塞
 
 # 实验设计
 
