@@ -53,11 +53,14 @@ https://www.bilibili.com/video/BV1144y167iZ?p=4
 - https://github.com/qichengzx/gopher-reading-list-zh_CN
 - https://www.zhihu.com/question/278551592
 - https://eagain.net/articles/git-for-computer-scientists/
-- MIT6.828 Operating System Engineering
-	* https://pdos.csail.mit.edu/6.828/2018/schedule.html
 - cs110l
 	* https://reberhardt.com/cs110l/spring-2020/
 	* https://github.com/reberhardt7/cs110l-spr-2020-starter-code
+- https://github.com/wyfcyx/osnotes
+- MIT6.828 Operating System Engineering
+	* https://pdos.csail.mit.edu/6.828/2018/schedule.html
+- cool
+	* https://csdiy.wiki/
 
 - database
 	* https://www.cs.cmu.edu/~bam/uicourse/830spring20/

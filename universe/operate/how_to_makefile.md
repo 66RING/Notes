@@ -8,6 +8,23 @@ tags:
 ---
 
 # How to makefile
+
+## cheat sheet
+
+| f                          | 描述                      |
+|----------------------------|---------------------------|
+| `$@`                       | target                    |
+| `$^`                       | 所有依赖，                |
+| `$<`                       | 第一个依赖                |
+| `=`                        | 整个makefile后再确定值    |
+| `:=`                       | 那里用哪里展开            |
+| `?=`                       | 如果没定义才赋值          |
+| `$(wildcard PATTERN)`      | 获取所有匹配的文件        |
+| `$(patsubst P1, P2, list)` | 读list,模式P1替换为P2     |
+| `$(foreach var,list,text)` | 从list中取,放到var,做text |
+
+
+
 ## Compile process
 How dose a project turn into an excutable file? There are four step:
 - Preprocessing

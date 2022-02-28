@@ -4,9 +4,19 @@ Just to remind myself.
 <summary>framework</summary>
 
 - qemu
+	* reverse engineering
+- distributed system
+	* mit6.824
+	* tinykv
+	* raft
+- home made OS
+	* mits.081
+	* rcore
+	* ucore
+	* wyoos
 - system software deveploment
 - fullstack web deveploment
-	* go, vue, react
+	* go, vue, react, mysql
 
 </details>
 
@@ -17,6 +27,7 @@ Just to remind myself.
 - c/cpp
 - go
 - rust
+- shell
 - python
 - java
 
@@ -26,9 +37,11 @@ Just to remind myself.
 <details>
 <summary>learning</summary>
 
-- QT
 - distributed system
+- multiprocessor programming
 - compiler
 - database
+- rust
+- QT
 
 </details>

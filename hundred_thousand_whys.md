@@ -7,6 +7,8 @@ tags:
 mathjax: true
 ---
 
+# stack
+
 ## inc文件
 
 inc文件完整名称应该是"include"是专门用于`#include`的。因为一般来说，声明放在".h"文件，定义放在".c"，而".inc"文件一般同时包含声明和定义，因为要一"#include"就能使用。
