@@ -49,16 +49,18 @@ mathjax: true
 2. 组合逻辑型和存储逻辑型控制器的区别
 	a. 组合逻辑型(RISC)
 		i. 指令类型少、功能简单、寻址方式少、硬布线
-		ii. 复杂
+		ii. 规整
 	b. 存储逻辑型(CISC)
 		i. 微指令
-		ii. 规整
+		ii. 复杂
 3. 理解流水线、CPU字长对CPU性能的影响
 	a. 指令并行执行
 	b. cpu效率
 	c. 多流水线
 	d. **CPU字长: 微处理器一次能处理的数据宽度**
 4. CPU寄存器与内存的区别
+	a. 内置于cpu
+	b. 速度区别
 5. RISC和CISC的主要区别（指令集、流水线、寄存器、Load/Store结构四个方面）
 	a. CISC复杂指令集计算机，RISC精简指令集计算机
 | 指标       | RISC                             | CISC                        |
@@ -110,7 +112,7 @@ mathjax: true
 - 前4bit(31~28)都是用于表示条件的
 - {S}表示是否影响标志位，有S将影响
 - `!`的作用是写回使能, 数据传送完毕后将最后的地址写入基地址寄存器
-- `ADDNE`会根据标志符执行
+- e.g. `ADDNE`会判断标志符再执行
 
 1. 充分理解Load/Store结构
 2. 指令分类（主要掌握数据处理类、Load/Store类和跳转类）
@@ -151,7 +153,7 @@ mathjax: true
 - add, adc
 - sub, sbc
 - rsb, rsc 逆向减
-- and, orr, eor, bic
+- and, **orr**, eor, bic
 - cmp, cmn, tst, teq
 - mul, mla
 - **L/S**
@@ -498,21 +500,66 @@ TODO
 
 ## 第十三课（要求能编程实现多任务应用）
 
-1.任务的创建
-2.任务的挂起与恢复机制
-3.任务延迟OSTimeDly的实现机制（利用时钟中断）
+1. 任务的创建
+	- `OSInit(void)`
+	- `OSTaskCreate(task, args ,stack, prio)`
+	- `OSStart()`
+2. 任务的挂起与恢复机制
+	- `OSTaskSuspend(int prio)`
+	- `OSTaskResume(int prio)`
+3. 任务延迟OSTimeDly的实现机制（利用时钟中断）
+	- `OSTimeDly(int ticks)`
 
 ## 第十四课（要求能编程应用信号量）
 
-1.uC/OS中事件的概念（事件等待队列的实现机制和任务就绪表一致）
-2.uC/OS中信号量的实现机制（创建、P操作和V操作）
-3.信号量超时机制。
+1. uC/OS中事件的概念（事件等待队列的实现机制和任务就绪表一致）
+2. uC/OS中信号量的实现机制（创建、P操作和V操作）
+	- P: s-- 后 s< 0入等(资源-- 后刚好0, 那就是刚好申请到)
+	- V: s++ 后 s<=0出等(资源++ 后仍是0, 那就是最后一个等待刚好出)
+	- 信号量cnt是16bit
+	- P `OSSemPend`
+	- V `OSSemPost`
+3. 信号量超时机制。
+	- `OSEventTO(OS_EVENT *pevent)`
 
 ## 第十五课（理解为主）
 
-1.优先级反转的概念
-2.uC/OS中互斥型信号量实现机制
-3.了解其它任务间通信机制（邮箱、队列和事件标志组）
-4.了解内存分区管理
+1. 优先级反转的概念
+	- 优先级继承
+	- 优先级天花板
+	- ucos -> PIP(优先级继承优先级)融合以上
+		* 保留一个优先级做pip
+2. uC/OS中互斥型信号量实现机制
+	- TODO
+3. 了解其它任务间通信机制（邮箱、队列和事件标志组）
+	- 邮箱：向另一个任务发送指针变量
+	- 消息队列
+	- 事件标志组，多对多，一个标志触发多个
+4. 了解内存分区管理
+	- ucos内存 分区 处理
+		* 分配和释放固定大小
+		* 大小有几种不同的类型
 
+```
+|------------|
+| next       |	(void**)addr
+| blk dataa  |
+|------------|
+| next       |
+| blk data   |
+|------------|
+| next       |
+| blk data   |
+|------------|
+
+用连续内存建立单向链表的过程：
+
+plink = (void**)addr; 				// 获取链表项指针
+pblk = (int8*)addr + blksize; 		// 计算下一项地址
+for(i = 0; i<(nblk-1); i++) {
+	*plink = (void*)pblk; 			// 当前项指向下一项
+	plink = (void**)pblk; 			// 更新链表表项指针
+	pblk = pblk + blksize; 		 	// 计算下一项地址
+}
+```
 

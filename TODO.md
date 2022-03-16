@@ -4,24 +4,23 @@
 		+ 规则记录册子，用于交流分享
 	* 生命游戏
 - **务必正反馈** 刷题是逃避痛苦反思的借口
-
 - STOP VICTIM's MINDSET
-
+- Always keep a high level abstraction before you dig into the detail
 - 问题驱动
 	* 好处
-
+- 大大方方翘课自学
+	* 上课，自学，实践找出效率ROI最高的一种方法
+	* 似乎做lab效率最高
 - 钱 == 信用 != 劳动
 	* 赚钱不靠劳动，靠信用，劳动是赚取信用
 - stay hungry, stay foolish
 	* https://www.youtube.com/watch?v=Tuw8hxrFBH8
-
 - 笔记 == 文档
 	* 笔记 零碎的抄
 	* 文档 逻辑组织
 	* 得其意忘其形
-
 - CR：预留锚点引诱老师
-
+- 视觉记忆
 - read 法
 	* pass1
 		1. title
@@ -35,19 +34,34 @@
 		+ 脑补自己做，怎么做，有何可改进
 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
+- LEARN!!!! https://github.com/danistefanovic/build-your-own-x
+	* shell
+		+ https://www.joshmcguigan.com/blog/build-your-own-shell-rust/
+	* terminal emulatior
+		+ https://www.uninformativ.de/blog/postings/2018-02-24/0/POSTING-en.html
+- **write a virtual machine**
+	* https://www.youtube.com/playlist?list=PLGNbPb3dQJ_446PjTYQ0mCn2OGoHSKraB
+	* https://www.youtube.com/watch?v=BNXP0w4Ppto&ab_channel=PhilipBohun
+	* https://www.youtube.com/c/ChapmanWorldOnTube/videos
+- a beautiful blog
+	* https://github.com/weijiew/codestep/issues/34
+
 https://www.bilibili.com/video/BV1144y167iZ?p=4
 
 - DSP
 	* https://www.bilibili.com/video/BV1WT4y1K7vz?from=search&seid=10186061784434529332&spm_id_from=333.337.0.0
 	* https://www.bilibili.com/video/BV1uq4y1r7xH?from=search&seid=17757862848878804045&spm_id_from=333.337.0.0
+	* https://www.bilibili.com/video/BV1bU4y1K7Nd?from=search&seid=6590355442545803848&spm_id_from=333.337.0.0
 
+- cool 
+	* https://blog.crazyark.xyz/
 
 - TO read
 	* https://mp.weixin.qq.com/s/jzqhLptmgcNix6xYWYL01Q
 - https://github.com/huihongxiao/MIT6.824
 - https://github.com/huihongxiao/MIT6.S081
 	* https://pdos.csail.mit.edu/6.S081/2020/schedule.html
-	* https://pdos.csail.mit.edu/6.S081/2020/labs/cow.html
+	* https://pdos.csail.mit.edu/6.S081/2020/labs/net.html
 - https://github.com/rustcc/writing-an-os-in-rust
 - https://github.com/dreamhead/patterns-of-distributed-systems
 - https://github.com/qichengzx/gopher-reading-list-zh_CN
@@ -59,12 +73,16 @@ https://www.bilibili.com/video/BV1144y167iZ?p=4
 - https://github.com/wyfcyx/osnotes
 - MIT6.828 Operating System Engineering
 	* https://pdos.csail.mit.edu/6.828/2018/schedule.html
+- https://oscpu.github.io/NutShell-doc/
 - cool
 	* https://csdiy.wiki/
 
 - database
-	* https://www.cs.cmu.edu/~bam/uicourse/830spring20/
 	* https://15445.courses.cs.cmu.edu/fall2021/
+		+ https://15445.courses.cs.cmu.edu/fall2021/schedule.html
+	* https://www.cs.cmu.edu/~bam/uicourse/830spring20/
+
+- https://www.bilibili.com/video/BV1TR4y1j745?spm_id_from=333.851.b_7265636f6d6d656e64.4
 
 - wow: https://github.com/rust-lang/rustlings
 
@@ -103,8 +121,6 @@ https://www.bilibili.com/video/BV1144y167iZ?p=4
 
 - remove
 	* `java doc: https://algs4.cs.princeton.edu/code/javadoc/`
-	* sql workbench
-		+ gnome-keyring
 
 
 - mit6.824

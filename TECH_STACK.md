@@ -4,7 +4,6 @@ Just to remind myself what I have done.
 <summary>framework</summary>
 
 - qemu
-	* reverse engineering
 	* thread model
 	* memory simulation
 	* QOM system
@@ -13,6 +12,7 @@ Just to remind myself what I have done.
 	* home made new board
 	* kernel configuration
 	* compile system
+	* anchor: detial of epoll/poll like.
 - distributed system
 	* mit6.824
 		+ multiprocessor programming
@@ -29,6 +29,14 @@ Just to remind myself what I have done.
 	* ucore
 	* wyoos
 - VR city
+	* linux kernel source code
+		+ exec
+		+ fork
+		+ elf
+		+ VMA
+		+ slab
+		+ schedule
+		+ ...
 	* system tracing: systemtap, ftrace, gdb, linux kernel, scheduler, slab allocator, proc initialize, mmap, memory area
 - bus management system
 	* relational database theory, highest normal formula level

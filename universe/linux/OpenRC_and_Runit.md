@@ -9,7 +9,7 @@ mathjax: true
 
 ## 前言
 
-很多人讨厌systemd，说systemd违背了UNIX哲学，是个big thing do big thing。这里不讨论systemd的功过，而是通过介绍OpenRC和Runit两个init程序来体会什么叫小而精, KISS。
+很多人讨厌systemd，说systemd违背了UNIX哲学的"do one thing and do it well"。这里不讨论systemd的功过，而是通过介绍OpenRC和Runit两个init程序来体会什么叫小而精, KISS。
 
 
 ## OpenRC使用逻辑
