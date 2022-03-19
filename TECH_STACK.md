@@ -19,6 +19,7 @@ Just to remind myself what I have done.
 		+ lock theory
 		+ debuging, tracing and analizing
 	* tinykv
+		+ https://asktug.com/t/topic/393068
 	* raft
 - home made OS
 	* mits.081
@@ -47,6 +48,8 @@ Just to remind myself what I have done.
 	* go, vue, react, mysql
 - misc
 	* vim, git, gdb, middleware, makefile, docker, CI/CD, shell, python, spider, lua, js, ts, java
+- DBMS
+- 繁星数据平台
 
 
 </details>

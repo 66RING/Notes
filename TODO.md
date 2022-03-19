@@ -59,9 +59,6 @@ https://www.bilibili.com/video/BV1144y167iZ?p=4
 - TO read
 	* https://mp.weixin.qq.com/s/jzqhLptmgcNix6xYWYL01Q
 - https://github.com/huihongxiao/MIT6.824
-- https://github.com/huihongxiao/MIT6.S081
-	* https://pdos.csail.mit.edu/6.S081/2020/schedule.html
-	* https://pdos.csail.mit.edu/6.S081/2020/labs/net.html
 - https://github.com/rustcc/writing-an-os-in-rust
 - https://github.com/dreamhead/patterns-of-distributed-systems
 - https://github.com/qichengzx/gopher-reading-list-zh_CN
