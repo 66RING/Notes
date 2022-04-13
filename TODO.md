@@ -4,6 +4,7 @@
 		+ 规则记录册子，用于交流分享
 	* 生命游戏
 - **务必正反馈** 刷题是逃避痛苦反思的借口
+- 解决方案maker：<= 策略组合 + 机制了解
 - STOP VICTIM's MINDSET
 - Always keep a high level abstraction before you dig into the detail
 - 问题驱动
@@ -34,11 +35,70 @@
 		+ 脑补自己做，怎么做，有何可改进
 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
+- side car
+	* weylus
+
+- alibaba
+	* https://alimeeting.alibaba-inc.com/alimeeting/web/webvc/videomeeting-web?uuid=3764e10e-6aee-486d-b876-aa822fc730ab
+
+- topic
+	* das
+	* vldb
+	* 殷征
+	* https://dl.acm.org/doi/abs/10.14778/3389133.3389136?casa_token=RB_fG86_BbkAAAAA:ocoNcEY8BgIlmZJCp2U4tCwtD6i2beEgfw9p_haheN660WLFcr1xbG5GjcNgJs79Dg6xKm09Qtzn5w
+	* boss? no https://scholar.google.com/citations?user=A8It-HkAAAAJ&hl=zh-CN&oi=s
+
+
+- TODO learn perf
+
+- TODO
+	* /home/ring/Documents/Notes/todo/zero_copy.md
+- TODO: learn dockerfile
+	* 为何串联dockerfile指令，原理??
+		+ dockerfile中每条指令都会为镜像增加一个镜像层
+		
+- COOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL
+	* https://www.anishathalye.com/2017/06/04/testing-distributed-systems-for-linearizability/
+
+- vhdl
+	* https://www.youtube.com/user/LBEbooks/videos
+
+- SOC 4.20
+	* https://vhdlguru.blogspot.com
+- 分布式计算 4.30
+- 人工智能导论作业 4.10
+	* 必考归结原理，搜索
+
+
+链接：https://pingcap.feishu.cn/docs/doccnxSowKSAEiVNoLVk4XSY6gb 密码：dP3W
+
+- https://courses.csail.mit.edu/6.851/
+
+- TODO remove
+	* maven
+	* nginx
+	* activemq
+	* activemq-runit
+	* lceda-pro
+		+ 立创eda
+
+- 软工重点
+	* 数据流图到程序结构图转换
+
+- vue
+	* https://its401.com/article/qq_41403494/116890314
+	* https://segmentfault.com/a/1190000037560460
+	* 按需加载 https://www.codeleading.com/article/94756039714/
+- codemirror
+	* https://juejin.cn/post/6844904022650912775
+
 - LEARN!!!! https://github.com/danistefanovic/build-your-own-x
 	* shell
 		+ https://www.joshmcguigan.com/blog/build-your-own-shell-rust/
 	* terminal emulatior
 		+ https://www.uninformativ.de/blog/postings/2018-02-24/0/POSTING-en.html
+- write OS in rust
+	* https://os.phil-opp.com/
 - **write a virtual machine**
 	* https://www.youtube.com/playlist?list=PLGNbPb3dQJ_446PjTYQ0mCn2OGoHSKraB
 	* https://www.youtube.com/watch?v=BNXP0w4Ppto&ab_channel=PhilipBohun
@@ -48,10 +108,6 @@
 
 https://www.bilibili.com/video/BV1144y167iZ?p=4
 
-- DSP
-	* https://www.bilibili.com/video/BV1WT4y1K7vz?from=search&seid=10186061784434529332&spm_id_from=333.337.0.0
-	* https://www.bilibili.com/video/BV1uq4y1r7xH?from=search&seid=17757862848878804045&spm_id_from=333.337.0.0
-	* https://www.bilibili.com/video/BV1bU4y1K7Nd?from=search&seid=6590355442545803848&spm_id_from=333.337.0.0
 
 - cool 
 	* https://blog.crazyark.xyz/
@@ -59,6 +115,7 @@ https://www.bilibili.com/video/BV1144y167iZ?p=4
 - TO read
 	* https://mp.weixin.qq.com/s/jzqhLptmgcNix6xYWYL01Q
 - https://github.com/huihongxiao/MIT6.824
+- https://pdos.csail.mit.edu/6.828/2018/schedule.html
 - https://github.com/rustcc/writing-an-os-in-rust
 - https://github.com/dreamhead/patterns-of-distributed-systems
 - https://github.com/qichengzx/gopher-reading-list-zh_CN
