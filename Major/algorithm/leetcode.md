@@ -9,11 +9,13 @@ mathjax: true
 
 # Abstract
 
+TODO learn 贪心 剪枝 dp 的思想和trade off
 
 # Preface
 
 
 # Overview
+
 ## 贪心法
 
 ### 无重叠区间
@@ -47,7 +49,7 @@ mathjax: true
 
 TODO redo
 
-[link](https://leetcode-cn.com/problems/minimum-number-of-arrows-to-burst-balloons/description/)
+[leetcode](https://leetcode-cn.com/problems/minimum-number-of-arrows-to-burst-balloons/description/)
 
 算法同[无重叠区间](#无重叠区间)。思考**有多少交集**，贪心：从首区间开始**交集越多越好**，没有交集的下一个区间称为新的首区间。
 
@@ -62,7 +64,7 @@ TODO
 
 ### 406. 根据身高重建队列
 
-[link](https://leetcode-cn.com/problems/queue-reconstruction-by-height/)
+[leetcode](https://leetcode-cn.com/problems/queue-reconstruction-by-height/)
 
 - 当按照身高排序时，然后插入。因为按身高从高到低排序，那么后插入的身高一定比前面出现的身高都低，那么它插入时就可以根据"它前有多少人"自由选择位置，因为都比它高。后面插入的也不会它，因为后面插入的一定比它矮
 - 如果存在相同身高，那么"前面比他高"的人数"小"的先选择插入，因为"前面比他高"的值大的一定插入在后面，不会应该前面插入的值
@@ -106,7 +108,7 @@ int maxProfit(vector<int>& prices) {
 
 ### 69. x 的平方根 
 
-[link](https://leetcode-cn.com/problems/sqrtx/description/)
+[leetcode](https://leetcode-cn.com/problems/sqrtx/description/)
 
 ```cpp
 int mySqrt(int x) {
@@ -126,7 +128,7 @@ int mySqrt(int x) {
 
 ### 744. 寻找比目标字母大的最小字母
 
-[link](https://leetcode-cn.com/problems/find-smallest-letter-greater-than-target/description/)
+[leetcode](https://leetcode-cn.com/problems/find-smallest-letter-greater-than-target/description/)
 
 TODO ??
 
@@ -150,7 +152,7 @@ char nextGreatestLetter(vector<char>& letters, char target) {
 
 ### 540. 有序数组中的单一元素
 
-[link](https://leetcode-cn.com/problems/single-element-in-a-sorted-array/description/)
+[leetcode](https://leetcode-cn.com/problems/single-element-in-a-sorted-array/description/)
 
 - **数组长度必是奇数**
 - 如果偶数下标等于偶数下标+1处的值，光棍在右边。否则在左边，移动偶数下标位
@@ -175,12 +177,12 @@ int singleNonDuplicate(vector<int>& nums) {
 
 ### 153. 寻找旋转排序数组中的最小值
 
-[link](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/description/)
+[leetcode](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/description/)
 
 
 ### 34. 在排序数组中查找元素的第一个和最后一个位置
 
-[link](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+[leetcode](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 
 **COOL**
 
@@ -197,13 +199,13 @@ int singleNonDuplicate(vector<int>& nums) {
 
 ### 241. 为运算表达式设计优先级
 
-[link](https://leetcode-cn.com/problems/different-ways-to-add-parentheses/description/)
+[leetcode](https://leetcode-cn.com/problems/different-ways-to-add-parentheses/description/)
 
 TODO redo **COOL**
 
 ### 95. 不同的二叉搜索树 II
 
-[link](https://leetcode-cn.com/problems/unique-binary-search-trees-ii/description/)
+[leetcode](https://leetcode-cn.com/problems/unique-binary-search-trees-ii/description/)
 
 TODO redo **COOL**
 
@@ -227,7 +229,7 @@ TODO
 
 ### 70. 爬楼梯
 
-[link](https://leetcode-cn.com/problems/climbing-stairs/description/)
+[leetcode](https://leetcode-cn.com/problems/climbing-stairs/description/)
 
 TODO redo
 
@@ -235,20 +237,20 @@ TODO redo
 
 TODO redo
 
-[link](https://leetcode-cn.com/problems/house-robber/description/)
+[leetcode](https://leetcode-cn.com/problems/house-robber/description/)
 
 ### 213. 打家劫舍 II
 
 TODO redo
 
-[link](https://leetcode-cn.com/problems/house-robber-ii/description/)
+[leetcode](https://leetcode-cn.com/problems/house-robber-ii/description/)
 
 
 ### 64. 最小路径和
 
 求左上到右下的最短路径
 
-[link](https://leetcode-cn.com/problems/minimum-path-sum/description/)
+[leetcode](https://leetcode-cn.com/problems/minimum-path-sum/description/)
 
 从终点到起点dp。e.g.
 
@@ -267,7 +269,7 @@ TODO redo
 
 左上到右下的不同路径数，只能向右和向下走
 
-[link](https://leetcode-cn.com/problems/unique-paths/description/)
+[leetcode](https://leetcode-cn.com/problems/unique-paths/description/)
 
 - 类似64. 最小路径和
 - tips: 先把边缘初始化了，剩下的遍历方便点
@@ -275,8 +277,188 @@ TODO redo
 
 ### 303. 区域和检索 - 数组不可变
 
-[link](https://leetcode-cn.com/problems/range-sum-query-immutable/description/)
+[leetcode](https://leetcode-cn.com/problems/range-sum-query-immutable/description/)
 
+- 前缀和相减
+- tips因为是左闭右闭的，可以后移1个，申请`n+1`个单元
+
+
+### 413. 等差数列划分
+
+[leetcode](https://leetcode-cn.com/problems/arithmetic-slices/description/)
+
+TODO redo
+
+### 背包问题
+
+[acwing](https://www.acwing.com/problem/content/2/)
+
+
+
+### 322. 零钱兑换
+
+[leetcode](https://leetcode-cn.com/problems/coin-change/description/)
+
+**COOL** TODO redo
+
+- dp
+
+`dp[i]`表示能够凑够i所需的最少硬币数，枚举硬币类型`coins[j]`，如果用了`coins[j]`面值的硬币，那么这种情况的硬币数应该为`dp[i-coins[j]] + 1`
+
+
+### 518. 零钱兑换 II
+
+[leetcode](https://leetcode-cn.com/problems/coin-change-2/description/)
+
+求能凑出amount的组合数
+
+
+### more dp 
+
+https://github.com/CyC2018/CS-Notes/blob/master/notes/Leetcode%20%E9%A2%98%E8%A7%A3%20-%20%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92.md#1-%E7%88%AC%E6%A5%BC%E6%A2%AF
+
+### dp思想
+
+1. 子问题最优解
+
+
+
+## 搜索
+
+- dfs, 递归
+- bfs, queue
+
+### 1091. 二进制矩阵中的最短路径
+
+[leetcode](https://leetcode-cn.com/problems/shortest-path-in-binary-matrix/)
+
+DFS vs BFS
+
+- 单可能 -> DFS, 因为多可能时大量回溯
+- 多可能 -> BFS
+
+相当于用BFS从起点不断外扩的过程，都把queue走完(边界外扩)。外层循环的次数就是最短路径。
+
+```
+e.g
+
+0 1 x x
+1 1 x x
+x x x x
+x x x x
+
+0 1 2 x
+1 1 2 x
+2 2 2 x
+x x x x
+
+```
+
+**注意是可以斜着走的**
+
+
+### 279. 完全平方数
+
+[leetcode](https://leetcode-cn.com/problems/perfect-squares/description/)
+
+> 给你一个整数 n ，返回 和为 n 的完全平方数的最少数量 。
+
+TODO redo
+
+- dp
+	* `dp[i]`表示组成i使用的完全数的最少数量
+	* 局部最优到整体最优：从小到大算，`dp[i-j*j]`最少已知了，那用上`j*j`这个数的话数量就是`dp[i-j*j]+1`
+
+
+### 695. 岛屿的最大面积
+
+[leetcode](https://leetcode-cn.com/problems/max-area-of-island/description/)
+
+- bfs/dfs
+
+### 200. 岛屿数量
+
+[leetcode](https://leetcode-cn.com/problems/number-of-islands/)
+
+- 同上dfs/bfs
+	* dfs, 递归
+	* bfs, queue
+- 可以复用grid做visited
+
+
+### 130. 被围绕的区域
+
+[leetcode](https://leetcode-cn.com/problems/surrounded-regions/description/)
+
+**COOL**：不被包围则必定直接或间接地与边界相连。从边界`O`点dfs/bfs，标记与直接间接相连的点。再整个遍历填充。
+
+遍历四周的tips
+
+```
+[i, 0]
+[i, m-1]
+|	|
+V	V
+
+[0,   i]
+[m-1, i]
+->
+
+->
+```
+
+### 回溯
+
+- dfs
+- 常用于解决**排列组合**问题
+- dfs不立即返回，注意元素的标记问题
+
+
+### 17. 电话号码的字母组合
+
+[leetcode](https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/description/)
+
+dfs，尝试一个字母后回溯，再试下一个
+
+```
+for(char x: phoneMap.at(digits[index])) {
+	combination.push_back(x);
+	backtrack(combinations, phoneMap, digits, index+1, combination);
+	combination.pop_back();
+}
+```
+
+
+### 93. 复原 IP 地址
+
+[leetcode](https://leetcode-cn.com/problems/restore-ip-addresses/description/)
+
+- `str.substr(start, len)`截取字串
+- string可以用`+=`，`substr()`和`pop_back()`增删
+- 模板`(combination, &combinations)`, combination表示当前状态，combinations用于接收完成的combinations，递归，然后回溯
+	* combination用引用和不用引用根据实际情况定
+
+
+
+### 257. 二叉树的所有路径
+
+[leetcode](https://leetcode-cn.com/problems/binary-tree-paths/description/)
+
+- combination不用引用，这样函数返回时就不用考虑回溯问题
+
+
+### 37. 解数独
+
+TODO hard
+
+[leetcode](https://leetcode-cn.com/problems/sudoku-solver/description/)
+
+
+### 15. N 皇后
+
+TODO hard
+
+[leetcode](https://leetcode-cn.com/problems/n-queens/description/)
 
 
 

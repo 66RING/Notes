@@ -300,6 +300,8 @@ void *mmap(void *start,size_t length,int prot,int flags,int fd,off_t offsize);
     * 将普通文件映射到内存，这样频繁读写时就可直接在内存读写，提高性能
     * 为关联的进程提供共享内存空间
     * 为无关联的进程提供共享内存空间
+		+ `fd = shm_open("/path")`
+		+ `mmap(fd)`
 - 参数说明
     * start：指向内存起始地址，为NULL则让系统自动选定，映射成功返回该地址
     * length：文件中多大的部分映射到内存
