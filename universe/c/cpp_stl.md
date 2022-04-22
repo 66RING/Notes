@@ -7,6 +7,25 @@ tags:
 mathjax: true
 ---
 
+## 迭代器
+
+如何像c里面使用`*p`，然后`p++`这样的方式遍历呢？使用迭代器，迭代器相当于返回了一个指针，当然它更抽象功能更多。
+
+```cpp
+vector<int> a = {1, 2, 3, 4};
+vector<int>::iterator it = a.begin();
+it++;
+cout << *it;
+```
+
+```c
+int a[] = {1, 2, 3, 4};
+int *p = a;
+p++;
+cout << *p ;
+```
+
+
 ## 函数
 
 ### sort
