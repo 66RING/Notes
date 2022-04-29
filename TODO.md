@@ -35,46 +35,48 @@
 		+ 脑补自己做，怎么做，有何可改进
 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
-- side car
-	* weylus
 
-- alibaba
-	* https://alimeeting.alibaba-inc.com/alimeeting/web/webvc/videomeeting-web?uuid=3764e10e-6aee-486d-b876-aa822fc730ab
+- no scalable问题的根源和解决方案MCS锁(FIFO)
+	* MSI缓存一致性协议
+	* 什么是可重入锁 https://developer.aliyun.com/article/270006 
+- TODO 
+	* learn perf
+	* 分布式锁
+	* https://leetcode-cn.com/problems/mini-parser/
+- TO note git丢失找回
+	* https://blog.csdn.net/u014289186/article/details/88885914
+- russ cox内存模型
 
-- topic
-	* das
-	* vldb
-	* 殷征
-	* https://dl.acm.org/doi/abs/10.14778/3389133.3389136?casa_token=RB_fG86_BbkAAAAA:ocoNcEY8BgIlmZJCp2U4tCwtD6i2beEgfw9p_haheN660WLFcr1xbG5GjcNgJs79Dg6xKm09Qtzn5w
-	* boss? no https://scholar.google.com/citations?user=A8It-HkAAAAJ&hl=zh-CN&oi=s
-
-
-- TODO learn perf
-
-- TODO
-	* /home/ring/Documents/Notes/todo/zero_copy.md
+- TODO: unix tips
+	* http://whatbeg.com/2019/06/05/processthread.html
 - TODO: learn dockerfile
 	* 为何串联dockerfile指令，原理??
 		+ dockerfile中每条指令都会为镜像增加一个镜像层
 		
 - COOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL
 	* https://www.anishathalye.com/2017/06/04/testing-distributed-systems-for-linearizability/
+- comfy awesomeWM
+	* https://www.youtube.com/watch?v=4PA-ZpK2i_M&ab_channel=BrodieRobertson
 
 - vhdl
 	* https://www.youtube.com/user/LBEbooks/videos
 
-- SOC 4.20
+- swaywm!!!!!!!!!
+	* https://www.youtube.com/watch?v=xCqPgQ-Vh3E&ab_channel=BrodieRobertson
+
+- SOC 5.7
 	* https://vhdlguru.blogspot.com
+- 编译原理 5.27
+- 形势政策
 - 分布式计算 4.30
 - 人工智能导论作业 4.10
 	* 必考归结原理，搜索
 
 
-链接：https://pingcap.feishu.cn/docs/doccnxSowKSAEiVNoLVk4XSY6gb 密码：dP3W
-
 - https://courses.csail.mit.edu/6.851/
 
 - TODO remove
+	* debtap
 	* maven
 	* nginx
 	* activemq
@@ -106,7 +108,8 @@
 - a beautiful blog
 	* https://github.com/weijiew/codestep/issues/34
 
-https://www.bilibili.com/video/BV1144y167iZ?p=4
+- 高级操作系统
+	* https://github.com/chyyuu/aos_course_info
 
 
 - cool 
@@ -138,16 +141,10 @@ https://www.bilibili.com/video/BV1144y167iZ?p=4
 
 - https://www.bilibili.com/video/BV1TR4y1j745?spm_id_from=333.851.b_7265636f6d6d656e64.4
 
-- wow: https://github.com/rust-lang/rustlings
-
-- remove
-	* nginx
-
 - learn ffmpeg
 
 - 陈海波
 - 包云岗
-
 - 陈天 rust
 
 - https://tanxinyu.work/tinykv/
@@ -201,19 +198,10 @@ https://www.bilibili.com/video/BV1144y167iZ?p=4
 	* https://biscuitos.github.io/blog/QEMU-Memory-Manager-VM/
 	* Why MRS
 		+ https://lore.kernel.org/qemu-devel/20210222171102.GP6669@xz-x1/T/
+	* 熟悉系统虚拟化中 CPU虚拟化 （vt-x）， 内存虚拟化（ept, shared virtual memory）， 中断虚拟化（interrupt remapping， msi/msi-x， posted interrupt），IO虚拟化 （iommu/smmu， vfio, sriov, scalable iov), 等核心虚拟化模块工作原理
+	* https://oenhan.com/
 
 - 问ah是不是在什么情况下不能用?
-
-
-| 次序 | 科目 | 日期  | 时间 |
-|------|------|-------|------|
-| 1    | arm  | 12.30 | 13   |
-| 2    | oop  | 12.31 | 13   |
-| 3    | mp   | 1.4   | 9    |
-| 4    | dsp  | 1.5   | 9    |
-| 5    | db   | 1.10  | 13   |
-| 6    | algo | 1.12  | 13   |
-
 
 
 - TO READ
@@ -223,34 +211,6 @@ https://www.bilibili.com/video/BV1144y167iZ?p=4
 	* https://pdos.csail.mit.edu/6.828/2018/schedule.html
 - learn rust with list
 	* https://weathfold.gitbooks.io/rust-too-many-lists-zhcn/content/first-layout.html
-
-- 作业
-	* work
-		+ [x] dsp 各个滤波器做法，如何理解线性相位
-		+ [x] cpp ch7 输入输出流笔记
-		+ [x] dsp课后题
-		+ [x] 嵌入式
-			+ 笔记
-			+ 实验报告
-		+ [x] oslab
-		+ [x] algo上课
-		+ [x] 嵌入式
-		+ [x] db上机
-		+ [x] 形势政治
-		+ [x] 劳动教育
-		+ [x] oop
-		+ [x] emb
-		+ [x] mp 31
-	* note
-		+ [] dsp
-		+ [] bd
-			+ 错题
-		+ [x] emb
-		+ [x] db
-		+ [x] mp
-	* misc
-		+ [x] 复习信号系统IZF
-		+ [x] 数学归纳法
 
 
 - db OJ
@@ -381,10 +341,4 @@ g& run last substitution command to all doc
 
 - The Unix philosophy
 	* http://www.catb.org/esr/writings/taoup/html/
-
-
-- 不暴露自身信息的比较
-	* https://www.youtube.com/watch?v=dOTwAzXrkyQ&ab_channel=%E6%9D%8E%E6%B0%B8%E4%B9%90%E8%80%81%E5%B8%88
-- **cmu**
-	* https://www.cs.cmu.edu/~213/
 
