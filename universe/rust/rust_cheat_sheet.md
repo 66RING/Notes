@@ -96,3 +96,60 @@ macro_rules! vec {
 - `{}`中的内容是要展开的表达式
 	* 使用`$()*`表示根据匹配次数生成对应代码
 
+
+## 错误处理
+
+rust引入了很多现代的抽象来消除Undefine Behavior，如`Result`, `Option`。而这些抽象可能需要很多重复的繁琐的"分支处理"，如：
+
+```rust
+match result {
+	Ok(o) => o,
+	Err(e) => panic("{:?}", e),
+}
+```
+
+于是Rust由引入了一些方便程序员的函数。上面的代码就得到了简化
+
+- `unwrap()`，对于一个`Result`或`Option`或实现了相关trait的，返回内容物，否则panic
+- `expect("")`，类似unwrap，但是可以指定panic的作为信息
+
+对于不让用户自己处理的错误可以"抛出"，即作为函数返回，而不是立刻处理，类似java的throw
+
+```rust
+let f = File::open("path");
+match f {
+	Ok(o) => o,
+	Err(e) => {
+		return Err(e);
+	}
+};
+```
+
+rust中的简化是使用`?`操作符，如`let f = File::open("path")?`将错误返回。需要注意的是**使用`?`操作符的函数的返回类型必须实现了响应trait**。
+
+- `?`如果"错误"返回出去，否则拿到内容物
+- 一个函数可能返回多种错误类型，这样它的返回值可以使用`Box<dyn Error>`，即实现了该trait的对象，或者能实现`from`转换掉
+
+因为`?`的存在，必定会返回一个result，所以**原本无返回的函数还要返回`OK(())`**
+
+
+## RefCell
+
+> 不可变引用一个改变数据之：内部可变性
+
+"data race = undefine behavior = rust 借用规则"
+
+rust 借用规则(读写锁): 可以存在一个可变引用(借用)或多个不可变引用。rust通过这点来消除undefine behavior
+
+`RefCell<T>`内部通过unsafe代码来维护可变引用和不可变引用的计数，从而绕过编译器借用规则检查，**在运行时执行借用规则检测**，一旦出错将会panic。
+
+- `RefCell<T>::borrow()`返回一个不可变引用(借用)
+	* `Ref<T>`计数加1
+	* `Ref<T>`离开作用域，计数减1
+- `RefCell<T>::borrow_mut()`返回一个可变引用(借用)
+	* `RefMut<T>`计数加1
+	* `RefMut<T>`离开作用域，计数减1
+
+运行时违反借用规则将panic
+
+
