@@ -36,9 +36,6 @@
 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
 
-- no scalable问题的根源和解决方案MCS锁(FIFO)
-	* MSI缓存一致性协议
-	* 什么是可重入锁 https://developer.aliyun.com/article/270006 
 - TODO 
 	* learn perf
 	* 分布式锁
@@ -49,9 +46,6 @@
 
 - TODO: unix tips
 	* http://whatbeg.com/2019/06/05/processthread.html
-- TODO: learn dockerfile
-	* 为何串联dockerfile指令，原理??
-		+ dockerfile中每条指令都会为镜像增加一个镜像层
 		
 - COOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL
 	* https://www.anishathalye.com/2017/06/04/testing-distributed-systems-for-linearizability/
@@ -61,8 +55,8 @@
 - vhdl
 	* https://www.youtube.com/user/LBEbooks/videos
 
-- swaywm!!!!!!!!!
-	* https://www.youtube.com/watch?v=xCqPgQ-Vh3E&ab_channel=BrodieRobertson
+- advance OS!
+	* https://github.com/chyyuu/aos_course_info/blob/master/oslist.md
 
 - SOC 5.7
 	* https://vhdlguru.blogspot.com
@@ -73,7 +67,18 @@
 	* 必考归结原理，搜索
 
 
+- TODO
+- 万恶之源
+	* L发送Install snap`Call("InstallSnapshot")`
+	* F的raft层内直接处理，导致raft的log更新了，但是kv状态机没有更新
+	* 从而F有机会当选，但是状态机没有更新
+- 正确理解`persister`是怎么工作的
+	* `SaveStateAndSnapshot()`和`persist()`的联系
+
+
+
 - https://courses.csail.mit.edu/6.851/
+- cool https://frankma.netlify.app/posts/database/raft-lab/#multi-raft
 
 - TODO remove
 	* debtap
