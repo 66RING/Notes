@@ -1,5 +1,10 @@
 ## stack
 
+### VMM yield insersion
+
+qemu多线程模型，在vm exit进入到qemu执行模拟时，能不能给当前需要的模拟的CPU注入一个"yield中断"，然后让该vCPU先执行其他进程呢？
+
+
 ### 编译器做手脚问题
 
 编译器是可以偷偷做手脚的

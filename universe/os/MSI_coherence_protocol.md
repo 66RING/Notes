@@ -100,7 +100,7 @@ CPU 0 状态记录的大致结构
 
 可以看到，引入缓存一致性导致了通信成本的提高，如果CPU数量再多点，那么"查表"将不是一件非常简单是事。本来一个cycle可以执行完成的操作需要"遍历所有"才能继续。
 
-所以会发现随着CPU(core)的增加，并发程序的性能反而下降的现象。这就是[no-scalable问题](https://raw.githubusercontent.com/66RING/Notes/master/universe/os/noscalable_lock_and_solution.md)。
+所以会发现随着CPU(core)的增加，并发程序的性能反而下降的现象。这就是[no-scalable问题](https://github.com/66RING/Notes/tree/master/universe/os/noscalable_lock_and_solution.md)。
 
 导致这个问题的原因就是**single cache line**
 

@@ -23,7 +23,7 @@ mathjax: true
 
 # no scalable lock
 
-如何判断一个锁是不是no scalable的锁，其中一个简单是办法是：如果这个锁是通过访问同一资源来实现互斥的，或者说**是single cache line**，那么该锁就是no scalable的。这个结论的原理是CPU的[缓存一致性协议](https://raw.githubusercontent.com/66RING/Notes/master/universe/os/MSI_coherence_protocol.md)。
+如何判断一个锁是不是no scalable的锁，其中一个简单是办法是：如果这个锁是通过访问同一资源来实现互斥的，或者说**是single cache line**，那么该锁就是no scalable的。这个结论的原理是CPU的[缓存一致性协议](https://github.com/66RING/Notes/tree/master/universe/os/MSI_coherence_protocol.md)。
 
 缓存一致性协议带来的问题简单来说就是：CPU间为了达成缓存一致性，需要引入额外的"通信复杂度"，从而每条指令的执行周期(cycle)就增加了。并且随着CPU(core)的增加，这个通信的开销也会增加，那么并发程序带来的优势就没有了。
 
