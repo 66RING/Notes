@@ -1,5 +1,11 @@
 ## stack
 
+### 设计
+
+- bspwm = QEMU HMP/QMP
+	* cool
+
+
 ### VMM yield insersion
 
 qemu多线程模型，在vm exit进入到qemu执行模拟时，能不能给当前需要的模拟的CPU注入一个"yield中断"，然后让该vCPU先执行其他进程呢？

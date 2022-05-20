@@ -199,6 +199,8 @@ sum:
 
 # 腾讯云
 
+## round 1
+
 腾讯云的话方向是非常非常对口的，包括虚拟化，操作系统方面。
 
 SDN
@@ -230,6 +232,46 @@ TODO
 
 
 还当场给了评价"大概懂，但是具体细节不懂"，挺贴心了。
+
+## round 2
+
+- 问了linux内存管理, slab分配器, buddy system
+- 问了很多qemu
+	* 遇到了哪些问题，报什么错，还遇到了哪些问题(我忘了遇到什么具体的问题了，一下子答不上来
+		+ 启动时报错无法挂载文件系统(block size)
+		+ 找不到设备(mpic)
+		+ 内核编译参数
+			+ 开启支持QEMU generic e500 platform等
+			+ initrd支持
+			+ 核心支持(processor support)问题，导致启动qemu时使用的`-cpu`不同
+		+ dtb文件定义顺序，初始cpu
+		+ qemu中需要`qemu_fdt_dumpdtb`才能导出dtb文件
+		+ 兼容性不标签和image的对应
+		+ 加载内核，内核启动参数，pc寄存器位置，qemu monitor
+		+ dtb指定输出设备`qemu_fdt_setprop_string(fdt, "/chosen", "stdout-path", "/serial@0xXXXXX");`
+- 然后就是pushdown
+	* ftrace, strace, systemtab
+
+
+## round 3
+
+问了一些平时都没考虑到的东西。
+
+- 内核太中的如何知道用户态寄存器信息的
+- 进程怎么知道内核栈的状态
+	* 微机原理，就是x86 中断时保存现场
+	* riscv中有专门的寄存器
+- 很多什么时候创建问题
+- 内核态里怎么分配内存
+	* kmalloc
+	* vmalloc
+- 用户态malloc除了brk系统调用还有什么
+- 中断机制
+	* 一下子没想起来，可惜
+	* 中断向量，中断号
+- 锁
+	* 一下子没反映过来，直接聊理论了，不太好
+	* 其实可以有死锁，自旋锁，读写锁等
 
 
 # 华为
