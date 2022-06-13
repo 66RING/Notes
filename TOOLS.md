@@ -8,6 +8,14 @@
 	* 图可视化工具
 - pavucontrol
 	* gui控制pulse配置
+- viu
+	* simpel terminal image viewer
+- maim
+	* 截 屏 工具
+	* 命令行但是可以多种配合
+
+
+[more](https://github.com/ibraheemdev/modern-unix)
 
 # system
 

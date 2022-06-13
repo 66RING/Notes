@@ -1,3 +1,20 @@
+---
+title: 双显卡下GPU直通
+author: 66RING
+date: 2021-05-08
+tags: 
+- passthrough
+mathjax: true
+---
+
+# Abstract
+
+
+# Preface
+
+
+# Overview
+
 double graphic card only, since host have not card when isolate
 
 - reboot and enable iommu in bios

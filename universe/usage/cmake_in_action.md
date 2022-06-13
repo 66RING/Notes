@@ -10,7 +10,7 @@ mathjax: true
 
 ## basic TODO: rename
 
-- [笔记内容来源](https://www.bilibili.com/video/BV14h41187FZ)
+- [笔记内容来源](https://github.com/richardchien/modern-cmake-by-example)
 
 经典三行
 

@@ -1,5 +1,7 @@
 ## stack
 
+### 数据文件cache未初始化0，导致历史敏感记录泄露?
+
 ### 设计
 
 - bspwm = QEMU HMP/QMP

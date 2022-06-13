@@ -272,10 +272,10 @@ void pci_host_config_write_common(PCIDevice *pci_dev, uint32_t addr,
 
 在configuration transaction章节中我们介绍了configuration transaction是用来配置和初始化系统的。所以我们对pci通信的流程做如下抽象：
 
-- 1. cpu指令先传递到pcihost解析
-- 2. pcihost根据*CONFIG_ADDRESS*，找到目标设备，并配置config空间，发起`configuration transactions`执行修改
+1. cpu指令先传递到pcihost解析
+2. pcihost根据*CONFIG_ADDRESS*，找到目标设备，并配置config空间，发起`configuration transactions`执行修改
 	* 配置config空间可以包括：(1)控制设备、(2)为设备准备io空间等
-- 3. bus transaction再根据`configuration transactions`后config空间的内容进行操作
+3. bus transaction再根据`configuration transactions`后config空间的内容进行操作
 
 下面我们通过一个函数深刻理解这点，并将给出`(1)、(2)等`内容的对应关系
 
