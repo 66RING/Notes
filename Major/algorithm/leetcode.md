@@ -104,6 +104,22 @@ int maxProfit(vector<int>& prices) {
 ```
 
 
+### 53. 最大子数组和
+
+如果`nums[i]`比`nums[i]+prefix`大, 那prefix从`nums[i]`重新开始
+
+
+### 763. 划分字母区间
+
+遍历字符串, 找每个字符能出现的最右端。一直找最右不断更新, 当`i == end`时区域结束
+
+```c
+for(int i=0; i<size; i++) {
+	map[s[i]-'a'] = i;
+}
+```
+
+
 ## 二分查找
 
 ### 69. x 的平方根 
@@ -212,6 +228,21 @@ TODO redo **COOL**
 
 ## 动态规划
 
+动态规划的本质就是枚举找最优
+
+- 确定base case
+- 确定状态(转移)
+	* 数学归纳
+- 确定选择
+- 定义dp
+
+1. 暴力地
+2. 带"备忘录"的
+
+
+### 二维压缩到一维防覆盖的办法
+
+
 ### 无重叠区间
 
 [leetcode](https://leetcode-cn.com/problems/non-overlapping-intervals/)
@@ -311,6 +342,11 @@ TODO redo
 [leetcode](https://leetcode-cn.com/problems/coin-change-2/description/)
 
 求能凑出amount的组合数
+
+
+### 309. 最佳买卖股票时机含冷冻期
+
+[leetcode](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/)
 
 
 ### more dp 
