@@ -10,6 +10,7 @@ mathjax: true
 # Summary
 
 - 有共享就得考虑哪里有瓶颈
+- no-scalable问题的本质就是"即共享又私下算账, 最后还要那私账说事"
 
 
 # Abstract
