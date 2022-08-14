@@ -1,12 +1,148 @@
 ---
 title: xv6 code review
-date: datetime
+date: 2022-05-08
 tags: 
 - OS
 mathjax: true
 ---
 
+TODO: 整个重启
+
 # Abstract
+
+TODO: start.c
+
+```c
+consoleinit();
+kinit();         // physical page allocator
+kvminit();       // create kernel page table
+kvminithart();   // turn on paging
+procinit();      // process table
+trapinit();      // trap vectors
+trapinithart();  // install kernel trap vector
+plicinit();      // set up interrupt controller
+plicinithart();  // ask PLIC for device interrupts
+binit();         // buffer cache
+iinit();         // inode table
+fileinit();      // file table
+virtio_disk_init(); // emulated hard disk
+userinit();      // first user process
+
+
+scheduler();
+```
+
+1. `consoleinit()`
+	- 初始化uart，配置中断，波特率等
+2. `kinit()`
+	- 创建堆空间，根据链接脚本中的标号获得堆空间的范围，逐一以页为单位插入到freelist中
+3. `kvminit()`
+	- 创建内核页表，全局变量`kernel_pagetable`
+	- 调用`kvmmake`初始化内核空间，将映射设备地址
+		* 使用`KSTACK`为每个进程分配内核栈(映射可读可写)，进程内核栈间间隔一页做guard
+4. `kvminithart()`
+	- 开启分页: **设置satp寄存器** ，使用SV39的模式
+	- 清空TLB
+5. `procinit()`
+	- 将3中创建好的内核栈分配到各个进程的PCB中，xv6使用定长数组维护pcb
+6. `trapinit()`
+	- 初始化计时器锁
+7. **`trapinithart()`**
+	- 内核态中trap
+	- 设置Trap-Vector(中断处理函数)：将`stvec`寄存器置为`kernelvec`地址
+	- `kernelvec`利用内核栈保存中断现场(push)然后调用`trap.c:kerneltrap()`执行中断服务程序，然后恢复线程(pop)
+	- `kerneltrap()`仅做了计时器的处理，让出cpu
+8. `plicinit()`
+	- Platform Level Interrupt Controller (PLIC)
+	- 设置中断优先级，0表示关闭
+9. `plicinithart()`
+10. `binit()`
+	- 初始化buffer cache
+	- 设计非常精简，静态数组做空间分配，然后在`binit()`中将数组组织成链表
+11. `iinit()`
+	- 初始化锁
+12. `fileinit()`
+	- 初始化锁
+13. `virtio_disk_init()`
+	- TODO
+14. `userinit()`
+	- 创建一个初始进程，该进程会`exec("/init")`
+	- **`allocproc`**
+		* 分配一个PCB
+		* **初始化上下文(context)** : 将返回地址设为`forkret`
+	- 设置trapframe
+		* 设置pc，sp当返回用户态( **`usertrapret`** )时会根据trapframe的内容
+15. `scheduler()`
+	- PCB数组中查找一个`RUNNABLE`的进程执行
+	- 第一次`swtch`将会进入14中设置的`forkret`
+	- `forkret`将该进程内核栈的内容保存到trapframe(下次trap就能知道现场)
+		* 置`SPP`0, Previous mode, 进入异常前处理器所处模式(S/U)
+			+ BTW，MPP可以是M/S/U/
+		* 全局中断使能`SIE`
+		* 加载用户态页表
+		* TODO: `trampoline`
+
+
+TODO: **内核态用户态切换的机制, trampoline等**
+
+
+## Trap机制
+
+难中难，重中重
+
+> When it needs to force a trap, the RISC-V hardware does the following for all trap types (other than timer interrupts):
+> 1. If the trap is a device interrupt, and the sstatus SIE bit is clear, don’t do any of the following.
+> 2. Disable interrupts by clearing SIE. 
+> 3. Copy the pc to sepc. 
+> 4. Save the current mode (user or supervisor) in the SPP bit in sstatus. 
+> 5. Set scause to reflect the interrupt’s cause. 
+> 6. Set the mode to supervisor. 
+> 7. Copy stvec to the pc.
+> 8. Start executing at the new pc.
+
+- ps
+- `w_stvec(TRAMPOLINE + (uservec - trampoline));`
+	* `readelf -s ./kernel | grep -E "uservec|trampoline"`
+	* 发现`uservec`就是`trampoline`, TODO：但是为什么要`uservec - trampoline`呢?
+
+为何trampoline
+
+> Because the RISC-V hardware doesn’t switch page tables during a trap, the user page table must
+> include a mapping for uservec, the trap vector instructions that stvec points to. uservec
+> must switch satp to point to the kernel page table; in order to continue executing instructions
+> after the switch, uservec must be mapped at the same address in the kernel page table as in the
+> user page table.
+
+
+- 内核态trap: 中断和异常
+- 用户态trap: 中断，异常和系统调用
+
+- [cool](https://www.cnblogs.com/KatyuMarisaBlog/p/13934537.html)
+- [good](https://blog.csdn.net/RedemptionC/article/details/108718347)
+
+
+```c
+uint64 fn = TRAMPOLINE + (userret - trampoline);
+((void (*)(uint64,uint64))fn)(TRAPFRAME, satp);
+// a0: TRAPFRAME, in user page table.
+// a1: user page table, for satp.
+```
+
+
+## Deep dive into Trap
+
+难点从用户太trap时，硬件并不会自动切换页表，即satp仍然是用户页表，而且栈顶指针sp可能存在恶意代码
+
+? user -> kernel 不能改pc么，kernel的pc能保存在哪里?
+
+切换地址空间和栈空间
+
+为什么要相同？
+
+- 先切换pc后还能找到切换页表吗?
+- 先切换页表(地址空间)后，pc的顺序执行还能正确吗?
+- 所以trampoline映射相同内容到相同虚拟地址
+
 
 
 # Preface
