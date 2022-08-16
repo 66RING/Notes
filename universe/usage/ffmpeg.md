@@ -146,7 +146,7 @@ ffmpeg \
 	-f x11grab -s $w'x'$h  -i "$DISPLAY+$x,$y"  \
 	# 录制音频
 	-f alsa -i default \
-	-r $fps -c:v h264 -crf 0 -preset ultrafast \
+	-r $fps -c:v h264 -crf 18 -preset ultrafast \
 	-c:a aac \
 	$outfile
 ```
@@ -154,3 +154,15 @@ ffmpeg \
 - `-f x11grab -s $w'x'$h  -i "$DISPLAY+$x,$y"`录制x11桌面
 	* 从`$x,$y`坐标点开始录制`$w'x'$h`的值存
 * `-f alsa`当前的音频系统格式
+
+
+### B站视频压制
+
+```
+# 1080p
+ffmpeg -i input.mp4 -preset ultrafast \
+	-c:v libx264 -b:v 6000k \
+#	-s 1920x1080 \
+	-c:a aac -b:a 320k -crf 18 ouput.mp4
+```
+

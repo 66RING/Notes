@@ -99,6 +99,20 @@ macro_rules! vec {
 
 ## 错误处理
 
+> https://blog.burntsushi.net/rust-error-handling/
+
+- `unwrap`取出Some/OK(e)等否则panic
+	* `map(self, F)`返回None或F处理后的Option: `Some(F(T))`
+		+ `and_then(self, F)`的区别, map总是rewraped with Some, 而`and_then`可以任意类型
+	* `unwrap_or(T, default)`, 取出Some或None时返回default
+- Result: richer version of Option
+- Multiple error type
+	- 类型转换: `ok_or()`Option转Result
+	- TODO: Box
+- `try`和`?`宏
+	* 如果错误返回错误(即返回), 常用`?`
+
+
 rust引入了很多现代的抽象来消除Undefine Behavior，如`Result`, `Option`。而这些抽象可能需要很多重复的繁琐的"分支处理"，如：
 
 ```rust
@@ -133,6 +147,28 @@ rust中的简化是使用`?`操作符，如`let f = File::open("path")?`将错�
 因为`?`的存在，必定会返回一个result，所以**原本无返回的函数还要返回`OK(())`**
 
 
+## Rc
+
+多所有权的场景, 如树, 图
+
+- `Rc::clone(&a)`增加引用计数(浅拷贝)
+- `a.clone()`, (深拷贝)
+- `Rc::strong_count(&a)`获取强引用计数
+	* `Rc::weak_count(&a)`获取弱引用计数
+
+```rust
+enum List {
+	Cons(i32, Rc<List>),
+	Nil,
+}
+// 用Rc::new()包裹一下
+fn main() {
+	let a = Rc::new(Cons(5, Rc::new(Nil)));
+	let b = Cons(4, Rc::clone(&a));
+}
+```
+
+
 ## RefCell
 
 > 不可变引用一个改变数据之：内部可变性
@@ -151,5 +187,20 @@ rust 借用规则(读写锁): 可以存在一个可变引用(借用)或多个不
 	* `RefMut<T>`离开作用域，计数减1
 
 运行时违反借用规则将panic
+
+
+- Rc + RefCell
+	* **多所有权内部可变场景**
+
+```rust
+let value = Rc::new(RefCell::new(5));
+// 1. 用*自动解引用Rc
+// 2. 用borrow_mut获取RefCell的内部可变引用
+*value.borrow_mut() += 10;
+```
+
+- Cell<T>, 通过复制来实现内部可变
+
+
 
 
