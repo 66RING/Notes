@@ -202,5 +202,52 @@ let value = Rc::new(RefCell::new(5));
 - Cell<T>, 通过复制来实现内部可变
 
 
+## HashMap
+
+> use std::collections::HashMap;
+
+妙用`entry(key).or_insert(value)`
+
+增
+
+```rust
+map.insert(k, v);
+```
+
+删
+
+
+
+改, `or_insert`很精髓
+
+```rust
+// map[k]++
+let count = map.entry(key).or_insert(0);
+*count += 1;
+
+// 覆盖
+map.insert(k, v);
+
+// 不覆盖
+map.entry(key).or_insert(value);
+```
+
+查
+
+```rust
+for (k, v) in &map {
+}
+
+map.get(&key);
+```
+
+## zip
+
+- 合并两个iter, 成一个元素为pair的iter, 如`[(iter1.1, iter2.1), (iter1.2, iter2.2), ...]`
+	* **不够一个pair将称为None**
+- 格式: `iter = iter1.iter().zip(iter2.iter())`
+- 可以使用map再将pair变为其他元素`map(|(&a, &b)| vec![a, b])`
+
+
 
 
