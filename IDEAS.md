@@ -1,5 +1,93 @@
 ## stack
 
+[TOC]
+
+### about ssd
+
+ssd的写流程: 
+
+- 拷贝块到内存
+- **清空整块**
+- 内存中修改, 整块写回
+
+- 不能定点清除, write in page erase in block
+- erase != delete, 有效数据写时才使用erase保证, 否则delete标记
+- gc
+
+
+2022-08-28
+
+### 图计算引发的结构化的思考
+
+我们说图计算的优势是它能反映出 "关系"。ok, 那现实中是否存在更多的信息需要抽象?
+
+就比如, 结构化anything
+
+e.g. textobject
+
+2022-08-24 22:11
+
+
+### 分形相似: 技术含量的图灵完毕
+
+一个项目(object), 可能需要很多技术, 用到那么多技术是否就
+
+e.g. 编译里涉及的很多内容
+
+即使不完整那也可以object将互补完整
+
+2022-08-24 22:05
+
+
+### 树与局部性: 增量图分析
+
+- 局部修改不影响外围: incremental parsing
+- treesitter
+	* incremental parsing
+		+ 边type边parse
+	* btrfs
+
+2022-08-24 21:49
+
+
+### 可扩展性问题
+
+- 存在一个按需复制的人来stealing work
+- 从而缓解瓶颈
+
+2022-07-30
+
+
+### 一步到位IPC
+
+- 分布式 -> 多IPC
+- 微内核 -> 多IPC
+- 分布式微内核native一步到位?
+
+2022-07-28
+
+
+### RAID + 正交 + 码分复用
+
+2022-07-21
+
+
+### 逻辑数据分析
+
+- 内核态只做少量的逻辑和涉及安全的操作
+- offload内核态
+
+2022-07-16
+
+### distributed oriented DB
+
+好像似乎都是要两段写才能保证安全, 无论分布式的还是，FS, DS的。那是否可以仅用分布式的log就行了，而不用DB本地的??distributed oranted db
+
+本质是因为要恢复那得有原件
+
+2022-07-13
+
+
 ### 数据文件cache未初始化0，导致历史敏感记录泄露?
 
 ### 设计
@@ -109,6 +197,10 @@ obj.setX().setY()
 ### Fault-tolerant QEMU
 
 ### Dshub
+
+- 数据集仓库
+- 虚拟货币捐赠
+- p2p
 
 - metalink
     * http

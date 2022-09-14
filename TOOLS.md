@@ -13,6 +13,8 @@
 - maim
 	* 截 屏 工具
 	* 命令行但是可以多种配合
+- writing
+	* Deepl, wordtune, QuillBot, grammarly
 
 
 [more](https://github.com/ibraheemdev/modern-unix)

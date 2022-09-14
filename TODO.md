@@ -33,8 +33,62 @@
 		+ 圈相关文献(之前的工作可能简单点)
 	* pass3 精读
 		+ 脑补自己做，怎么做，有何可改进
+- 问题主线技术点画像
 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
+- DB talk!
+	* https://db.cs.cmu.edu/seminar2022/
+- that cs major should know
+	* 理论
+		+ lambda calculus
+		+ P, NP, NP-hard, NP-Complete
+		+ 下推自动机
+		+ 有限状态机
+		+ context-free languages
+		+ formal grammars
+
+- Note of LSM tree
+- 跳表 in rust
+- B+ tree in rust
+	* https://github.com/peterzheng98/CS158-DS_Project
+- lsm tree in rust
+- OSTEP: 不仅基本涵盖了操作系统课程的内容，还通过案例详细说明了为什么要这么做，不像课程一般泛泛而谈
+- https://matt.might.net/articles/what-cs-majors-should-know/
+- nand2tetris
+	* https://www.nand2tetris.org/
+
+- linux hack
+	* 平板复屏 https://blog.yidaozhan.top/2022/07/17/linux-virtual-display/
+	* kvm无缝 https://blog.yidaozhan.top/2022/04/20/run-windows-apps-in-kvm-on-linux/
+		+ RDP
+
+- RDF graph
+
+- learn JIT
+	* https://nugine.github.io/bfjit/
+
+- 宝藏: https://github.com/dyweb/papers-notebook
+- 内存分配器: https://www.bilibili.com/video/BV1FU4y1B7Dk?vd_source=fa5227c06f0a0c9f870b406f10be1d31
+- 一致性哈希
+	* 虚节点 -> 逻辑卷
+
+
+- <1999不战而胜>
+- learn
+	* tinyrpc
+		+ https://github.com/zehuamama/tinyrpc
+		+ https://zhuanlan.zhihu.com/p/499098284
+	* godis
+		+ https://github.com/HDT3213/godis
+	* docker
+		+ https://github.com/Fewbytes/rubber-docker/tree/master/docs
+
+!!!!!
+
+- TODO: https://toast-lab.sist.shanghaitech.edu.cn/2021/05/31/2021-05-31-paper-reading/
+
+- TODO
+	* Cellcular Automata
 
 - TODO 
 	* learn perf
@@ -49,31 +103,9 @@
 		
 - COOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL
 	* https://www.anishathalye.com/2017/06/04/testing-distributed-systems-for-linearizability/
-- comfy awesomeWM
-	* https://www.youtube.com/watch?v=4PA-ZpK2i_M&ab_channel=BrodieRobertson
-
-- vhdl
-	* https://www.youtube.com/user/LBEbooks/videos
 
 - advance OS!
 	* https://github.com/chyyuu/aos_course_info/blob/master/oslist.md
-
-- SOC 5.7
-	* https://vhdlguru.blogspot.com
-- 编译原理 5.27
-- 形势政策
-- 分布式计算 4.30
-- 人工智能导论作业 4.10
-	* 必考归结原理，搜索
-
-
-- TODO
-- 万恶之源
-	* L发送Install snap`Call("InstallSnapshot")`
-	* F的raft层内直接处理，导致raft的log更新了，但是kv状态机没有更新
-	* 从而F有机会当选，但是状态机没有更新
-- 正确理解`persister`是怎么工作的
-	* `SaveStateAndSnapshot()`和`persist()`的联系
 
 
 
@@ -81,23 +113,12 @@
 - cool https://frankma.netlify.app/posts/database/raft-lab/#multi-raft
 
 - TODO remove
-	* debtap
 	* maven
 	* nginx
 	* activemq
 	* activemq-runit
-	* lceda-pro
+	* lceda-bin
 		+ 立创eda
-
-- 软工重点
-	* 数据流图到程序结构图转换
-
-- vue
-	* https://its401.com/article/qq_41403494/116890314
-	* https://segmentfault.com/a/1190000037560460
-	* 按需加载 https://www.codeleading.com/article/94756039714/
-- codemirror
-	* https://juejin.cn/post/6844904022650912775
 
 - LEARN!!!! https://github.com/danistefanovic/build-your-own-x
 	* shell
@@ -112,9 +133,6 @@
 	* https://www.youtube.com/c/ChapmanWorldOnTube/videos
 - a beautiful blog
 	* https://github.com/weijiew/codestep/issues/34
-
-- 高级操作系统
-	* https://github.com/chyyuu/aos_course_info
 
 
 - cool 
@@ -264,16 +282,23 @@
 	* https://www.cnblogs.com/lidabo/category/801933.html
 
 
-- 通识教育基础课  xxx/57
+- [x] 通识教育基础课  xxx/57
+	* 56.2
+	* 差大四形势
 - 通识教育核心课  3/8
-- 通识教育选修课 10/8
-- 大类基础课 18.5/16.5
-- 专业核心课  20.5/30.5
-- 专业选修课  12.5/29 # 3.5+2.5
-	* 算法分析与设计 2.5
-	* 编译原理 3
-- 集中实践环节  1/22
+	* 4
+	* 缺 , 工4
+	* **创业基础, 交流强化**
+- [x] 通识教育选修课 10/8
+- [x] 大类基础课 18.5/16.5
+- [x] 专业核心课 30.5/30.5
+	* 30.5
+- [x] 专业选修课 35/29
+	* 35.0
+- [x] 集中实践环节  1/22
+	* 6 + 毕业设计 16
 - 拓展提高 4.5/10
+	* 6
 
 
 
