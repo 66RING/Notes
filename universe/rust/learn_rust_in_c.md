@@ -11,6 +11,26 @@ mathjax: true
 
 作为一个母语是c程序员，初见rust时很多改变是比较模糊的，c中的指针等在rust中似乎变得更加抽象难以理解了。所以打算用类比的方式，让c程序员更好的理解rust。
 
+```rust
+// 基于引用创建裸指针
+let mut num = 5;
+let r1 = &num as *const i32;
+let r2 = &mut num as *const i32;
+println!("{:?} {:?}", r1, r2);
+
+// 基于地址创建裸指针
+let addr = 0xdeadbeefusize;
+let r3 = addr as *const i32;
+
+// 基于智能指针创建裸指针
+let a = Box::new(1);
+// 同理基于引用创建裸指针
+let b: *const i32 = &*a;
+let c = &*a as *const i32;
+// 使用api创建
+let d: *const i32 = Box::into_raw(a);
+```
+
 ## mut和&mut
 
 以下操作的区别
