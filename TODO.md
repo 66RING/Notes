@@ -36,6 +36,21 @@
 - 问题主线技术点画像
 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
+- TODO: unikraft
+- https://github.com/YdrMaster/try-libos
+
+- 西电数据库, https://dbedu.xidian.edu.cn/
+
+- kill la kill
+	* https://www.yhdmp.cc/vp/13130-1-3.html
+
+- leveldb
+	* https://programath.fun/leveldb-annotations-0-usage-and-examples/#%E7%89%B9%E6%80%A7
+	* <精通leveldb>
+- lsm tree demo
+	* /home/ring/Documents/code/go/src/LSM-Tree
+
+
 - DB talk!
 	* https://db.cs.cmu.edu/seminar2022/
 - that cs major should know
