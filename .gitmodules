@@ -1,3 +1,6 @@
 [submodule "tips/english-note"]
 	path = tips/english-note
 	url = https://github.com/66RING/english-note
+[submodule "paperDB"]
+	path = paperDB
+	url = https://github.com/66RING/paperDB.git
