@@ -1,7 +1,7 @@
 ---
 title: 大教堂与集市读书笔记
 author: 66RING
-date: datetime
+date: 2000-01-01
 tags: 
 - reading note
 mathjax: true
