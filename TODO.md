@@ -38,11 +38,15 @@
 
 - TODO: unikraft
 - https://github.com/YdrMaster/try-libos
+- on road
+	* 极客时间-分布式协议与算法实战
+	* large-scale systems
+		+ http://www.cs.cmu.edu/~dga/15-440/S14/
+		+ http://www.cs.cmu.edu/afs/cs.cmu.edu/academic/class/15712-s12/www/
+            + http://www.cs.cmu.edu/afs/cs.cmu.edu/academic/class/15712-s12/www/syllabus.html
+		+ https://cs.stanford.edu/~matei/courses/2015/6.S897/
 
 - 西电数据库, https://dbedu.xidian.edu.cn/
-
-- kill la kill
-	* https://www.yhdmp.cc/vp/13130-1-3.html
 
 - leveldb
 	* https://programath.fun/leveldb-annotations-0-usage-and-examples/#%E7%89%B9%E6%80%A7

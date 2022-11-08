@@ -229,7 +229,14 @@ map.insert(k, v);
 
 ```rust
 // map[k]++
+// 指针法: 注意解引用和or_insert()消耗掉entry
 let count = map.entry(key).or_insert(0);
+*count += 1;
+// API法
+map.entry(key).and_modify(|counter| *counter += 1).or_insert(0);
+
+// get_mut法
+let count = h.get_mut(&key).unwrap();
 *count += 1;
 
 // 覆盖
@@ -261,4 +268,24 @@ map.get(&key);
 - 实现`Send`的类型可以线程间安全**传递所有权**
 - 实现`Sync`的类型可以线程间安全**共享(引用)**
 - 手动实现`Send + Sync`不安全, 好在大多数类型实现了
+
+
+## tuple
+
+元组一个个`.`太麻烦了, 直接解包。可以使用`@`运算符
+
+```rust
+fn t(tuple: (i32, i32, i32)) {
+    match tuple {
+        (r @ 0..=255, g @ 0..=255, b @ 0..=255) {
+            todo!()
+        }
+        _ => todo!()
+    }
+}
+```
+
+
+
+
 

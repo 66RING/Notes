@@ -75,11 +75,18 @@ git add .  // 添加所有
 ### 退回
 
 ```shell
+## cheat sheet
 git reset
 git reset --hard HEAD^ 退回到上一个版本
 git reset --hard HEAD~n 退回到上n个版本
 git reset --hard sjaieral 退回某个版本
 ```
+
+- `git add`后会将磁盘内容添加到暂存区
+    * `git reset <file/commit>` **撤销暂存区的修改, 本地磁盘内容保留**
+- `git checkout <file/commit>` **撤销本地磁盘的修改**
+- `git reset --hard <commit>` **撤销暂存区同时修改本地磁盘**
+- `git revert <commit>` ++变--, **并形成新的commit**
 
 
 ### 添加用户
