@@ -1,5 +1,5 @@
 ---
-title: rust中指针指针box的简单实现
+title: rust中智能指针box的简单实现
 author: 66RING
 date: 2022-11-10
 tags: 
@@ -7,7 +7,7 @@ tags:
 mathjax: true
 ---
 
-# rust中指针指针box的简单实现
+# rust中智能指针box的简单实现
 
 ## Abstract
 

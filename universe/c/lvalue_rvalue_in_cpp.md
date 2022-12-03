@@ -107,6 +107,8 @@ int main() {
 
 比如容器扩容
 
+**当使用临时对象初始化类对象时**, 如`demo a = get_demo(); demo get_demo {return demo();}`, 编译器会优先调用移动构造, 如果找不到就会使用拷贝构造函数。
+
 ```cpp
 class SuperClass{
     public:

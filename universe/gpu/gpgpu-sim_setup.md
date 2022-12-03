@@ -222,4 +222,4 @@ TODO:
 
 ## 其他
 
-- 目前gpgpu-sim 4.0没有支持部分功能, 如`cudaMallocManaged`
+- 目前gpgpu-sim 4.0没有支持`cudaMallocManaged`
