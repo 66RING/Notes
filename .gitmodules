@@ -4,3 +4,6 @@
 [submodule "paperDB"]
 	path = paperDB
 	url = https://github.com/66RING/paperDB.git
+[submodule "NNote"]
+	path = NNote
+	url = https://github.com/66RING/NNote

@@ -72,7 +72,21 @@ sudo update-alternatives --config g++
 此时gcc和g++的默认版本应该是5: `gcc -v`
 
 
-## 安装CUDA
+### 高版本ubuntu装gcc5
+
+1. 加软件源`vim /etc/apt/sources.list`
+    ```
+    deb http://dk.archive.ubuntu.com/ubuntu/ xenial main
+    deb http://dk.archive.ubuntu.com/ubuntu/ xenial universe
+    ```
+2. 包管理器更新数据`sudo apt update`
+3. 安装`sudo apt install gcc-5 g++-5`
+4. 根据上述步骤调整主次
+
+
+## 安装CUDA和驱动
+
+[官网下载安装程序](https://developer.nvidia.com/cuda-toolkit-archive?spm=a2c4g.14484438.10004.1)
 
 下载CUDA安装包
 
@@ -80,14 +94,16 @@ sudo update-alternatives --config g++
 wget https://developer.download.nvidia.com/compute/cuda/11.1.0/local_installers/cuda_11.1.0_455.23.05_linux.run
 ```
 
-执行安装
+执行安装, 记得参数指定安装驱动和其他工具
 
 ```sh
 chmod +x cuda_11.1.0_455.23.05_linux.run
-sudo ./cuda_11.1.0_455.23.05_linux.run
+sudo ./cuda_11.1.0_455.23.05_linux.run --silent --verbose --driver --toolkit --samples
 ```
 
 键入`accept`后, 仅选择安装`Toolkit`即可。之后cuda会安装到`/usr/local/cuda`。不同版本cuda的安装路径不同, 可以使用`sudo find / -name "nvcc"`命令查找一下。
+
+[ref](https://help.aliyun.com/apsara/enterprise/v_3_13_0_20201215/ecs/enterprise-user-guide/install-the-cuda-and-gpu-drivers-for-a-linux-instance.html)
 
 
 ## 安装GPGPU-sim
