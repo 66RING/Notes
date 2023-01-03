@@ -1,17 +1,29 @@
 ---
-title: linux中的奇技淫巧
+title: linux奇技淫巧
 author: 66RING
-date: datetime
+date: 2000-01-01
 tags: 
-- tags
+- misc
 mathjax: true
 ---
 
-# Abstract
+# 记录一些"八股"tips
 
-一些很妙的操作，需要对计算机的深刻理解
+stack base, since 2022-12-30 14:13
 
-# container_of
+
+## mmap and sparse array
+
+> [post](https://offlinemark.com/2020/10/14/demand-paging/)
+
+linux mmap的page demand, 对于匿名映射它会映射一个特殊的"zero page", 然后COW。而read的时候其实不会触发page demand, 因为假设没有write就是初始的"zero page"。
+
+利用这点你就可以实现很大的零散数组, 它即能利用内存访问的特性又不会实际占用很多内存空间(因为大多的特殊的"zero page")。可以需要注意一些overcommit的开启情况
+
+2022-12-30
+
+
+## container_of
 
 ```c
 #define container_of(ptr, type, member) ({			\
@@ -31,3 +43,4 @@ mathjax: true
 	- **这里的0是必要的**，因为本来是只能取到地址的，不如如果结构体的从0开始的，那么成员的地址就是成员的偏移
 3. 成员指针减偏移就是所属结构体的地址了，再将指针类型转换然后返回
 
+2022-09-09

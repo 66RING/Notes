@@ -29,15 +29,15 @@ ok，理解了前置基础，let jump into it
 	- 用户空间的buffer(数据)拷贝到内核的socket buffer
 		* 第三次拷贝(user -> kernel)
 	- 内核最后将buffer中的数据传输到设备
-		* 第死次拷贝(DMA)
+		* 第四次拷贝(DMA)
 
-可以看到需要四次拷贝操作，四次状态切换(user -> kernel, kernel -> user)
+可以看到需要四次拷贝操作，四次状态切换(user -> kernel x2, kernel -> user x2)
 
 # mmap
 
 如果我将接收数据的那个内核buffer映射到用户空间，那就不用用户态和内核态之间的拷贝了。
 
-最后只需要"读buffer"到"写buffer"的拷贝和DMA拷贝
+最后只需要"读buffer"到"写buffer"(socket缓冲区)的拷贝和DMA拷贝
 
 
 # sendfile
