@@ -23,3 +23,27 @@ public:
 };
 ```
 
+
+## constexpr标注
+
+编译期就能确定(编译器执行), 从而不需要运行时, 从而优化执行效率。e.g. 一些递归constexpr的计算: 阶乘
+
+声明时constexpr标记表示可以在编译期确定, 不过也可以用在运行时。调用时使用`constexpr`表示显式使用编译期执行, 如果不能编译器会报错。否则就是自动选择编译期还是运行时运行。 如果调用要运行时才能决定, 如`frac(n)`等待用户输入一个n就"自动取消constexpr"
+
+```cpp
+constexpr int frac(int n) {
+    if (n == 1) {
+        return 1;
+    } else {
+        return n * frac(n-1);
+    }
+}
+
+int main() {
+    constexpr int result = frac(5);
+}
+```
+
+前后对比: `objdump -dC <binary>`
+
+

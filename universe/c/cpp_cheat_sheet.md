@@ -56,5 +56,102 @@ int main() {
     * 必须要有虚函数, 因为它底层的RTTI(运行时类型检测)依赖虚函数
 
 
+## push_back 和 emplace_back的区别
+
+- `push_back`: 新建然后再移动或拷贝
+- `emplace_back`: **可以**在容器开辟的空间内原地创建
+
+之所以说的"可以"是因为使用不当还是会触发移动/拷贝的。用法应该是传给`emplace_back`的参数的构造函数的参数。
+
+```cpp
+#include <iostream>
+#include <stdio.h>
+#include <unistd.h>
+#include <vector>
+
+using namespace std;
+class S {
+public:
+  int n;
+  S(int n) : n(n) { cout << "Cons\n"; }
+  S(S &&s) : n(s.n) { cout << "move\n"; }
+  S(const S &s) : n(s.n) { cout << "copy\n"; }
+};
+
+int main() {
+  vector<S> v;
+  v.reserve(20);
+  v.emplace_back(10);       // 构造
+  v.emplace_back(S(10));    // 构造 + move
+}
+```
+
+
+## 多线程和锁
+
+```cpp
+#include <thread>
+#include <mutex>
+
+void func(int &x) {}
+
+class ThreadObj {
+public:
+  void operator()(int x) {}
+};
+
+int main() {
+  std::thread th1(func, arg);  // 通过函数启动的
+  std::thread th2(ThreadObj, arg);  // 通过类对象启动的
+  std::thread th3(lambda, arg);  // 通过匿名函数启动的
+  std::this_thread::get_id()
+  std::this_thread::()
+  this_thread::sleep_for(std::chrono::seconds(1));
+  th1.join()// 等待完成
+
+  // mutex:
+  std::mutex mymutex;
+  mymutex.lock();
+  mymutex.unlock();
+
+  // lock_guard
+  std::mutex mymutex;
+  std::lock_guard<std::mutex>(mymutex); // 已废弃, 使用scoped_lock
+  std::scoped_lock<std::mutex> lock(mymutex);
+  
+  // 显式引用/线程引用参数的传递(e.g. 锁)
+  std::ref();
+
+  int a;
+  std::thread th4(func, std::ref(a));
+}
+```
+
+## 文件流
+
+```cpp
+#include <iostream>
+#include <fstream>
+using namespace std;
+int main() {
+  ofstream file;
+  char data[100];
+  file.open("filename");
+  cin.getline(data, 100);
+  cin.ignore(); // 跳过直到下一个\n
+
+  // seek
+  file.seekp(0, ios::beg);
+  file.close();
+
+  // 只读
+  ifstream rfile;
+  rfile.open("./a.txt");
+  rfile >> data;
+  cout << data << endl;
+  rfile.close();
+  return 0;
+}
+```
 
 
