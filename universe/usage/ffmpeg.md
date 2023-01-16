@@ -68,7 +68,7 @@ ffmpeg -i test.avi -c:v libx264 -ss 00:00:03 -t 00:00:05 ouput.mp4
 
 - `-ss`指定起始位置
 - `-to`指定终止位置
-- `-t`表示持续时常
+i `-t`表示持续时常
 - **`-ss`要放在`-i`参数后面**
 - 表示的格式
 	* `hh:mm:ss`十分秒
@@ -99,6 +99,28 @@ ffmpeg -i test.mp4 -af "volume=1.5" output.mp4
 - `-af "volume=1.5"`音量过滤器
 - `-af "loudnorm=I=-5:LRA=1"`统一视频音量
 - `-af "equalizar=f=1000:width_type=h:width=200:g=-10"`高通低通均衡器等
+
+
+## 视频添加音频
+
+混声
+
+```
+ffmpeg -i video.mp4 -stream_loop -1 -i audio.wav -filter_complex [0:a][1:a]amix -t 60 -y out.mp4
+```
+
+- `-stream_loop -1 -i audio.wav`, 先指定对stream的处理, 再指定的-i, 即`-i`对应的是`-i`前面的操作
+- `-stream_loop -1` 参数`-1`代表循环输入源
+- `[0:a][1:a]amix`将0和1号的音频流进行混合
+- `-t 60` 裁剪60秒
+
+音频替换
+
+```
+ffmpeg -an -i video.mp4 -stream_loop -1 -i audio.wav -t 60 -y out2.mp4
+```
+
+- `-an -i video.mp4`代表消除视频中的音频
 
 
 ## 轨道处理
@@ -165,4 +187,7 @@ ffmpeg -i input.mp4 -preset ultrafast \
 #	-s 1920x1080 \
 	-c:a aac -b:a 320k -crf 18 ouput.mp4
 ```
+
+
+### 制作封面
 

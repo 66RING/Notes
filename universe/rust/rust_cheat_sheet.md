@@ -286,6 +286,27 @@ fn t(tuple: (i32, i32, i32)) {
 ```
 
 
+## 内敛汇编
+
+```rust
+asm!(
+    "mov rsp, [{0} + 0x00]",
+    "ret",
+    in(reg) new,
+    options(noreturn),
+    );
+```
+
+- 前半部""包裹的字段: 汇编模板
+    + `{}`, placeholder, 类似`println!()`, 可以指定index也可以不
+    + `[]`, 表示一个内存地址
+- 后半部rust代码: 输入输出参数
+    + `in(reg) new`, 让编译器决定一个通用寄存器来保存new
+    + `out(reg)`, 同理, 表示输出, 需要mut
+    + 同理还有`inout`, `lateout`
+    + option参数
+        + 如可以指定使用AT&T还是intel格式等
+
 
 
 

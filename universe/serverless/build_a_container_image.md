@@ -30,6 +30,8 @@ https://www.youtube.com/watch?v=hhQ6uc2bp2s
 > https://github.com/opencontainers/image-spec/blob/main/spec.md
 
 - image-layout, 包含以下三个文件/夹内容
+    * `blobs`文件夹, `oci-layout`文件, `index.json`入口文件
+    * 文件的索引就是blobs中的文件名, 一串哈希, 文件内容经过加密
 
 解压压缩的文件: `tar xvf -C <output name>`发现就是文件系统, runtime等东西。
 

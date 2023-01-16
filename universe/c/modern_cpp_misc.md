@@ -47,3 +47,17 @@ int main() {
 前后对比: `objdump -dC <binary>`
 
 
+## explicit
+
+对一个构造函数进行`explicit`修饰, 可以防止隐式调用一个参数的构造函数
+
+```cpp
+class A {
+ public:
+  A(int x);
+  // explicit A(int x);
+};
+
+doSomething(28);  // 产生了隐式临时对象
+doSomething(A(28));  // 产生了显示临时对象
+```
