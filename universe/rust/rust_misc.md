@@ -20,6 +20,25 @@ mathjax: true
     * 假设说包裹的指针非空
 - `mem::forget()`
 
+## 小工具
+
+### 火焰图
+
+```
+$ cargo install flamegraph
+$ cargo framegraph
+```
+
+
+### 查看asm
+
+输出rust和对应汇编代码
+
+```
+$ cargo install cargo-asm
+$ cargo asm --rust path::to::a::function
+```
+
 
 ## Cell vs RefCell vs Cell
 
