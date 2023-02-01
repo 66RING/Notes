@@ -4,6 +4,11 @@
 
 [TOC]
 
+
+### 自然最通晓
+
+2023-01-28
+
 ### page table and extendible hashing
 
 申请内存需要申请pte对吧, 然后我们又是lazy的page demand对吧, 那这个page demand的剩下的开销就是申请pte的开销了。512GB大概消耗1GB pte, 这部分开销需不需要减少呢？
