@@ -1,7 +1,7 @@
 ---
 title: MIT6.S081 cow lab
 author: 66RING
-date: 2000-01-01
+date: 2022-01-01
 tags: 
 - OS
 mathjax: true

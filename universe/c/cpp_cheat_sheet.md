@@ -154,4 +154,14 @@ int main() {
 }
 ```
 
+## misc
+
+```cpp
+struct sdshdr {
+    long len;
+    long free;
+    char buf[]; //不占空间
+};
+```
+
 
