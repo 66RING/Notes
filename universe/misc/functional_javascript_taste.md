@@ -21,6 +21,8 @@ mathjax: true
     6. no arrays
     7. only 0 or 1 argument
 
+> Pure function, 怎么的输入就有怎样的输出，不产生side effect, 如修改外部全局变量。不依赖外部数据, 如根据全局变量的值产生输出。
+
 - 多参数
 - 链表
     * first, second, ...

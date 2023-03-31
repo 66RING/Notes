@@ -308,5 +308,23 @@ asm!(
         + 如可以指定使用AT&T还是intel格式等
 
 
+## 范围match
 
+match中加if
 
+```rust
+match (count) {
+    (x) if x < 3 => println!("OK"),
+    (_) => println!("NO"),
+}
+```
+
+match中的或操作
+
+```rust
+match (count) {
+    (x) if x < 3 => println!("OK"),
+    (4) | (5) => println!("45"),
+    (_) => println!("NO"),
+}
+```

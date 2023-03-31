@@ -22,7 +22,7 @@ tags:
 | `$(wildcard PATTERN)`      | 获取所有匹配的文件                       |
 | `$(patsubst P1, P2, list)` | 读list,模式P1替换为P2, 使用%代表替换部分 |
 | `$(foreach var,list,text)` | 从list中取,放到var,做text                |
-
+| `$(foo:%.c=%.o)`           | 变量中的值替换, 注意不要有空格           |
 
 
 ## Compile process
