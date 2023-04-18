@@ -9,6 +9,27 @@ mathjax: true
 
 # 小抄
 
+> stack
+
+## 妙用structure bind
+
+- case 1: 使用pair等时用`p.first`, `p.second`有很差的可读性。可以使用`auto [name, age]`
+- case 2: 除了pair, 结构体也可以使用bind。绑定的顺序和结构体成员顺序有关
+
+```cpp
+struct Person {
+    string name;
+    int age;
+};
+
+Person get_person();
+
+auto [name, age] = get_person();
+```
+
+- case 3: 当有多个输出参数时`func(int n, int& out1, int& out2)`，可以利用bind的方法放回一个结构体然后分解
+
+
 ## 移动构造
 
 使用右值引用创建移动构造器。然后传入右值: `std::move(lvalue)`或者直接匿名变量
