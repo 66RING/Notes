@@ -198,6 +198,13 @@ HEAD表示当前版本
 - `git reflog`查看命令历史
 
 
+#### git stash误删找回
+
+1. `git fsck --unreachable`查看可以内容
+2. `git show <id>`查看内容
+3. `git stash apply <id>`恢复
+
+
 ### 增删改
 
 - checkout
@@ -283,6 +290,17 @@ no Fast forward合并
 如果一个bug早期就存在了，那每个分支上这个bug都存在。git提供了复制特定提交到当前分支的功能`cherry-pick <commit_id>`
 
 这样一条命令就完成了修复bug，而不需要把分区合并
+
+
+#### 拉取远程分支
+
+> fetch/pull remote branch
+
+```
+git pull <remote> <remote branch>:<local branch>
+```
+
+如`git pull origin remote_b:local_b`
 
 
 ### 保存工作区
