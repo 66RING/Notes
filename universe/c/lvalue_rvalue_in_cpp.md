@@ -98,9 +98,49 @@ int main() {
 
 ## 完美转发
 
+```cpp
+template<typename T, typename Arg>
+shared_ptr<T> wrapper(Arg&& arg) {
+  return shared_ptr<T>(new T(std::forward<T>(arg)));
+}
+```
+
+1. 万能引用
+    - **模板参数**的情况下, 使用`&&`标识符以使用万能引用
+2. 引用折叠
+    - 为什么`&&`可以实现万能引用? 引用的引用自动折叠, 可以看到只有`T&&`才能正确转换出右值引用
+        * `T& & -> T&`
+        * `T&& & -> T&`
+        * `T& && -> T&`
+        * `T&& && -> T&&`
+
 本质上也是做类型转换, `std::move()`转换出右值, 而`std::forward<T>()`即能转换出右值也能转换出左值, 有泛型`T`决定。
 
 前面[有名引用本身是左值](#有名引用本身是左值)说过有名引用都是左值。那我们拿到一个引用后(通过函数传递或临时变量等方式)要怎么把这个左值传递下去? 就可以使用`std::forward<T>()`了
+
+什么是完美转发? 比如参数通过外层的wrapper函数传递到内层的另一个函数调用, 我们希望避免参数传递过程中的拷贝构造，所以我们可以加上引用`&`。**但是怎么传递右值呢?**, 一个方法是手动重载, 但是在参数多时就**需要手动实现很多重载**。这里的本质问题是, 进入第一层函数后变量就变成左值了没法move。
+
+
+### std::forward原理
+
+> cpp模板展开规则: 实参左值, 则T展开成`T&`。 实参为右值, 则T展开成`T`
+
+```cpp
+// 匹配实参为左值的情况
+template<typename _Tp>
+_Tp&& forward(_Tp& __t)
+    return static_cast<_Tp&&>(__t);
+// 左值的模板展开为T&, 所以_Tp -> T&, static_cast<_Tp&&>就是static_cast<T& &&>
+// 最后折叠成T&
+
+
+// 匹配实参为右值的情况
+template<typename _Tp>
+_Tp&& forward(_Tp&& __t)
+    return static_cast<_Tp&&>(__t);
+// 右值的模板展开为T, 所以_Tp -> T, static_cast<_Tp&&>就是static_cast<T &&>
+// 最后折叠成T&&
+```
 
 
 ## 移动构造
