@@ -1,4 +1,13 @@
-# 一致性简述
+---
+title: 各种一致性简记
+author: 66RING
+date: 2022-05-14 11:07
+tags: 
+- distributed
+mathjax: true
+---
+
+# 各种一致性简记
 
 ## 线性一致性
 
