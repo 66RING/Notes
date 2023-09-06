@@ -36,6 +36,10 @@
 - 问题主线技术点画像
 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
+- crafting interpreters:
+    * here: https://hanayabuki.github.io/craftinginterpreters_zh/#/content/6.%E8%A7%A3%E6%9E%90%E8%A1%A8%E8%BE%BE%E5%BC%8F
+    * https://hanayabuki.github.io/craftinginterpreters_zh/#/README
+    * https://zihengcat.github.io/crafting-interpreters-zh-cn/contents.html
 - TO note git丢失找回
 	* https://blog.csdn.net/u014289186/article/details/88885914
 - mini k8s
