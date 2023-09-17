@@ -1,5 +1,5 @@
 ---
-title: 显卡下GPU直通
+title: 显卡直通
 author: 66RING
 date: 2021-05-08
 tags: 
