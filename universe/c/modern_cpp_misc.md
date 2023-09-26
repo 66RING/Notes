@@ -77,3 +77,41 @@ doSomething(A(28));  // 产生了显示临时对象
 2. 指定底层数据类型: `enum class Name: T {}`
 3. 作用域访问成员需要使用域运算符
 
+## X Macro
+
+> [知乎教程](https://zhuanlan.zhihu.com/p/521073931)
+
+使用宏技巧自动生成模式, 如定义变量, switch case等模式
+
+1. 小范围内定义宏, 然后释放(undef)
+2. 本质就是利用宏函数的一些功能来实现诸如字符串拼接, 转字面值, 转"值"等操作, 如
+    - `#define X_MACRO(x) x,`, 原样输出并添加一个都好
+    - `#define X_MACRO(x) #x`, 输出字符串字面值"x"
+
+```cpp
+#define XMACROS_TABLE(f) \
+	f(trace) \
+    f(debug) \
+    f(info) \
+    f(critical) \
+    f(warn) \
+    f(error) \
+    f(fatal)
+
+enum class log_level : std::uint8_t {
+// X Macro原样返回name, 快速完成定义
+#define _FUNCTION(name) name,
+    XMACROS_TABLE(_FUNCTION)
+#undef _FUNCTION
+};
+
+inline std::string log_level_name(log_level lev) {
+    switch (lev) {
+// X Macro批量生成 case log_level::name: return #name
+#define _FUNCTION(name) case log_level::name: return #name;
+    XMACROS_TABLE(_FUNCTION)
+#undef _FUNCTION
+    }
+    return "unknown";
+}
+```
