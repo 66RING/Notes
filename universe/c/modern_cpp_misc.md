@@ -115,3 +115,63 @@ inline std::string log_level_name(log_level lev) {
     return "unknown";
 }
 ```
+
+## 类型擦除
+
+我们知道虚基类的作用是提供一个统一的接口。即如果将子类赋值到基类则调用虚函数饰会自动调用对应的实现, 从而实现统一的管理。类型擦除就是利用虚基类能提供统一接口的这个原理, 将虚基类的自动"分发"封装在一个类中, 该类再对外提供统一的模板和接口, 从而隐藏虚基类的调用。
+
+如下面这个`Function<void(int)>`可以接收任何实现了`operator()()`方法的对象, 包括结构体的, 函数指针和lambda。
+
+```cpp
+// NOTE: 关闭默认特化, 必须使用函数形式特化
+// 为什么不能直接false, 因为要依赖模板FnSig做惰性编译
+template <class FnSig>
+struct Function {
+  static_assert(!std::is_same_v<FnSig, FnSig>, "not a valid function signature");
+};
+
+template <class Ret, class ...Args>
+// 特化: 使用时用这种格式, Function<void(int)>
+// NOTE: 偏特化: 如果存在这种形式就不会跳到上面FnSig处了
+struct Function<Ret(Args...)> {
+  struct FuncBase {
+	virtual Ret call(Args ...args) = 0;
+	virtual ~FuncBase() = default;
+  };
+
+  template <class F>
+  struct FuncImpl : FuncBase {
+	F f;
+
+	FuncImpl(F f) : f(std::move(f)) {}
+
+	// 把FuncBase的call覆盖掉, 就是调用传入的函数F
+	virtual Ret call(Args ...args) override {
+	  return std::invoke(f, std::forward<Args>(args)...);
+	}
+  };
+
+  std::shared_ptr<FuncBase> m_base;
+
+  Function() = default;
+
+  // 构造函数, 会实例化多次, 但都用统一的虚接口
+  template <class F, class = std::enable_if_t<std::is_invocable_r_v<Ret, F &, Args...>>>
+  Function(F f): m_base(std::make_shared<FuncImpl<F>>(std::move(f))) {}
+
+  Ret operator()(Args ...args) const {
+	if (!m_base) [[unlikely]]
+	  throw std::runtime_error("function uninitialized");
+	// 虚接口实例化多次, 虚函数自动调用对应实现
+	return m_base->call(std::forward<Args>(args)...);
+  }
+};
+```
+
+主要有三个部分组成: "接口类", "impl类", "基类"。接口类将后两者封装, 内含一个基类成员以获取统一接口, impl类继承自基类那么就可以使用模板自动构造类。而使用时我们只需要关注接口类的使用。
+
+
+
+
+
+
