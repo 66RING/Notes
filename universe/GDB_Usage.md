@@ -70,6 +70,17 @@ tags:
 - Debug a core file
     * `gdb <binary file> <core file>`
     * System will no generate a core file by default. Because typically core files are very big. You can use `ulimit` command to set unset the limit.
+- 自定义脚本
 
+```cpp
+define print_list
+set $list=$arg0
+while($list)
+printf "%d\n",$list->val
+set $list=$list->next
+end
+printf "\n"
+end
+```
 
 
