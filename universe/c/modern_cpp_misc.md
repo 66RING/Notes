@@ -118,6 +118,8 @@ inline std::string log_level_name(log_level lev) {
 
 ## 类型擦除
 
+> 可以实现其他语言中interface之类的特性
+
 我们知道虚基类的作用是提供一个统一的接口。即如果将子类赋值到基类则调用虚函数饰会自动调用对应的实现, 从而实现统一的管理。类型擦除就是利用虚基类能提供统一接口的这个原理, 将虚基类的自动"分发"封装在一个类中, 该类再对外提供统一的模板和接口, 从而隐藏虚基类的调用。
 
 如下面这个`Function<void(int)>`可以接收任何实现了`operator()()`方法的对象, 包括结构体的, 函数指针和lambda。
@@ -169,6 +171,110 @@ struct Function<Ret(Args...)> {
 ```
 
 主要有三个部分组成: "接口类", "impl类", "基类"。接口类将后两者封装, 内含一个基类成员以获取统一接口, impl类继承自基类那么就可以使用模板自动构造类。而使用时我们只需要关注接口类的使用。
+
+
+## decltype
+
+`decltype(e)`, 总是以一个普通表达式作为参数, 做编译期类型推导
+
+```cpp
+int i = 4;
+decltype(i) a;
+```
+
+泛型编程中结合auto来追踪变量返回值:
+
+```cpp
+template <typename _Tx, typename _Ty>
+auto multiply(_Tx x, _Ty y)->decltype(_Tx*_Ty)
+{
+    return x*y;
+}
+```
+
+## static switch
+
+利用泛型自动生成不同数据规模的实现, 本质就是枚举所有可能的数据规模。然后传入一个闭包来限制作用域。
+
+- `__VA_ARGS__`用于展开宏中的可变参数, 因为传入是的一个闭包所以`__VA_ARGS__()`手动调用
+- 枚举所有可能并生成所需的静态变量, 以完成泛型展开
+
+```cpp
+// https://github.com/NVIDIA/DALI/blob/main/include/dali/core/static_switch.h
+// and https://github.com/pytorch/pytorch/blob/master/aten/src/ATen/Dispatch.h
+
+#define FWD_HEADDIM_SWITCH(HEADDIM, ...)   \
+  [&] {                                    \
+    if (HEADDIM <= 32) {                   \
+      constexpr static int kHeadDim = 32;  \
+      return __VA_ARGS__();                \
+    } else if (HEADDIM <= 64) {            \
+      constexpr static int kHeadDim = 64;  \
+      return __VA_ARGS__();                \
+    } else if (HEADDIM <= 96) {            \
+      constexpr static int kHeadDim = 96;  \
+      return __VA_ARGS__();                \
+    } else if (HEADDIM <= 128) {           \
+      constexpr static int kHeadDim = 128; \
+      return __VA_ARGS__();                \
+    } else if (HEADDIM <= 160) {           \
+      constexpr static int kHeadDim = 160; \
+      return __VA_ARGS__();                \
+    } else if (HEADDIM <= 192) {           \
+      constexpr static int kHeadDim = 192; \
+      return __VA_ARGS__();                \
+    } else if (HEADDIM <= 224) {           \
+      constexpr static int kHeadDim = 224; \
+      return __VA_ARGS__();                \
+    } else if (HEADDIM <= 256) {           \
+      constexpr static int kHeadDim = 256; \
+      return __VA_ARGS__();                \
+    }                                      \
+  }()
+
+FWD_HEADDIM_SWITCH(dim, [&] {});
+```
+
+## 模板函数的header分离
+
+> 模板函数的"声明"并不是常规意义是声明, 只**是用来生成声明的蓝图**
+
+如下场景会发现找不到symbol。即将模板函数的声明写在header将"定义"分开写在一个cpp文件。
+
+这是因为cpp文件中的"定义", **对于模板函数来说并不是常规意义定义**。模板函数是蓝图: 在使用到时才自动展开。所以在编译`add.cpp`时没有任何使用蓝图就不会生成任何具体的声明。当编译`main.cpp`时就没有发现任何声明。
+
+```cpp
+// add.h
+#pragma once
+template <typename T> T add(T a, T b);
+
+// add.cpp
+#include "add.h"
+template <typename T> T add(T a, T b) { return a + b; }
+
+// main.cpp
+#include "add.h"
+#include <iostream>
+
+using namespace std;
+
+int main() {
+
+  cout << add(1, 2);
+  return 0;
+}
+```
+
+改进方法: 要么都写在header文件中, 要在模板函数手动特化, 如
+
+```cpp
+// add.cpp
+#include "add.h"
+template <typename T> T add(T a, T b) { return a + b; }
+template int add(int, int);
+template<> float add<float>(float, float); // 或者
+```
+
 
 
 
