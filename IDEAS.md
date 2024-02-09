@@ -4,6 +4,17 @@
 
 [TOC]
 
+### kernel bypass LLM
+
+cuda申请内存需要大量访问驱动，进行大量内核态和用户态的切换。如果能在用户态实现一个用户态的显存分配器(缓存分配器)就能实现加速。
+
+不过可能cudaMalloc已经有了, 需要cudaMalloc, cudaFree测试一下。
+
+好吧, pytorch已经实现了: `cuda.empty_cache()`
+
+2024-01-05 16:58
+
+
 ### distributed attention + best match scala
 
 balance attention在一定的grid下表现最好，那么将attention做分布式处理，分割成性能最好的小块执行。
@@ -780,6 +791,10 @@ what if
 
 ## MOVIE
 
+### team -lorde
+
+Not very pretty, but we sure know how to run things.
+
 ### 敢于开第一枪
 
 开了第一枪才给后续很多枪做参考
@@ -787,5 +802,13 @@ what if
 ### 1
 
 one get bored, some bit change, humanity rebuild, the lucky one lucky enough, and enjoying this new life. However not everyone so luck.
+
+### [Sisyphus and the Impossible Dream](https://www.youtube.com/watch?v=9IiTdSnmS7E)
+
+What matters are the experiences, the journey
+
+Life is a battle and there times when you need to accept that you've been beat.
+
+it's been a long road and there's a lot to be proud of.
 
 

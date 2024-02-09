@@ -1,7 +1,7 @@
 ---
 title: 自动微分简记
 author: 66RING
-date: 2000-01-01
+date: 2023-05-01
 tags: 
 - misc
 mathjax: true
