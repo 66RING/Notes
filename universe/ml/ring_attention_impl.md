@@ -10,6 +10,8 @@ mathjax: true
 
 # 手把手实现Ring Attention
 
+![](https://pic1.zhimg.com/v2-e788242205e9eda9897029c7e51852f4_1440w.jpg?source=d16d100b)
+
 官方ring attention是jax实现的，这里用pytorch实现一个ring attention的学习版本。
 
 [source code](https://github.com/66RING/ring-attention-pytorch)
@@ -72,7 +74,6 @@ ring_attention():
             step_send_recv_kv()
         rescale(out)
 ```
-
 
 
 
