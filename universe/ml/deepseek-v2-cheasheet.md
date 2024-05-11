@@ -9,7 +9,7 @@ mathjax: true
 
 # DeepSeek-V2架构
 
-![architecture](https://github.com/deepseek-ai/DeepSeek-V2/blob/main/figures/architecture.png)
+![architecture](https://github.com/deepseek-ai/DeepSeek-V2/blob/main/figures/architecture.png?raw=true)
 
 简单的说MLA + MoE
 
