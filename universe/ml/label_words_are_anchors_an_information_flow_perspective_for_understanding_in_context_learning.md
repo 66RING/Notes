@@ -37,17 +37,17 @@ mathjax: true
 
 attn_map或者说attn score或者说attn weight与loss对attn的导(利用torch的自动求导机制)的累加
 
-![](./assets/img/saliece_score.png)
+![](https://raw.githubusercontent.com/66RING/Notes/master/universe/ml/assets/img/saliece_score.png)
 
 代码实现
 
 1. 为了能对attn求导，则让attn乘上一个占位参数，反向时参数就会自动求导并和attn相乘
 
-![](./assets/img/score_impl.png)
+![](https://raw.githubusercontent.com/66RING/Notes/master/universe/ml/assets/img/score_impl.png)
 
 2. 因为上图在自动求导(反向)完成后就会自动形成Sigma右边的结构，所以使用时只需要sum和abs即可
 
-![](./assets/img/score_usage.png)
+![](https://raw.githubusercontent.com/66RING/Notes/master/universe/ml/assets/img/score_usage.png)
 
 这是显著性的计算, 但在实际应用中是用不到显著性计算的，直接利用ICL中的lable id提取即可。
 
@@ -58,7 +58,7 @@ attn_map或者说attn score或者说attn weight与loss对attn的导(利用torch�
 - 在浅层block掉label位置的信息聚合流(attn weight)影响大, 在深层block掉信息聚合流(attn weight)影响小, 说明只有浅层有聚合作用, 深层几乎没有影响
 - 随机block的影响不及对lable的精确block，说明确实lable的聚合作用比较重要
 
-![](./assets/img/info_flow_block.png)
+![](https://raw.githubusercontent.com/66RING/Notes/master/universe/ml/assets/img/info_flow_block.png)
 
 阻塞信息流的代码实现：修改attention weight(attn score)，把label对上文的注意力全部mask掉
 
@@ -83,15 +83,15 @@ def _forward(self, attn_weights):
 
 1. 根据上一节的方法知道显著性的计算方法后这节对比各个阶段显著性的主导地位class_pos表示lable在输入序列的位置
 
-![](./assets/img/anchor_proportion_lab.png)
+![](https://raw.githubusercontent.com/66RING/Notes/master/universe/ml/assets/img/anchor_proportion_lab.png)
 
 2. proportion1,2,3分别是S_wp(信息流向label), S_pq(label流向目标预测token), S_ww(其他信息流)
 
-![](./assets/img/anchor_proportion_equation.png)
+![](https://raw.githubusercontent.com/66RING/Notes/master/universe/ml/assets/img/anchor_proportion_equation.png)
 
 3. 可见浅层时S_wp占主导(信息流向label), 深层时S_pq占主导(目标预测从lable中提取), 其他情况(S_ww)影响不大
 
-![](./assets/img/anchor_proportion_result.png)
+![](https://raw.githubusercontent.com/66RING/Notes/master/universe/ml/assets/img/anchor_proportion_result.png)
 
 ### 验证深层layer的影响
 
@@ -99,15 +99,15 @@ def _forward(self, attn_weights):
 
 所以引入了AUCROC得分来衡量模型输出和lable的attention的相关性。并且为了为了验证l层累积的效果还引入了Rl(eq 5), 并设置了一个0.5的threshold
 
-![](./assets/img/anchor_aucroc_score_equation.png)
+![](https://raw.githubusercontent.com/66RING/Notes/master/universe/ml/assets/img/anchor_aucroc_score_equation.png)
 
 结果深层layer的相关性更高，达到0.8，而浅层layer相关性低
 
-![](./assets/img/anchor_aucroc_result.png)
+![](https://raw.githubusercontent.com/66RING/Notes/master/universe/ml/assets/img/anchor_aucroc_result.png)
 
 代码实现
 
-![](./assets/img/anchor_aucroc_result.png)
+![](https://raw.githubusercontent.com/66RING/Notes/master/universe/ml/assets/img/anchor_aucroc_result.png)
 
 
 ## 假设的应用
@@ -140,7 +140,7 @@ Compress
 
 用标签位置的hidden state来代表整个示例(ICL中的示例概念)
 
-![](./assets/img/anchor_hidden_compress.png)
+![](https://raw.githubusercontent.com/66RING/Notes/master/universe/ml/assets/img/anchor_hidden_compress.png)
 
 - Text_anchor直接取文本的标签 => 不行
 - Hidden_anchor取标签对应的hidden state => 行
