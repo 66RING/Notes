@@ -68,6 +68,12 @@ key_states[:, :, :, self.qk_nope_head_dim :] = k_pe
 
 attention算子部分不变, 只不过`query_state`, `key_state`如上述的构造方法: 一部分pe, 一部分不pe。
 
+- **QA**
+    * 为什么会省kv cache
+        + 类似MQA, 但kv进一步联合压缩压缩, `compressed_kv = self.kv_a_proj_with_mqa(hidden_states)`, Figure 3
+            + low-rank kv 联合压缩
+        + huggingface的`modeling_deepseek.py`中的kvcache保存仍然是保存完整的没有压缩过的cache
+        + 所以在推理过程中, 如果保存全量cache则cache占用不变。如果保存压缩的cache则额外up proj的开销
 
 
 
