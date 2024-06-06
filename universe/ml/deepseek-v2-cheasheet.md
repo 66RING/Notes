@@ -74,6 +74,19 @@ attention算子部分不变, 只不过`query_state`, `key_state`如上述的构�
             + low-rank kv 联合压缩
         + huggingface的`modeling_deepseek.py`中的kvcache保存仍然是保存完整的没有压缩过的cache
         + 所以在推理过程中, 如果保存全量cache则cache占用不变。如果保存压缩的cache则额外up proj的开销
+        + Answer **就是用计算换空间, 或者说是计算和加载的tradeoff**, 因为随着硬件性能增强mem bound的影响更大, 所以保存压缩过后的cache虽然还需要一点up proj但是比没压过的up proj算得要快, 显存占用(需要加载的数据)也更小, 从而实现平衡
 
 
+## 精髓
+
+> 计算和加载的平衡: 降低了加载代价, 稍微提升了计算代价。make sense因为目前(2024年)的带宽速度提升比FLOP提升要慢。
+
+利用联合低秩proj来降低显存, 降低加载代价, 而只稍微提升计算代价
+
+- 如果全部不cache, 那可能会是compute bound, 瓶颈在硬件计算单元
+- 如果全部做cache, 那可能会是memory bound, 瓶颈在从HBM加载
+
+上面两个极端都不好。所以MLA保存的是压缩过后的cache(虽然开源版代码保存的是全量cache)，压缩过的cache(低秩联合proj了一部分)需要更少的显存(更少的加载)，而解压所需的proj开销也比从0开始proj要低。
+
+这样，需要的compute稍微提升了，但需要的load更少了，从而实现平衡。tradeoff而不是走极端。
 
