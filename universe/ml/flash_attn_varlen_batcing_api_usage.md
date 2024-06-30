@@ -16,6 +16,8 @@ mathjax: true
 from flash_attn import flash_attn_varlen_func
 ```
 
+需要注意使用`causal`这个参数才能进入causal模式哦。
+
 ```python
 def flash_attn_varlen_func(
     q, # (total_q, nheads, headdim)
