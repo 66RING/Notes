@@ -29,7 +29,7 @@ python setup.py install
 python setup.py develop
 ```
 
-安装到系统
+安装到系统, 使用`-e`参数保证可编辑，即对源文件修改后直接作用在安装过的pkg中。
 
 ```sh
 pip install -e .
