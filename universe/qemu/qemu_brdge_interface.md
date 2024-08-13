@@ -8,6 +8,8 @@ tags:
 mathjax: true
 ---
 
+# linux虚拟网桥创建
+
 - ethernet
 	* https://wiki.archlinux.org/title/Network_configuration/Ethernet
 - https://www.youtube.com/watch?v=rSxK_08LSZw&ab_channel=SethJennings
@@ -47,24 +49,13 @@ ip link set dev <网卡名> nomaster <网桥名>
 ip link delete dev <网桥名>
 ```
 
-## 2
-
-qemu中使用网桥
+## qemu中使用网桥
 
 ```
 -net nic -net bridge, br=<网桥名>
 ```
 
-
-# Abstract
-
-
-# Preface
-
-
-# Overview
-
-# samba usage
+## samba usage
 
 testparm 测试
 
@@ -72,7 +63,7 @@ smbstatus
 
 /etc/samba/smb.conf
 
-# route
+## routing
 
 - https://linuxconfig.org/configuring-virtual-network-interfaces-in-linux
 
