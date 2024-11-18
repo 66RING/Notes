@@ -4,6 +4,20 @@
 
 [TOC]
 
+### The auto-regressive OS
+
+llm serving可以像操作系统一样。本质就是pc指针沿着sequence len方向去执行。
+
+- prefill阶段, pc只管step
+- decoding阶段, 生成logits, 然后pc step
+- schedule by redix tree
+
+- 模型(CPU)插槽
+- 内存(MEM)插槽
+
+
+2024-10-14 14:19
+
 ### kernel bypass LLM
 
 cuda申请内存需要大量访问驱动，进行大量内核态和用户态的切换。如果能在用户态实现一个用户态的显存分配器(缓存分配器)就能实现加速。
