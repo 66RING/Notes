@@ -82,6 +82,8 @@ attention算子部分不变, 只不过`query_state`, `key_state`如上述的构�
         + 所以在推理过程中, 如果保存全量cache则cache占用不变。如果保存压缩的cache则额外up proj的开销
         + Answer **就是用计算换空间, 或者说是计算和加载的tradeoff**, 因为随着硬件性能增强mem bound的影响更大, 所以保存压缩过后的cache虽然还需要一点up proj但是比没压过的up proj算得要快, 显存占用(需要加载的数据)也更小, 从而实现平衡
             - **只cache联合压缩后的结果，需要时再重算出来**
+- 另外，高性能算子的实现技巧/优化在于矩阵吸收: https://zhuanlan.zhihu.com/p/700214123
+    - 简单的说可以是: (q * Wq) * (Wc * kv) 可以规约成(q * Wq * Wc) * kv, 从而减少计算量
 
 
 ## 精髓
