@@ -44,6 +44,10 @@ query_states[:, :, :, self.qk_nope_head_dim :] = q_pe
 ```python
 compressed_kv = self.kv_a_proj_with_mqa(hidden_states)
 # NOTE: 拆分出需要pe的那部分key
+# compressed_kv取了low_rank(hidden_size)中的kv_lora_rank个维度. shape=(..., :kv_lora_rank)
+# k_pe取了low_rank(hidden_size)中的qk_rope_head_dim个维度. shape=(..., -qk_rope_head_dim:)
+# kv_lora_rank+qk_rope_head_dim=hidden_size
+# NOTE: kvcache只需要缓存compressed_kv和k_pe
 compressed_kv, k_pe = torch.split(
     compressed_kv, [self.kv_lora_rank, self.qk_rope_head_dim], dim=-1
 )
@@ -66,6 +70,8 @@ key_states[:, :, :, self.qk_nope_head_dim :] = k_pe
 
 ## MLA: Multi-Head Latent Attention
 
+> 本质: 对hidden_size维度做了low_rank压缩(hidden_size包含multi head的维度, 所以可以和GQA等等价上), 然后只需要缓存low rank的cache。aka除了GQA压缩head维度外, 还压缩了hidden_size维度。最后通过重算还原出原始的hidden_size
+
 attention算子部分不变, 只不过`query_state`, `key_state`如上述的构造方法: 一部分pe, 一部分不pe。
 
 - **QA**
@@ -75,6 +81,7 @@ attention算子部分不变, 只不过`query_state`, `key_state`如上述的构�
         + huggingface的`modeling_deepseek.py`中的kvcache保存仍然是保存完整的没有压缩过的cache
         + 所以在推理过程中, 如果保存全量cache则cache占用不变。如果保存压缩的cache则额外up proj的开销
         + Answer **就是用计算换空间, 或者说是计算和加载的tradeoff**, 因为随着硬件性能增强mem bound的影响更大, 所以保存压缩过后的cache虽然还需要一点up proj但是比没压过的up proj算得要快, 显存占用(需要加载的数据)也更小, 从而实现平衡
+            - **只cache联合压缩后的结果，需要时再重算出来**
 
 
 ## 精髓
