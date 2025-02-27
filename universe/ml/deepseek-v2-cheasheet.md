@@ -3,7 +3,7 @@ title: DeepSeek-V2架构
 author: 66RING
 date: 2024-05-08
 tags: 
-- marchine learning
+- machine learning
 mathjax: true
 ---
 

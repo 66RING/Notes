@@ -3,7 +3,7 @@ title: RoPE CheatSheet
 author: 66RING
 date: 2024-02-27
 tags: 
-- marchine learning
+- machine learning
 mathjax: true
 ---
 
