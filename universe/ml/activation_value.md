@@ -9,6 +9,8 @@ mathjax: true
 
 # 神经网络中的激活值
 
+> Output = Activation * Weight + Bias
+
 - 什么是激活值
     * 任意算子的输出结果就是激活值, 因为你需要使用结果(激活值)来求导
 - 为什么要保存激活值
