@@ -85,6 +85,25 @@ swizzle使用BMS描述，表示有$2^B$行$2^S$列, $2^M$个元素为一组。
         + 因为y_l1 != y_l2, 所以y_l1^y_l2 != 0
 
 
+##  TMA中的swizzling
+
+> 本质: 元素id转换成chunk id, 用chunk id做swizzling
+
+- 使用向量指令访问，此时一次访问可能就不受4字节，此时需要按照chunk为单位做swizzling
+- 元素id向chunk id的的转换
+    * 假设chunk=16B, 所有bank 128B的空间内有8个chunk
+    * 元素id计算, 16B一个单位: i16 = (y * NX + x) * sizeof(T) / 16
+    * chunk逻辑行: y16 = i16 / 8
+    * chunk逻辑列: x16 = i16 % 8
+    * chunk swz物理行(swz_y16) = y16
+    * chunk swz物理列(swz_x16) = y16 ^ x16
+- chunk id向元素id的转换: 访问单个元素(x, y)的物理地址
+    * swz_y = y16
+    * swz_x = 行内偏移 + chunk内偏移 = swz_x16 * 16 / sizeof(T) % NX + x % (16 / sizeof(T))
+        + swz_x16 * 16 / sizeof(T)表示一个行内有多少个元素
+        + 16 / sizeof(T)表示一个chunk内有多少个元素
+
+
 
 
 
