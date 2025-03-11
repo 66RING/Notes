@@ -192,28 +192,61 @@ void createHeap(int *heap,int len){
 - 再对左右区间重复第二步，直到各区间只有一个数
 
 ```c
-void quicksort(int *ar,int l,int r){
-    int num = ar[l];   /* 做寄存，减少写入读出的次数 */
-    int left = l,right = r;
-    if(l<r){
-        while(r>l){
-            while(l<r&&ar[r]>num){
-                r--;
-            }
-            ar[l] = ar[r];
-            while(l<r&&ar[l]<=num){
-                l++;
-            }
-            ar[r] = ar[l];
-        }
-        ar[l] = num;
-        quicksort(ar,left,l-1);
-        quicksort(ar,l+1,right);
+// void quicksort(int *ar,int l,int r){
+//     int num = ar[l];   /* 做寄存，减少写入读出的次数 */
+//     int left = l,right = r;
+//     if(l<r){
+//         while(r>l){
+//             while(l<r&&ar[r]>num){
+//                 r--;
+//             }
+//             ar[l] = ar[r];
+//             while(l<r&&ar[l]<=num){
+//                 l++;
+//             }
+//             ar[r] = ar[l];
+//         }
+//         ar[l] = num;
+//         quicksort(ar,left,l-1);
+//         quicksort(ar,l+1,right);
+//     }
+// }
+
+void qsort(vector<int> &nums, int l, int r) {
+  if (l>=r) return;
+  int pv = nums[(l+r)/2];
+  swap(nums[l], nums[(l+r)/2]); // 哨兵隔离开计算
+  int start=l, end=r;
+  // l -= 1;
+  r+=1;
+  while(true) {
+    while(l < end && nums[++l] < pv) {
+      // if (l==end) break;
+    };
+    while(r > start && nums[--r] > pv) {
+      // if (r==start) break;
+    };
+    if (l<r) {
+      swap(nums[l], nums[r]);
+    } else {
+      break;
     }
+  }
+  swap(nums[start], nums[r]);
+  qsort(nums, start, r-1);
+  qsort(nums, r+1, end);
 }
 ```
 
 **注意** 若选取的比较位是序列的首位或尾位，则当序列有序时使用快速排序，时间复杂度退化为$O(n^2)$。 **优化** :取首位、中位、尾位的中位数作为比较位。
+
+- 不容易注意的细节
+    1. 和基准比较时**不能取等于**, 应该两侧同时跳过该相同点
+        - 这样可以保证两侧分配尽可能均匀
+    2. **边界检测: 保证退出点是交点**
+        - 防止循环退出点不是交点, 这时用l递归还是用r递归就有区别
+    3. 哨兵隔离开计算比较安全
+    4. 开始时l--,r++, 循环是先++--, 保证每个step都会移动
 
 
 ### 擂台法
