@@ -7,6 +7,25 @@ tags:
 mathjax: true
 ---
 
+# Cheat Sheet
+
+- MLP: down(act(gate(x)) * up(x)) # 两个path矩阵乘，再过最后一个线性层
+    * `[B, L, D] -> [B, L, D]`
+- 每个token都取topk个专家和权重
+    * `[B, L, D] -> [B, L, topk, D]`
+- 每个专家会处理x个token
+    * x的个数可能不同
+- sorted_tokens, 让属于同一个专家的token在一起
+    * 提升并行计算效率
+- for 选专家, 选token处理, 依次append -> [total_num_tokens, D]
+    * `[exper_token_num, D] -> [exper_token_num, D]`
+- 索引还原: new_x = [B*L, topk, D], 每个token的topk个专家的处理结果
+    * `[B*L, topk, D]`
+- 按权重加和每个专家的结果: new_x * topk_weights = [B*L, topk, D], sum(dim=1) = [B*L, D]
+    * 每个专家的权重`[topk, D]`
+    * 专家加权求和
+
+
 # Mixtral MoE源码笔记
 
 > transformers/src/transformers/models/mixtral/modeling_mixtral.py
