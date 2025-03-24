@@ -15,6 +15,8 @@ mathjax: true
 
 > [clangd file](https://clangd.llvm.org/config)
 
+**快速找头文件: `find  . -name "*.h" | xargs -n1 dirname | sort -u | xargs -n1 realpath`**
+
 `.clangd`文件由一个个片段(fragment)组成, 片段间可以使用`---`分割。本质就是解析成yaml, 所以配置是key value对的形式定义的。比如:
 
 ```yaml
