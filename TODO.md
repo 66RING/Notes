@@ -36,6 +36,24 @@
 - 问题主线技术点画像
 ⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐
 
+- 2024-01-01 10:06
+    * https://github.com/Xnhyacinth/Awesome-LLM-Long-Context-Modeling
+- 2023-12-28 15:05
+    * https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html
+- 2023-12-20 20:49
+    * [deepspeed-offloadpp](https://github.com/microsoft/DeepSpeed/tree/master/blogs/deepspeed-offloadpp)
+- 2023-12-17 21:00
+    * *ps-lite*: 
+        + https://zhuanlan.zhihu.com/p/467650462
+        + https://zhuanlan.zhihu.com/p/467693949
+        + https://zhuanlan.zhihu.com/p/467697961
+        + https://zhuanlan.zhihu.com/p/467702941
+- 2023-12-15 10:00
+    * https://blog.tartanllama.xyz/writing-a-linux-debugger-dwarf-step/
+- https://github.com/practical-tutorials/project-based-learning
+    * browser engine in rust: https://limpet.net/mbrubeck/2014/08/08/toy-layout-engine-1.html
+    * chat service ing rust: https://nbaksalyar.github.io/2015/07/10/writing-chat-in-rust.html
+
 - crafting interpreters:
     * here: https://hanayabuki.github.io/craftinginterpreters_zh/#/content/6.%E8%A7%A3%E6%9E%90%E8%A1%A8%E8%BE%BE%E5%BC%8F
     * https://hanayabuki.github.io/craftinginterpreters_zh/#/README
