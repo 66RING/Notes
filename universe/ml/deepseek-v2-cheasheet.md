@@ -70,6 +70,8 @@ key_states[:, :, :, self.qk_nope_head_dim :] = k_pe
 
 ## MLA: Multi-Head Latent Attention
 
+兼容了mla的huggingface modeling实现: https://huggingface.co/deepseek-ai/DeepSeek-V2-Chat/discussions/12/files
+
 > 本质: 对hidden_size维度做了low_rank压缩(hidden_size包含multi head的维度, 所以可以和GQA等等价上), 然后只需要缓存low rank的cache。aka除了GQA压缩head维度外, 还压缩了hidden_size维度。最后通过重算还原出原始的hidden_size
 
 attention算子部分不变, 只不过`query_state`, `key_state`如上述的构造方法: 一部分pe, 一部分不pe。
