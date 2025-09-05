@@ -58,6 +58,8 @@ mathjax: true
 
 permutationLayout: 给你一个row-ptr, 你构造stride去重排这一行
 
+permutationLayout表示new_layout变成old_layout的方法(映射关系)
+
 
 ``` python
 """
