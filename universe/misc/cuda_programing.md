@@ -190,6 +190,23 @@ int main(void)
 }
 ```
 
+## Misc
+
+### __cvta
+
+> https://stackoverflow.com/questions/76992939/confusion-about-cvta-generic-to-shared
+>
+> https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html#address-space-conversion-functions
+
+地址空间转换Address Space Conversion Functions
+
+`__cvta_generic_to_global`, `__cvta_generic_to_shared`等
+
+因为GPU里有多种地址空间，global, shared, local等，而指针本身并不携带地址空间信息，所以需要使用这些函数进行转换。
+
+AKA: **不存在隐式地址转换**
+
+
 
 ## TODO
 
