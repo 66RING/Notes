@@ -12,7 +12,7 @@ mathjax: true
 
 > 物理行号=逻辑行号, 物理列号=逻辑列号^逻辑组号
 >
-> 一个index/offset有明显的组别关系, e.g. 0b rr ccc b, 表示|行号bits|列号bits|数据bits|
+> 一个index/offset有明显的组别关系, e.g. 0b rr ccc b, 表示|行号bits|(组)列号bits|数据组bits|
 
 用swizzle映射一个逻辑地址, 可以实现无bank conflict的smem访问: `physical_addr = swizzle(logical_addr)`
 
@@ -33,7 +33,7 @@ e.g. 4行, 8列, 2B数据
 index: 0b rr ccc b
 rr表示行号所在bits
 ccc表示列号所在bits
-b表示数据所在bits
+b表示数据组所需bits
 
 swizzle就相当于把ccc替换成ccc ^ rr
 ```
@@ -46,8 +46,8 @@ swizzle就相当于把ccc替换成ccc ^ rr
 根据上述原理和注释, 可以得出人话版`Swizzle<B, M, S>(offset)`的语义
 
 - `Swizzle<B, M, S>(offset)`
-    * M, MBase: 数据有效位, e.g. float4 -> 128bits
-    * B, BBis:  列有效位
+    * M, MBase: 数据组有效位, e.g. 度halfx8 -> 数据组大小就是8
+    * B, BBis:  grouped列有效位
     * S, SShift:行号左移多少位可以和列号位置对齐
     * 当然BMS抽象是为了更通用实现, 不一定局限于行号列号, 我们只是方便理解
 
