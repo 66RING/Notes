@@ -33,6 +33,7 @@ MMA使用流程
     - 映射公式一般图片下面会给出
     ```
     (row, col)表示元素在矩阵中的位置, 需要搬运到thread的寄存器中
+    i 表示thread中的value的index
     row =            %laneid % 4          if %laneid < 16
                     (%laneid % 4) + 4     otherwise
 
