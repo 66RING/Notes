@@ -69,6 +69,17 @@ row =     X           if %laneid < 16
 col = (i & 0b100) + (%laneid & 0b10) + (i & 0b1)  for ci where i = {0,..,7}
 ```
 
+ptx指令规则: 1. 顺序placeholder 2. 寄存器类型(处理r表示regular/u32, 其他都是常见的缩写)
+
+```
+"h" = .u16 reg  -> half
+"r" = .u32 reg  -> regular/u32
+"l" = .u64 reg  -> long
+"q" = .u128 reg -> quad
+"f" = .f32 reg  -> float
+"d" = .f64 reg  -> double
+```
+
 ## 完整代码
 
 ```cpp
