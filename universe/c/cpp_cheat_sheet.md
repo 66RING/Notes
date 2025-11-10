@@ -29,6 +29,17 @@ auto [name, age] = get_person();
 
 - case 3: 当有多个输出参数时`func(int n, int& out1, int& out2)`，可以利用bind的方法放回一个结构体然后分解
 
+## 右值引用
+
+> 所有权语义
+>
+> 尽可能少复制的情况下把数据存到内存
+
+- 直接从语言层面理解，就是rust的move
+- move后所有权转移, 不应该再使用了 => 将亡值
+    - 软约束，继续使用可能会出现未定义行为
+- 右值引用作为参数 => 该函数将夺取该参数的所有权
+
 
 ## 移动构造
 
@@ -184,5 +195,30 @@ struct sdshdr {
     char buf[]; //不占空间
 };
 ```
+
+## typename
+
+为什么叫typename, 因为在模板中, 泛型T可能是类型, 也可能是变量。使用模板时提取出来的是类型还是变量存在二意性，所以需要用typename来明确指出是类型。
+
+```cpp
+template <typename T, int arg>
+struct Type<T> {
+    using type = T;
+    int arg = arg;
+};
+
+template <typename T>
+void show(typename Type<T>::type a) {
+    std::cout << a << std::endl;
+}
+```
+
+`typename Type<T>::type`说明`Type<T>::type`是一个类型，而不是一个变量。
+
+为什么template中已经用了typename修饰T了后面没能推导出type是类型呢？因为内部type需要具体特化时才能分析到。
+
+
+
+
 
 
