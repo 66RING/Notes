@@ -28,6 +28,12 @@ Per SM:
 
 优化目标: 正好用满max_threads和max_register和max_smem(优先级顺序相同)
 
+可以用`cudaOccupancyXXX`系列API做计算. e.g.
+
+- `at::cuda::getCurrentDeviceProperties()->multiProcessorCount`获取SM数
+- `cudaOccupancyMaxActiveBlocksPerMultiprocessor(func, thread_per_block)`获取最大能调度的block数
+- ...
+
 
 ## SM
 
