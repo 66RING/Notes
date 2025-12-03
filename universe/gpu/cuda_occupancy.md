@@ -58,6 +58,13 @@ Per SM:
 - thread slot = 2048
 - thread block slot = 32
 - register: 65536
+- wave: AKA几个thread block是一个wave
+    * 一个sm中可以并行执行的一组thread block
+    * wave大小(固定): 一个SM中可以并行运行的thread block数
+- waves per SM: AKA几个wave是一个waves
+    * 运行时平分的任务规模
+    * e.g. 运行时2640个thread block, 硬件资源: wave大小是2, 132个sm
+        + waves per SM = 2640 / 132 / 2 = 5
 
 case study:
 
