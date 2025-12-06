@@ -97,6 +97,10 @@ stall reason
 - Stall Memory Throttle
     - 一个warp不可发射, 因为LSU pipe被占用。说明smem的使用有gap, 可能是bank conflict或warp divergence
 - Stall No Instruction
+    - means the SMs could not be fed instructions fast enough from memory.
+    - instruction caches miss => 指令太多样了
+        - **warp间的执行相互影响**
+        - 区分prologue, main loop, epilogue，保证指令执行的相似性和局部性
 
 
 ## Memory workload
