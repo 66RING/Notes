@@ -90,6 +90,10 @@ stall reason
 - MIO Throttle
     - 被mem input/output指令阻塞, e.g. LDS, MUFU, 动态分支
     - **IO导致的stall**
+- Stall Not Selected
+    - 一个warp可发射, 但是选择了其他warp。说明warp数量很高，可以适当降低
+- Stall Memory Throttle
+    - 一个warp不可发射, 因为LSU pipe被占用。说明smem的使用有gap, 可能是bank conflict或warp divergence
 
 
 ## Memory workload
