@@ -31,6 +31,8 @@ https://www.bilibili.com/video/BV13w411o7cu/?vd_source=fa5227c06f0a0c9f870b406f1
     - MIO Throttle: pipeline用得多, e.g. smem和bank conflict
 
 
+- case study
+    - https://developer.nvidia.com/blog/improving-gpu-performance-by-reducing-instruction-cache-misses-2/
 
 
 # Sections
@@ -94,6 +96,7 @@ stall reason
     - 一个warp可发射, 但是选择了其他warp。说明warp数量很高，可以适当降低
 - Stall Memory Throttle
     - 一个warp不可发射, 因为LSU pipe被占用。说明smem的使用有gap, 可能是bank conflict或warp divergence
+- Stall No Instruction
 
 
 ## Memory workload
