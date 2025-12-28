@@ -139,7 +139,11 @@ void _test_tidfrg_D() {
   //   FrgX:  The values tiled across COPY_ATOMs Dst.
   //   RestM: The values tiled in M.
   //   RestN: The values tiled in N.
-  // TODO: 
+  // TODO: QA
   //  1. 还没有理解ref2trg的功能
+  //    模板记录了一个tv layout, 但描述的是src还是dst呢? 
+  //    所以定义一个中间表示Ref layout
+  //    ref layout可以通过layout代数转换成src/dst的tv layout
+  //    所以在_S时ref2trg就是把ref转成src的tv, _D时就是转成dst的tv
 }
 ```
