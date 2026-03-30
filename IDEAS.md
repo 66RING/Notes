@@ -4,6 +4,34 @@
 
 [TOC]
 
+### The roofline mode of critical KV Cache: critical kv cahce的量化分析方法
+
+- KV Cache并不是挑选的越准越好
+    * e.g. SnapKV的Pooling会让效果变好
+- 原因猜测
+    1. unify挑选导致的精确挑选刚好破坏了不同head的特性
+    2. 浅层的精确挑选忽视了深层的ancor的影响
+    3. 浅层layer的roofline, 精确token + contxt token
+        - 如何量化分析精确token和context token
+        - 浅层用max/min, 深层用avg
+
+
+2025-09-10 10:31
+
+
+### structed agent
+
+- 分支由人决定
+    * map reduce pair抽象
+        + map <-> reduce
+        + rerank <-> ranking
+        + ...
+- 分支选择使用prefix cache和one-token生成
+    * 做embedding的匹配
+    * 分支预测部分不用cache
+
+2025-09-3 10:30
+
 ### The auto-regressive OS
 
 llm serving可以像操作系统一样。本质就是pc指针沿着sequence len方向去执行。

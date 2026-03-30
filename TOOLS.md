@@ -24,4 +24,7 @@
 - nm
 	* list symbols from object files
 - ldd
+    * list dynamic dependencies
+- c++filt
+    * demangle c++ symbols
 
